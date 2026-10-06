@@ -26,6 +26,10 @@ python3 scripts/fetch_prices.py   # pull today's prices from scryfall and re-run
 
 everything lands in `results/`: `set_summary.csv` (one row per box product), `box_sim.csv` (simulated boxes), `godpack.csv`, `foil_scenarios.csv`, the `significance_*.csv` files, ten charts, and `MTG_Booster_EV_Model.xlsx` with every assumption as a cell you can edit.
 
+## animations
+
+`animations.py` renders five short mp4 clips (1080p, 30 fps, dark) straight from the model, so the motion graphics in the video are the data, not an illustration of it: a box opening pack by pack with running market vs cash totals, 4,000 boxes dropping into a histogram, the god-pack odds curve filling in as you buy packs, 420 cards sorting into price tiers, and ten years of boxes appearing year by year. `python3 animations.py` (about 5 minutes; needs ffmpeg) writes them to `results/animations/`.
+
 ## how it works
 
 1. **pack structure.** wizards publishes slot-by-slot odds for every set in the "collecting <set>" articles. `data/sealed_basic_data.json` (from [mtg.wtf](https://mtg.wtf) via [taw/magic-sealed-data](https://github.com/taw/magic-sealed-data)) turns those into card-level weights: every booster variant, every sheet it pulls from, how many cards from each sheet, and each printing's weight on the sheet. reality fracture's play booster alone is 109 sheets.
