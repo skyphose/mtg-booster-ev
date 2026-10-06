@@ -1,14 +1,12 @@
 """
-MTG booster expected-value model (2016-2026) + 2027 god pack / foil-change scenarios.
+the booster ev model. 2016-2026, 99 box products.
 
-Inputs (same folder):
-  sealed_basic_data.json   - booster/sheet structure (taw/magic-sealed-data, mirrors mtg.wtf)
-  scryfall_prices.psv      - Scryfall default-cards bulk export filtered to needed sets (prices = TCGplayer market, USD)
-  tcg_sealed_sales.psv     - TCGplayer "latest sales" (5 most recent completed sales per sealed product)
-  tcg_sealed_products.psv  - TCGplayer sealed product ids, market price, lowest listing
+what it does: takes wizards' published pack odds (as card-level sheet weights from mtg.wtf), prices every card off
+scryfall (tcgplayer market), and works out what a pack and a box are worth. then it simulates thousands of boxes
+so you get the spread and not just the average. box price = median of the 5 most recent completed tcgplayer sales,
+because "market price" and "lowest listing" are not what people pay.
 
-Outputs:
-  out/set_summary.csv, out/box_sim.csv, out/godpack.csv, out/chase_cards.csv, out/coverage.csv
+inputs live in data/, outputs land in results/. run `python3 ev_model.py --help` for the cash-out levers.
 """
 import json, csv, random, statistics as st, os, collections, math
 

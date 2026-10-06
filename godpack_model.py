@@ -1,11 +1,12 @@
 """
-2027 booster changes modelled on top of Reality Fracture (Oct 2026) sheet data + current prices.
+the 2027 changes, priced on reality fracture (the newest set, so the closest thing to nauctis we have).
 
-Scenarios:
-  A. God packs (1:1000 Booster Packs, 1:300 Collector Boosters) - value, per-pack EV lift, hit odds, variance.
-  B. Foil change in Booster Packs - foil commons/uncommons removed, no guaranteed foil, higher foil R/M rate (rate unpublished -> sensitivity).
-  C. Collector Booster shrink - 2 foil commons + 1 foil uncommon removed, price unchanged.
-  D. Supply effects - how many extra rares/mythics god packs add, how much foil C/U supply disappears.
+  A. god packs      - what one is worth, what 1-in-1,000 does to pack ev, how many boxes until you have a coin-flip shot
+  B. foil change    - foil commons/uncommons leave, no guaranteed foil, foil rare rate "increased" (to what? unpublished) -> break-even
+  C. collector cut  - 2 foil commons + 1 foil uncommon gone, price unchanged
+  D. supply         - how many rares god packs actually add (spoiler: about 1%)
+
+run ev_model.py first.
 """
 import json, csv, os, math, random, statistics as st
 from ev_model import BY_CODE, card_price, sheet_stats, product_ev, simulate_boxes, realizable, OUT, HERE, DATA

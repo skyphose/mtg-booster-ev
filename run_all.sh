@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Rebuild every result from the data in data/. About 5 minutes on a laptop (the Monte Carlo is the slow part).
+# rebuilds everything in results/ from data/. about 8 minutes on a laptop; the simulations are the slow part.
 set -e
 cd "$(dirname "$0")"
 python3 ev_model.py "$@"      # results/set_summary.csv, box_sim.csv, coverage.csv, chase_cards.csv

@@ -1,4 +1,4 @@
-"""B-roll charts (1920x1080, dark surface) from the model outputs. Store figures are rounded UP to the nearest $10 and anonymized."""
+"""b-roll charts for the video. 1920x1080, dark. store figures are rounded UP to the nearest $10 and anonymous on purpose."""
 import csv, os, math, statistics as st
 import matplotlib
 matplotlib.use('Agg')

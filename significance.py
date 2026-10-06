@@ -1,19 +1,15 @@
 """
-Statistical tests for the video's claims. Four separate sources of uncertainty, tested separately:
+is any of this statistically significant, or did i just run a lot of dice?
 
-  A. Monte Carlo noise      - per product, is the mean box value (market / cash-out) different from the box price?
-                              One-sample t-test on simulated boxes. With 4,000 boxes this is almost never the binding
-                              uncertainty; reported so nobody has to ask.
-  B. Box-price sampling     - the box price is the median of only 5 completed sales. Bootstrap those 5 (with replacement),
-                              recompute the ratio and P(box beats price); report 95% intervals.
-  C. Card-price error       - TCGplayer market prices are estimates. Perturb every card price by lognormal noise
-                              (sigma = 20%, independent per printing) and recompute the set-level ratios 300 times.
-  D. Across sets            - treating each set as one observation, are Play Booster boxes above break-even at market
-                              and below it in cash as a population, not just in this sample? Wilcoxon signed-rank on
-                              log(ratio) and an exact sign test, by box type.
-  E. God pack spread        - a god pack is "$63 on average": simulate 20,000 god packs and report the spread.
+four separate things could be wrong, so i test them separately:
 
-    python3 significance.py          # writes results/significance_*.csv and prints a summary (~3 min)
+  A. monte carlo noise   - per product, t-test of simulated box values vs the box price. with thousands of boxes this is never the problem.
+  B. five sales          - the box price is the median of only 5 completed sales. bootstrap them and see how much the answer moves.
+  C. card prices         - tcgplayer market prices are estimates. shake every card price by lognormal noise (20%) 300 times.
+  D. across sets         - each set is one data point. wilcoxon signed-rank + sign test on log(ratio), by box type.
+  E. god pack spread     - "$63" is an average. simulate 20,000 god packs and look at the distribution.
+
+    python3 significance.py     # ~4 min, writes results/significance_*.csv
 """
 import csv, os, math, random, statistics as st, collections
 import numpy as np
