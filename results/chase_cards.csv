@@ -1,0 +1,409 @@
+set,name,cn,rarity,usd
+blb,"Lumra, Bellow of the Woods",183,m,29.77
+blb,Three Tree City,260,r,29.35
+blb,"Maha, Its Feathers Night",100,m,21.33
+blb,Caretaker's Talent,6,r,12.12
+blb,"Ygra, Eater of All",241,m,12.06
+blb,Rottenmouth Viper,107,m,11.98
+blb,"Ral, Crackling Wit",230,m,10.97
+blb,Dawn's Truce,9,r,9.47
+xln,Revel in Riches,117,r,21.11
+xln,Primal Amulet // Primal Wellspring,243,r,11.43
+xln,"Growing Rites of Itlimoc // Itlimoc, Cradle of the Sun",191,r,9.76
+xln,"Jace, Cunning Castaway",60,m,9.27
+xln,Dowsing Dagger // Lost Vale,235,r,7.39
+xln,"Gishath, Sun's Avatar",222,m,6.91
+xln,Vanquisher's Banner,251,r,6.06
+xln,Herald of Secret Streams,59,r,6.05
+woe,Agatha's Soul Cauldron,242,m,41.71
+woe,Beseech the Mirror,82,m,21.19
+woe,Moonshaker Cavalry,21,m,9.73
+woe,"Talion, the Kindly Lord",215,m,8.94
+woe,Virtue of Persistence // Locthwain Scorn,115,m,7.05
+woe,Virtue of Loyalty // Ardenvale Fealty,38,m,6.74
+woe,"Kellan, the Fae-Blooded // Birthright Boon",230,m,6.22
+woe,Agatha of the Vile Cauldron,199,m,5.89
+eld,The Great Henge,161,m,65.89
+eld,Castle Garenbrig,240,r,10.77
+eld,Embercleave,120,m,9.95
+eld,"Ayara, First of Locthwain",75,r,8.1
+eld,"Torbran, Thane of Red Fell",147,r,5.72
+eld,"Oko, Thief of Crowns",197,m,5.36
+eld,Castle Locthwain,241,r,3.65
+eld,Questing Beast,171,m,3.55
+dmu,"Sheoldred, the Apocalypse",107,m,101.06
+dmu,Silverback Elder,177,m,8.97
+dmu,Plaza of Heroes,252,r,6.26
+dmu,Liliana of the Veil,97,m,5.86
+dmu,Vesuvan Duplimancy,73,m,5.5
+dmu,Vodalian Hexcatcher,75,r,5.49
+dmu,Timeless Lotus,239,m,4.6
+dmu,Leaf-Crowned Visionary,167,r,4.37
+plst,Ancient Tomb,TMP-315,u,127.78
+plst,Rhystic Study,PCY-45,c,68.55
+plst,Esper Sentinel,MH2-12,r,66.66
+plst,Demonic Tutor,UMA-93,r,65.9
+plst,Anointed Procession,AKH-2,r,65.19
+plst,Demonic Tutor,DDC-49,u,63.1
+plst,Gemstone Caverns,TSP-274,r,62.59
+plst,"Urborg, Tomb of Yawgmoth",UMA-254,r,60.98
+dsk,Overlord of the Balemurk,113,m,20.54
+dsk,"Valgavoth, Terror Eater",120,m,18.79
+dsk,Enduring Vitality,176,r,15.87
+dsk,"Tyvar, the Pummeler",202,m,15.3
+dsk,Enduring Tenacity,95,r,14.33
+dsk,"Kaito, Bane of Nightmares",220,m,11.6
+dsk,Gloomlake Verge,260,r,10.99
+dsk,Abhorrent Oculus,42,m,10.94
+mom,"Etali, Primal Conqueror // Etali, Primal Sickness",137,r,29.44
+mom,Sheoldred // The True Scriptures,125,m,18.75
+mom,Urabrask // The Great Work,169,m,15.9
+mom,Tribute to the World Tree,211,r,15.24
+mom,"Invasion of Ikoria // Zilortha, Apex of Ikoria",190,r,13.0
+mom,Jin-Gitaxias // The Great Synthesis,65,m,12.01
+mom,Faerie Mastermind,58,r,11.9
+mom,City on Fire,135,r,11.56
+grn,Steam Vents,257,r,11.38
+grn,Sacred Foundry,254,r,11.25
+grn,Underrealm Lich,211,m,11.05
+grn,Watery Grave,259,r,9.67
+grn,Overgrown Tomb,253,r,8.76
+grn,Beast Whisperer,123,r,8.43
+grn,Mnemonic Betrayal,189,m,7.74
+grn,Temple Garden,258,r,7.41
+dom,Mox Amber,224,m,87.79
+dom,Cabal Stronghold,238,r,12.34
+dom,"Teferi, Hero of Dominaria",207,m,7.35
+dom,Oath of Teferi,200,r,6.83
+dom,"Marwyn, the Nurturer",172,r,6.6
+dom,Helm of the Host,217,r,6.1
+dom,Rat Colony,101,c,5.45
+dom,"Karn, Scion of Urza",1,m,4.71
+m19,Scapeshift,201,m,41.5
+m19,Crucible of Worlds,229,m,31.25
+m19,"Nicol Bolas, the Ravager // Nicol Bolas, the Arisen",218,m,17.5
+m19,Resplendent Angel,34,m,8.51
+m19,Goblin Trashmaster,144,r,6.75
+m19,Omniscience,65,m,6.45
+m19,Leonin Warleader,23,r,6.11
+m19,"Tezzeret, Artifice Master",79,m,5.06
+aer,Heroic Intervention,109,r,15.71
+aer,Walking Ballista,181,r,9.55
+aer,Paradox Engine,169,m,6.43
+aer,Whir of Invention,49,r,5.57
+aer,"Baral, Chief of Compliance",28,r,4.48
+aer,Exquisite Archangel,18,m,4.39
+aer,Rishkar's Expertise,123,r,4.37
+aer,Planar Bridge,171,m,3.57
+fin,Buster Sword,255,m,48.78
+fin,Vivi Ornitier,248,m,31.61
+fin,"Sephiroth, Fabled SOLDIER // Sephiroth, One-Winged Angel",115,m,27.95
+fin,Summon: Bahamut,1,m,24.75
+fin,"Cloud, Midgar Mercenary",10,m,19.27
+fin,Traveling Chocobo,210,m,17.1
+fin,Summon: Knights of Round,36,m,12.33
+fin,The Earth Crystal,184,r,12.06
+otj,"Bristly Bill, Spine Sower",157,m,35.48
+otj,Terror of the Peaks,149,m,30.7
+otj,"Tinybones, the Pickpocket",109,m,9.04
+otj,"Gisa, the Hellraiser",89,m,6.79
+otj,Lively Dirge,93,u,6.43
+otj,Insatiable Avarice,91,r,6.11
+otj,Railway Brawler,175,m,5.92
+otj,Slickshot Show-Off,146,r,5.81
+mh3,Ocelot Pride,38,m,42.41
+mh3,Phyrexian Tower,303,m,30.15
+mh3,Polluted Delta,224,r,20.75
+mh3,Warren Soultrader,110,r,20.24
+mh3,Urza's Incubator,297,r,19.26
+mh3,"Ulamog, the Defiler",15,m,18.73
+mh3,Bloodstained Mire,216,r,18.45
+mh3,"Tamiyo, Inquisitive Student // Tamiyo, Seasoned Scholar",242,m,17.94
+ltr,The One Ring,246,m,118.68
+ltr,Orcish Bowmasters,433,r,53.8
+ltr,Orcish Bowmasters,103,r,43.6
+ltr,Mithril Coat,245,r,27.87
+ltr,Delighted Halfling,158,r,26.42
+ltr,Nazgûl,335,u,25.64
+ltr,Last March of the Ents,418,m,24.45
+ltr,Last March of the Ents,172,m,23.13
+rna,Smothering Tithe,22,r,55.24
+rna,Guardian Project,130,r,14.14
+rna,Prime Speaker Vannifar,195,m,10.54
+rna,Blood Crypt,245,r,9.83
+rna,Breeding Pool,246,r,9.59
+rna,Godless Shrine,248,r,9.03
+rna,Stomping Ground,259,r,7.61
+rna,Hallowed Fountain,251,r,7.14
+lci,Roaming Throne,258,r,52.04
+lci,Cavern of Souls,345,m,51.89
+lci,Cavern of Souls,269,m,51.53
+lci,Roaming Throne,344,r,49.25
+lci,Bloodletter of Aclazotz,92,m,36.55
+lci,"Ghalta, Stampede Tyrant",326,m,36.41
+lci,Bloodletter of Aclazotz,336,m,35.92
+lci,"Ghalta, Stampede Tyrant",185,m,34.96
+akh,Anointed Procession,2,r,63.64
+akh,Throne of the God-Pharaoh,237,r,7.55
+akh,Approach of the Second Sun,4,r,6.24
+akh,Rhonas the Indomitable,182,m,5.3
+akh,Nest of Scarabs,101,u,4.14
+akh,Prowling Serpopard,180,r,3.91
+akh,Bontu's Monument,225,u,3.85
+akh,Harvest Season,170,r,3.82
+tla,Badgermole Cub,326,m,66.5
+tla,"Wan Shi Tong, Librarian",320,m,57.34
+tla,Badgermole Cub,167,m,44.59
+tla,"Wan Shi Tong, Librarian",78,m,34.81
+tla,The Walls of Ba Sing Se,329,m,30.34
+tla,"Ozai, the Phoenix King",311,m,27.48
+tla,The Walls of Ba Sing Se,261,m,25.26
+tla,Redirect Lightning,343,r,19.0
+snc,Jetmir's Garden,250,r,16.72
+snc,Xander's Lounge,260,r,13.54
+snc,Raffine's Tower,254,r,13.22
+snc,Spara's Headquarters,257,r,12.98
+snc,Ledger Shredder,46,r,9.97
+snc,"Jetmir, Nexus of Revels",193,m,9.47
+snc,Ziatora's Proving Ground,261,r,9.45
+snc,Halo Fountain,15,m,7.28
+neo,"Boseiju, Who Endures",266,r,48.7
+neo,"Otawara, Soaring City",271,r,25.14
+neo,Kodama of the West Tree,199,m,20.62
+neo,"Takenuma, Abandoned Mire",278,r,10.6
+neo,"Jin-Gitaxias, Progress Tyrant",59,m,9.82
+neo,Fable of the Mirror-Breaker // Reflection of Kiki-Jiki,141,r,6.06
+neo,"Eiganjo, Seat of the Empire",268,r,5.8
+neo,Tamiyo's Safekeeping,211,c,5.21
+hou,Torment of Hailfire,77,r,36.45
+hou,"Razaketh, the Foulblooded",73,m,15.24
+hou,Solemnity,22,r,9.77
+hou,"Unesh, Criosphinx Sovereign",52,m,8.53
+hou,Crested Sunmare,6,m,7.6
+hou,"Neheb, the Eternal",104,m,7.14
+hou,The Locust God,139,m,7.12
+hou,Overwhelming Splendor,19,m,5.68
+stx,"Kasmina, Enigma Sage",196,m,10.15
+stx,Crackle with Power,95,m,9.77
+stx,Wandering Archaic // Explore the Vastlands,6,r,8.59
+stx,"Blex, Vexing Pest // Search for Blex",148,m,8.33
+stx,Professor Onyx,83,m,6.0
+stx,Blade Historian,165,r,4.52
+stx,Solve the Equation,54,u,4.39
+stx,Sedgemoor Witch,86,r,3.98
+tle,The Great Henge,41,m,62.88
+tle,Force of Negation,13,m,45.86
+tle,Teferi's Protection,7,m,39.4
+tle,Mystic Remora,16,m,23.56
+tle,Sakashima of a Thousand Faces,18,m,17.42
+tle,Heroic Intervention,43,m,15.78
+tle,Bloodchief Ascension,23,m,14.0
+tle,"Valakut, the Molten Pinnacle",61,m,12.29
+znr,"Sea Gate Restoration // Sea Gate, Reborn",76,m,35.99
+znr,"Agadeem's Awakening // Agadeem, the Undercrypt",90,m,28.93
+znr,Valakut Awakening // Valakut Stoneforge,174,r,15.61
+znr,"Ashaya, Soul of the Wild",179,m,15.55
+znr,Malakir Rebirth // Malakir Mire,111,u,15.14
+znr,Ancient Greenwarden,178,m,13.09
+znr,Angel of Destiny,2,m,9.83
+znr,Scute Swarm,203,r,9.31
+ecl,Hexing Squelcher,317,r,28.49
+ecl,Chronicle of Victory,346,m,25.07
+ecl,Chronicle of Victory,253,m,23.04
+ecl,Hexing Squelcher,145,r,18.95
+ecl,Moonshadow,313,m,17.73
+ecl,Bitterbloom Bearer,310,m,17.37
+ecl,Moonshadow,110,m,15.09
+ecl,Bitterbloom Bearer,88,m,14.15
+iko,The Ozolith,237,r,62.04
+iko,Zagoth Triome,259,r,21.23
+iko,Savai Triome,253,r,18.84
+iko,Indatha Triome,248,r,17.54
+iko,"Kinnan, Bonder Prodigy",192,m,16.86
+iko,Ketria Triome,250,r,16.42
+iko,Raugrin Triome,251,r,14.55
+iko,Drannith Magistrate,11,r,13.01
+bro,Portal to Phyrexia,240,m,50.54
+bro,"Myrel, Shield of Argive",18,m,18.2
+bro,Diabolic Intent,89,r,17.26
+bro,Cityscape Leveler,233,m,13.37
+bro,Awaken the Woods,170,m,12.83
+bro,"Urza, Lord Protector",225,m,9.62
+bro,"Liberator, Urza's Battlethopter",237,r,6.96
+bro,"Mishra, Claimed by Gix",216,m,6.28
+kld,Aetherflux Reservoir,192,r,21.43
+kld,Inventors' Fair,247,r,15.96
+kld,"Kambal, Consul of Allocation",183,r,7.0
+kld,Panharmonicon,226,r,6.55
+kld,Authority of the Consuls,5,r,5.45
+kld,Spirebluff Canal,249,r,5.03
+kld,"Chandra, Torch of Defiance",110,m,3.45
+kld,Blooming Marsh,243,r,3.21
+war,"Liliana, Dreadhorde General",97★,m,114.23
+war,Finale of Devastation,160,m,37.02
+war,"Nicol Bolas, Dragon-God",207,m,28.95
+war,Bolas's Citadel,79,r,16.98
+war,"Jace, Wielder of Mysteries",54,r,11.01
+war,God-Eternal Rhonas,163,m,9.83
+war,Spark Double,68,r,9.39
+war,"Liliana, Dreadhorde General",97,m,8.98
+rix,Polyraptor,144,m,16.1
+rix,The Immortal Sun,180,m,14.26
+rix,"Nezahal, Primal Tide",45,r,8.3
+rix,"Azor, the Lawbringer",154,m,7.86
+rix,"Elenda, the Dusk Rose",157,m,6.31
+rix,Vona's Hunger,90,r,6.09
+rix,World Shaper,151,r,5.72
+rix,Trapjaw Tyrant,29,m,5.66
+m20,Field of the Dead,247,r,28.53
+m20,"Kaalia, Zenith Seeker",210,m,11.39
+m20,"Vilis, Broker of Blood",122,r,9.71
+m20,"Chandra, Awakened Inferno",127,m,9.07
+m20,Glint-Horn Buccaneer,141,r,8.94
+m20,"Ajani, Strength of the Pride",2,m,8.62
+m20,Cavalier of Night,94,m,8.49
+m20,Scheming Symmetry,113,r,8.33
+mkm,"Delney, Streetwise Lookout",12,m,34.68
+mkm,Underground Mortuary,271,r,16.44
+mkm,Thundering Falls,269,r,16.26
+mkm,Undercity Sewers,270,r,15.45
+mkm,Meticulous Archive,264,r,14.63
+mkm,Hedge Maze,262,r,13.28
+mkm,Raucous Theater,266,r,11.8
+mkm,Shadowy Backstreet,268,r,11.31
+fdn,Bloodthirsty Conqueror,58,m,35.34
+fdn,Doubling Season,216,m,35.05
+fdn,Twinflame Tyrant,97,m,28.52
+fdn,Sire of Seven Deaths,1,m,18.49
+fdn,Mossborn Hydra,107,r,13.57
+fdn,"Liliana, Dreadhorde General",176,m,9.08
+fdn,Banner of Kinship,127,r,7.93
+fdn,"Niv-Mizzet, Visionary",123,m,6.5
+eoe,Ouroboroid,201,m,36.72
+eoe,Quantum Riddler,72,m,32.78
+eoe,Icetill Explorer,192,r,22.14
+eoe,Exalted Sunborn,15,m,19.17
+eoe,"Tezzeret, Cruel Captain",2,m,19.11
+eoe,"Evendo, Waking Haven",253,m,18.58
+eoe,"Dawnsire, Sunstar Dreadnought",238,m,12.64
+eoe,"Uthros, Titanic Godcore",260,m,12.52
+soi,Cryptolith Rite,200,r,13.15
+soi,Relentless Dead,131,m,12.45
+soi,Eerie Interlude,16,r,7.15
+soi,Diregraf Colossus,107,r,5.84
+soi,"Sorin, Grim Nemesis",251,m,4.3
+soi,Second Harvest,227,r,4.27
+soi,"Westvale Abbey // Ormendahl, Profane Prince",281,r,3.34
+soi,"Archangel Avacyn // Avacyn, the Purifier",5,m,3.31
+thb,Shadowspear,236,r,30.8
+thb,Nyxbloom Ancient,190,m,27.63
+thb,"Thassa, Deep-Dwelling",71,m,27.38
+thb,Thassa's Oracle,73,r,22.54
+thb,"Heliod, Sun-Crowned",18,m,20.44
+thb,Idyllic Tutor,24,r,12.74
+thb,Underworld Breach,161,r,10.84
+thb,Dryad of the Ilysian Grove,169,r,9.52
+one,"Mondrak, Glory Dominus",23,m,43.13
+one,"Solphim, Mayhem Dominus",150,m,28.92
+one,Ichormoon Gauntlet,56,m,26.92
+one,"Elesh Norn, Mother of Machines",10,m,25.59
+one,"Atraxa, Grand Unifier",196,m,18.29
+one,All Will Be One,118,m,16.86
+one,"Zopandrel, Hunger Dominus",195,m,12.04
+one,Phyrexian Obliterator,105,m,9.52
+m21,Chromatic Orrery,228,m,32.36
+m21,Terror of the Peaks,164,m,31.91
+m21,Grim Tutor,103,m,24.46
+m21,Heroic Intervention,188,r,15.54
+m21,Fiery Emancipation,143,m,13.6
+m21,"Azusa, Lost but Seeking",173,r,12.62
+m21,"Ugin, the Spirit Dragon",1,m,12.19
+m21,"Vito, Thorn of the Dusk Rose",127,r,11.41
+spm,The Soul Stone,66,m,84.02
+spm,Norman Osborn // Green Goblin,39,m,14.49
+spm,Spectacular Spider-Man,14,r,7.19
+spm,Impostor Syndrome,34,m,6.91
+spm,"Anti-Venom, Horrifying Healer",1,m,6.83
+spm,"Doctor Octopus, Master Planner",128,m,6.82
+spm,Multiversal Passage,180,r,6.45
+spm,"Gwenom, Remorseless",56,m,5.22
+tdm,"Elspeth, Storm Slayer",11,m,43.85
+tdm,"Ugin, Eye of the Storms",1,m,39.04
+tdm,Craterhoof Behemoth,138,m,25.37
+tdm,Voice of Victory,33,r,19.63
+tdm,Mox Jasper,246,m,12.05
+tdm,Dracogenesis,105,m,11.71
+tdm,Mistrise Village,261,r,7.27
+tdm,"Betor, Kin to All",172,m,6.47
+pls,Meddling Mage,116,r,36.71
+pls,Diabolic Intent,42,r,25.49
+pls,Orim's Chant,11,r,22.44
+pls,Forsaken City,139,r,12.55
+pls,Eladamri's Call,106,r,12.4
+pls,Lord of the Undead,44,r,11.87
+pls,Quirion Dryad,89,r,6.27
+pls,Draco,131,r,3.95
+ala,Tezzeret the Seeker,60,m,36.02
+ala,Ad Nauseam,63,r,10.42
+ala,"Elspeth, Knight-Errant",9,m,9.1
+ala,Relic of Progenitus,218,c,8.01
+ala,Memory Erosion,50,r,7.1
+ala,Lich's Mirror,210,m,6.94
+ala,Ethersworn Canonist,10,r,5.8
+ala,Cunning Lethemancer,69,r,5.28
+emn,"Emrakul, the Promised End",6,m,29.97
+emn,"Gisela, the Broken Blade",28,m,24.01
+emn,Sigarda's Aid,41,r,18.16
+emn,"Liliana, the Last Hope",93,m,5.66
+emn,Tree of Perdition,109,m,4.66
+emn,Mind's Dilation,70,m,4.56
+emn,"Ulrich of the Krallenhorde // Ulrich, Uncontested Alpha",191,m,3.71
+emn,Eldritch Evolution,155,r,3.68
+afr,Old Gnawbone,197,m,49.65
+afr,Tiamat,235,m,21.32
+afr,Circle of Dreams Druid,176,r,17.5
+afr,Xorn,167,r,13.64
+afr,Teleportation Circle,39,r,10.29
+afr,Fighter Class,222,r,9.2
+afr,The Book of Exalted Deeds,4,m,8.42
+afr,Acererak the Archlich,87,m,5.5
+dft,The Aetherspark,231,m,20.56
+dft,Monument to Endurance,237,r,17.2
+dft,Riverpyre Verge,260,r,16.63
+dft,Sunbillow Verge,264,r,10.7
+dft,Wastewood Verge,268,r,10.38
+dft,Bleachbone Verge,250,r,10.33
+dft,Brightglass Gearhulk,191,m,5.71
+dft,Willowrush Verge,270,r,5.35
+vow,"Toxrill, the Corrosive",132,m,17.72
+vow,"Olivia, Crimson Bride",245,m,8.68
+vow,Hallowed Haunting,17,m,8.2
+vow,Necroduality,70,m,7.79
+vow,Cultivator Colossus,195,m,6.6
+vow,Cemetery Prowler,191,m,6.47
+vow,Hullbreaker Horror,63,r,6.35
+vow,Avabruck Caretaker // Hollowhenge Huntmaster,187,m,5.7
+khm,"Vorinclex, Monstrous Raider",199,m,52.1
+khm,"Birgi, God of Storytelling // Harnfel, Horn of Bounty",123,r,25.78
+khm,"Esika, God of the Tree // The Prismatic Bridge",168,m,21.92
+khm,"Halvar, God of Battle // Sword of the Realms",15,m,21.31
+khm,"Tergrid, God of Fright // Tergrid's Lantern",112,r,19.67
+khm,Goldspan Dragon,139,m,11.94
+khm,Tibalt's Trickery,153,r,10.5
+khm,"Magda, Brazen Outlaw",142,r,8.68
+leg,The Tabernacle at Pendrell Vale,307,r,3239.0
+leg,Chains of Mephistopheles,91,r,1260.44
+leg,Moat,28,r,926.95
+leg,The Abyss,120,r,698.7
+leg,All Hallow's Eve,88,r,547.12
+leg,Nether Void,113,r,518.87
+leg,Eureka,185,r,469.76
+leg,Mirror Universe,287,r,369.9
+mid,The Meathook Massacre,112,m,24.37
+mid,Haunted Ridge,263,r,8.72
+mid,Shipwreck Marsh,267,r,7.04
+mid,Deserted Beach,260,r,5.85
+mid,Overgrown Farmland,265,r,4.32
+mid,Unnatural Growth,206,r,4.31
+mid,"Teferi, Who Slows the Sunset",245,m,4.15
+mid,"Adeline, Resplendent Cathar",1,r,3.59

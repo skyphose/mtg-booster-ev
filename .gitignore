@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+data/default-cards.jsonl.gz
+.DS_Store
