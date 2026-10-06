@@ -44,6 +44,19 @@ Outputs land in `results/`: `set_summary.csv` (one row per box product), `box_si
 - **The god pack values are generous.** Reality Fracture was three days old when prices were pulled; the foil Booster Fun sheet average ($16) includes shattered-mirror and serialized treatments that will not be in a god pack (capped at $100 per card it is $13).
 - **Store figures are rounded and anonymized.** The store-economics section comes from one independent store's launch order, rounded up to the nearest $10, with no store or distributor named. The raw files are not in this repo.
 
+## Is it statistically significant?
+
+`significance.py` separates four sources of uncertainty (results in `results/significance_*.csv`):
+
+| Source | Test | Result |
+|---|---|---|
+| Monte Carlo noise | one-sample t-test, simulated boxes vs box price, per product | not the binding uncertainty: every 2024-26 product has \|t\| > 5; cash-out value is below price for all 32 products with p < 10⁻⁶ |
+| Box price from only 5 sales | bootstrap the 5 sales, recompute ratio and P(box beats price) | 95% intervals are narrow because the 5 sales cluster (e.g. Reality Fracture Play box market ratio 1.37-1.38; Final Fantasy Play, the widest, 0.90-1.06) |
+| Card-price measurement error | lognormal noise, σ = 20% per printing, 300 redraws | median Play Booster market ratio 1.27-1.34, cash-out 0.45-0.49; in 300/300 draws the median set is above 1 at market and below 1 in cash. A *systematic* overstatement of all card prices would need to exceed 21% to pull the market ratio under 1; no plausible bias rescues the cash-out ratio |
+| Across sets (is it the population, not this sample?) | Wilcoxon signed-rank and exact sign test on log(ratio), one observation per set | Play Boosters above break-even at market: 14 of 16 sets, Wilcoxon p = 2×10⁻⁴. Below break-even in cash: 16 of 16, p = 1.5×10⁻⁵. Collector boxes below break-even at market: 33 of 33, p = 3×10⁻⁷. Draft boxes at market: no significant direction (median 0.99) |
+
+God pack spread (20,000 simulated god packs): mean $64, **median $50**, 10th-90th percentile $23-$106, 1% above $400. Half of all god packs will be worth less than $50; the mean is pulled up by the two foil Booster Fun slots.
+
 ## Independent cross-check
 
 [TableTopMeta](https://www.tabletopmeta.com/ev) runs the same kind of calculation with live prices. On the day of the pull: Foundations $265 vs this model's $266; Aetherdrift $171 vs $166; Modern Horizons 3 $417 vs $385; Final Fantasy Collector $722 vs $831.

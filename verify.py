@@ -32,6 +32,14 @@ claim('foil change break-even rate (%)', fl(gp['break-even new foil R/M rate so 
 claim('Collector shrink EV removed ($/pack)', fl(gp['EV removed per Collector Booster (2 foil C + 1 foil U) ($)']), 1.02, 0.4)
 claim('rares+mythics per Booster Pack', fl(gp['rares+mythics per Booster Pack today (all slots)']), 1.28, 0.1)
 
+# significance outputs (run significance.py first; skipped if absent)
+sig = os.path.join(OUT, 'significance_across_sets.csv')
+if os.path.exists(sig):
+    cs = {(r['group'], r['measure']): r for r in csv.DictReader(open(sig))}
+    claim('Play Boosters above 1 at market: Wilcoxon p < 0.01', float(cs[('Play Booster boxes 2024-26', 'market EV / price')]['wilcoxon_p']) < 0.01, 1, 0)
+    claim('Play Boosters below 1 in cash: Wilcoxon p < 0.001', float(cs[('Play Booster boxes 2024-26', 'cash-out / price')]['wilcoxon_p']) < 0.001, 1, 0)
+    claim('Collector boxes below 1 at market: Wilcoxon p < 0.001', float(cs[('Collector boxes (all years)', 'market EV / price')]['wilcoxon_p']) < 0.001, 1, 0)
+
 # arithmetic that does not depend on prices at all
 claim('P(>=1 god pack) in a 30-pack box (%)', 100 * (1 - (1 - 1/1000) ** 30), 2.96, 0.01)
 claim('P(>=1 god pack) in a 6-box case (%)', 100 * (1 - (1 - 1/1000) ** 180), 16.5, 0.1)
