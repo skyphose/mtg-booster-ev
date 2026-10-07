@@ -2,3 +2,9 @@ __pycache__/
 *.pyc
 data/default-cards.jsonl.gz
 .DS_Store
+# edit pipeline: model weights, scratch, and test media stay local
+edit/models/
+edit/work/
+edit/test/*.mp4
+edit/test/*.wav
+edit/test/*.srt

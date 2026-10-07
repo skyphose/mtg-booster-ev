@@ -1,0 +1,298 @@
+[
+ {
+  "id": "lower",
+  "phrase": "i work at a game store",
+  "type": "lower",
+  "asset": "lower_name.png",
+  "dur": 5
+ },
+ {
+  "id": "six_cents",
+  "phrase": "six cents",
+  "type": "callout",
+  "asset": "callout_six_cents.png",
+  "dur": 1.4,
+  "min_score": 80
+ },
+ {
+  "id": "title",
+  "phrase": "six cents",
+  "type": "insert",
+  "asset": "card_title.png",
+  "same_as": "six_cents",
+  "anchor": "end",
+  "offset": 0.9,
+  "dur": 2.6
+ },
+ {
+  "id": "tag_p1",
+  "phrase": "here's what surprised me",
+  "type": "tag",
+  "asset": "tag_p1.png",
+  "dur": 4
+ },
+ {
+  "id": "chart01",
+  "phrase": "take every play booster box since",
+  "type": "broll",
+  "asset": "01_play_boxes_ev_vs_price.png",
+  "until": "box_worth",
+  "max": 30
+ },
+ {
+  "id": "ratio_127",
+  "phrase": "of cards in it for every dollar the box sells for",
+  "type": "callout",
+  "asset": "callout_ratio_127.png",
+  "dur": 4
+ },
+ {
+  "id": "box_worth",
+  "phrase": "so the box is worth more than it costs",
+  "type": "mark",
+  "asset": ""
+ },
+ {
+  "id": "tag_p2",
+  "phrase": "here's one box of reality fracture",
+  "type": "tag",
+  "asset": "tag_p2.png",
+  "dur": 4
+ },
+ {
+  "id": "anim_box",
+  "phrase": "here's one box of reality fracture",
+  "type": "broll",
+  "asset": "anim_open_a_box.mp4",
+  "same_as": "tag_p2",
+  "until": "anim_hist",
+  "max": 24
+ },
+ {
+  "id": "bulk_396",
+  "phrase": "of them are under a dollar",
+  "type": "callout",
+  "asset": "callout_bulk_396.png",
+  "dur": 4
+ },
+ {
+  "id": "anim_hist",
+  "phrase": "same product simulated boxes",
+  "type": "broll",
+  "asset": "anim_histogram.mp4",
+  "until": "chart04",
+  "max": 16,
+  "min_score": 65
+ },
+ {
+  "id": "cash_46",
+  "phrase": "cents on the dollar",
+  "type": "callout",
+  "asset": "callout_cash_46.png",
+  "dur": 4
+ },
+ {
+  "id": "chart04",
+  "phrase": "i did that for every set",
+  "type": "broll",
+  "asset": "04_p_box_beats_price.png",
+  "until": "anim_tiers",
+  "max": 25
+ },
+ {
+  "id": "one_in_100",
+  "phrase": "pays for itself in cash",
+  "type": "callout",
+  "asset": "callout_one_in_100.png",
+  "dur": 4
+ },
+ {
+  "id": "anim_tiers",
+  "phrase": "nobody puts in the thumbnail",
+  "type": "broll",
+  "asset": "anim_where_the_ev_sits.mp4",
+  "until": "plastic",
+  "max": 14
+ },
+ {
+  "id": "hours",
+  "phrase": "about five hours of work",
+  "type": "callout",
+  "asset": "callout_hours.png",
+  "dur": 5
+ },
+ {
+  "id": "plastic",
+  "phrase": "the money's gone when you crack the plastic",
+  "type": "mark",
+  "asset": ""
+ },
+ {
+  "id": "chart02",
+  "phrase": "the median collector box sells for almost twice",
+  "type": "broll",
+  "asset": "02_collector_boxes_ev_vs_price.png",
+  "until": "tag_p3",
+  "max": 20
+ },
+ {
+  "id": "tag_p3",
+  "phrase": "this isn't a bad set problem",
+  "type": "tag",
+  "asset": "tag_p3.png",
+  "dur": 4
+ },
+ {
+  "id": "anim_years",
+  "phrase": "this isn't a bad set problem",
+  "type": "broll",
+  "asset": "anim_ten_years.mp4",
+  "same_as": "tag_p3",
+  "until": "tag_p4",
+  "max": 16
+ },
+ {
+  "id": "tag_p4",
+  "phrase": "now the god pack",
+  "type": "tag",
+  "asset": "tag_p4.png",
+  "dur": 4
+ },
+ {
+  "id": "chart05",
+  "phrase": "now the god pack",
+  "type": "broll",
+  "asset": "05_godpack_value_and_odds.png",
+  "same_as": "tag_p4",
+  "until": "anim_god",
+  "max": 25
+ },
+ {
+  "id": "gp_63",
+  "phrase": "if the celebration card is good",
+  "type": "callout",
+  "asset": "callout_gp_63.png",
+  "dur": 4
+ },
+ {
+  "id": "six_cents_2",
+  "phrase": "of the pack price",
+  "type": "callout",
+  "asset": "callout_six_cents.png",
+  "dur": 3
+ },
+ {
+  "id": "anim_god",
+  "phrase": "chance of having one",
+  "type": "broll",
+  "asset": "anim_godpack_odds.mp4",
+  "anchor": "start",
+  "offset": -1.2,
+  "until": "avg",
+  "max": 16
+ },
+ {
+  "id": "gp_23",
+  "phrase": "if you want a coin flip at seeing one",
+  "type": "callout",
+  "asset": "callout_gp_23.png",
+  "dur": 4
+ },
+ {
+  "id": "avg",
+  "phrase": "is the average",
+  "type": "mark",
+  "asset": "",
+  "min_score": 70
+ },
+ {
+  "id": "gp_50",
+  "phrase": "the median one is",
+  "type": "callout",
+  "asset": "callout_gp_50.png",
+  "dur": 5
+ },
+ {
+  "id": "tag_p5",
+  "phrase": "same post two paragraphs down",
+  "type": "tag",
+  "asset": "tag_p5.png",
+  "dur": 4
+ },
+ {
+  "id": "chart07",
+  "phrase": "price per card goes up",
+  "type": "broll",
+  "asset": "07_collector_shrink.png",
+  "offset": -2.5,
+  "until": "chart06",
+  "max": 20
+ },
+ {
+  "id": "shrink",
+  "phrase": "price per card goes up",
+  "type": "callout",
+  "asset": "callout_shrink.png",
+  "same_as": "chart07",
+  "dur": 4
+ },
+ {
+  "id": "net_80",
+  "phrase": "your collector booster got about",
+  "type": "callout",
+  "asset": "callout_net_80.png",
+  "dur": 4
+ },
+ {
+  "id": "chart06",
+  "phrase": "it comes down to one number wizards",
+  "type": "broll",
+  "asset": "06_foil_change_breakeven.png",
+  "until": "tag_p6",
+  "max": 25
+ },
+ {
+  "id": "foil_85",
+  "phrase": "if the new rate is better than one in",
+  "type": "callout",
+  "asset": "callout_foil_85.png",
+  "dur": 5
+ },
+ {
+  "id": "tag_p6",
+  "phrase": "one thing from my side of the counter",
+  "type": "tag",
+  "asset": "tag_p6.png",
+  "dur": 4
+ },
+ {
+  "id": "chart08",
+  "phrase": "one thing from my side of the counter",
+  "type": "broll",
+  "asset": "08_store_economics.png",
+  "same_as": "tag_p6",
+  "until": "verdict",
+  "max": 25
+ },
+ {
+  "id": "verdict",
+  "phrase": "buy singles for the deck",
+  "type": "callout",
+  "asset": "callout_verdict.png",
+  "dur": 5
+ },
+ {
+  "id": "repo",
+  "phrase": "public github repo",
+  "type": "badge",
+  "asset": "badge_repo.png",
+  "dur": 60
+ },
+ {
+  "id": "end",
+  "phrase": "",
+  "type": "endcard",
+  "asset": "card_end.png",
+  "dur": 6
+ }
+]
