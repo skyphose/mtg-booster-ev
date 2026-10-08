@@ -1,5 +1,14 @@
 [
  {
+  "id": "myth",
+  "phrase": "okay now boxes are worth it",
+  "type": "broll",
+  "asset": "card_myth.png",
+  "anchor": "end",
+  "offset": 0.3,
+  "dur": 4
+ },
+ {
   "id": "lower",
   "phrase": "i work at a game store",
   "type": "lower",
@@ -43,7 +52,15 @@
   "phrase": "a tracker that runs the same kind of math",
   "type": "broll",
   "asset": "01_play_boxes_ev_vs_price.png",
+  "until": "receipts",
   "max": 10
+ },
+ {
+  "id": "receipts",
+  "phrase": "i found a bug in my own model",
+  "type": "broll",
+  "asset": "card_receipts.png",
+  "dur": 8
  },
  {
   "id": "tag_b2",
@@ -146,15 +163,16 @@
   "phrase": "nobody puts in the thumbnail",
   "type": "broll",
   "asset": "anim_where_the_ev_sits.mp4",
-  "until": "plastic",
+  "until": "anim_clock",
   "max": 14
  },
  {
-  "id": "hours",
-  "phrase": "about five hours of work",
-  "type": "callout",
-  "asset": "callout_hours.png",
-  "dur": 5
+  "id": "anim_clock",
+  "phrase": "i ran the numbers on that too",
+  "type": "broll",
+  "asset": "anim_selling_clock.mp4",
+  "until": "plastic",
+  "max": 16
  },
  {
   "id": "plastic",
@@ -175,15 +193,16 @@
   "phrase": "now the thing the haircut hides",
   "type": "broll",
   "asset": "anim_where_the_ev_sits.mp4",
-  "until": "b_trap",
+  "until": "anim_clock_b",
   "max": 14
  },
  {
-  "id": "hours_b",
-  "phrase": "call it five hours",
-  "type": "callout",
-  "asset": "callout_hours.png",
-  "dur": 5
+  "id": "anim_clock_b",
+  "phrase": "sorting the box at fifteen seconds a card",
+  "type": "broll",
+  "asset": "anim_selling_clock.mp4",
+  "until": "b_trap",
+  "max": 16
  },
  {
   "id": "b_trap",
@@ -249,22 +268,16 @@
   "type": "broll",
   "asset": "05_godpack_value_and_odds.png",
   "same_as": "tag_b5",
-  "until": "anim_god",
+  "until": "anim_reveal",
   "max": 25
  },
  {
-  "id": "gp_63",
-  "phrase": "if the celebration card is good",
-  "type": "callout",
-  "asset": "callout_gp_63.png",
-  "dur": 4
- },
- {
-  "id": "six_cents_2",
-  "phrase": "of the pack price",
-  "type": "callout",
-  "asset": "callout_six_cents.png",
-  "dur": 3
+  "id": "anim_reveal",
+  "phrase": "ten regular rares two fancy-frame rares",
+  "type": "broll",
+  "asset": "anim_godpack_reveal.mp4",
+  "until": "anim_god",
+  "max": 16
  },
  {
   "id": "anim_god",
@@ -340,21 +353,12 @@
   "dur": 4
  },
  {
-  "id": "chart07",
-  "phrase": "price per card goes up",
+  "id": "anim_cut",
+  "phrase": "fifteen cards to twelve",
   "type": "broll",
-  "asset": "07_collector_shrink.png",
-  "offset": -2.5,
+  "asset": "anim_collector_cut.mp4",
   "until": "chart12",
-  "max": 20
- },
- {
-  "id": "shrink",
-  "phrase": "price per card goes up",
-  "type": "callout",
-  "asset": "callout_shrink.png",
-  "same_as": "chart07",
-  "dur": 4
+  "max": 11
  },
  {
   "id": "net_80",
@@ -382,16 +386,9 @@
   "id": "chart06",
   "phrase": "it comes down to one number wizards",
   "type": "broll",
-  "asset": "06_foil_change_breakeven.png",
+  "asset": "anim_foil_breakeven.mp4",
   "until": "tag_p6",
-  "max": 25
- },
- {
-  "id": "foil_85",
-  "phrase": "if the new rate is better than one in",
-  "type": "callout",
-  "asset": "callout_foil_85.png",
-  "dur": 5
+  "max": 14
  },
  {
   "id": "chart06_b",
@@ -453,11 +450,11 @@
   "max": 25
  },
  {
-  "id": "verdict",
-  "phrase": "buy singles for the deck",
-  "type": "callout",
-  "asset": "callout_verdict.png",
-  "dur": 5
+  "id": "recap",
+  "phrase": "so here's the verdict",
+  "type": "broll",
+  "asset": "card_recap.png",
+  "dur": 7
  },
  {
   "id": "repo",

@@ -160,3 +160,19 @@ on a laptop, expect transcription at about 1/3 of real time and the render at ab
 ## tested on
 
 `edit/test/script_a_spoken.txt` is script a with a deliberate flub ("three hundred ninety eight of them. redo."). read by a robot voice over a placeholder card, all 38 cue lines match (one fuzzy). after the 2026-10-08 script changes, a simulated read of the current doc matches 44 of 44 (public) and 64 of 64 (nerd), the retake gets cut, and 31 seconds of air removed from 9.4 minutes. the nerd cut was checked against a simulated full read of script b: 55 of 56 cues matched, and the last one is a fuzzy match that still lands.
+
+### full-screen cards and the newer clips
+
+| say this | you get |
+|---|---|
+| okay, now boxes are worth it (cold open) | myth vs math card |
+| i ran the numbers on that too | selling clock animation |
+| ten regular rares, two fancy-frame rares | god pack reveal animation |
+| what if god packs had always been a thing | god packs through history animation |
+| fifteen cards to twelve | collector cut animation |
+| it comes down to one number wizards | foil break-even slider |
+| so here's the verdict | recap card (three numbers) |
+| i found a bug in my own model (nerd cut) | receipts card |
+| sorting the box at fifteen seconds a card (nerd cut) | selling clock animation |
+
+where an animation already shows a number on screen, the matching callout was dropped so they don't stack.

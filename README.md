@@ -29,7 +29,7 @@ everything lands in `results/`: `set_summary.csv` (one row per box product), `bo
 
 ## animations
 
-`animations.py` renders five short mp4 clips (1080p, 30 fps, dark) straight from the model, so the motion graphics in the video are the data, not an illustration of it: a box opening pack by pack with running market vs cash totals, 4,000 boxes dropping into a histogram, the god-pack odds curve filling in as you buy packs, 420 cards sorting into price tiers, and ten years of boxes appearing year by year. `python3 animations.py` (about 5 minutes; needs ffmpeg) writes them to `results/animations/`.
+`animations.py` renders five short mp4 clips (1080p, 30 fps, dark) straight from the model, so the motion graphics in the video are the data, not an illustration of it: a box opening pack by pack with running market vs cash totals, 4,000 boxes dropping into a histogram, the god-pack odds curve filling in as you buy packs, 420 cards sorting into price tiers, and ten years of boxes appearing year by year. `python3 animations.py` (about 5 minutes; needs ffmpeg) writes them to `results/animations/`. `animations2.py` adds five more: a typical god pack flipping open card by card, a collector booster losing its three foil slots, the hours and dollars of selling one box, the 2027 foil-rate slider going red to green, and god packs bolted onto ten years of sets.
 
 ## the edit
 

@@ -133,6 +133,42 @@ def badge():
     img = blank(); d = ImageDraw.Draw(img); f = font('reg', 22); t = 'prices: tcgplayer market via scryfall, 5 oct 2026 · box prices: median of recent completed sales'
     w, h = tw(d, t, f); d.text((W - w - 60, H - 40), t, font=f, fill=MUTED); save(img, 'badge_source.png')
 
+
+# ----------------------------------------------------------------------------- full-screen story cards (used as b-roll, so your face sits in the corner)
+def card_myth():
+    img = Image.new('RGBA', (W, H), SURF + (255,)); d = ImageDraw.Draw(img)
+    d.text((140, 170), 'MYTH', font=font('black', 64), fill=RED)
+    d.text((140, 250), '"god packs make boxes worth it"', font=font('bold', 76), fill=INK)
+    d.rectangle((140, 470, 1780, 474), fill=GRID if 'GRID' in globals() else (44, 44, 42))
+    d.text((140, 540), 'MATH', font=font('black', 64), fill=AQUA)
+    d.text((140, 620), '+$1.74 of value on a $151 box', font=font('black', 96), fill=INK)
+    d.text((140, 760), 'one god pack in 1,000 packs, averaged out', font=font('med', 40), fill=INK2)
+    save(img, 'card_myth.png')
+
+def card_receipts():
+    img = Image.new('RGBA', (W, H), SURF + (255,)); d = ImageDraw.Draw(img)
+    d.text((140, 150), 'RECEIPTS: I FOUND A BUG IN MY OWN MODEL', font=font('black', 56), fill=YELLOW)
+    d.text((140, 260), 'double-faced cards were priced as bulk', font=font('bold', 60), fill=INK)
+    rows = [('median play box, on paper', '1.27×', '1.35×'), ('median play box, in cash', '46¢', '49¢'), ('median collector box', '0.58×', '0.62×')]
+    y = 420
+    for lab, a, b in rows:
+        d.text((140, y), lab, font=font('med', 44), fill=INK2)
+        d.text((1150, y - 6), a, font=font('bold', 56), fill=MUTED); d.text((1400, y - 6), '→', font=font('bold', 56), fill=MUTED); d.text((1520, y - 6), b, font=font('black', 56), fill=BLUE)
+        y += 110
+    d.text((140, 800), 'conclusions: unchanged.', font=font('black', 72), fill=AQUA)
+    save(img, 'card_receipts.png')
+
+def card_recap():
+    img = Image.new('RGBA', (W, H), SURF + (255,)); d = ImageDraw.Draw(img)
+    d.text((140, 120), 'the whole video in three numbers', font=font('bold', 52), fill=INK2)
+    cols = [('49¢', 'what a play box returns\nper $1, in cash', AQUA), ('6¢', 'what a god pack adds\nto each pack', YELLOW), ('−$12.83', 'what the 2027 cut takes\nfrom a collector box', MAGENTA)]
+    for i, (big, small, c) in enumerate(cols):
+        x = 140 + i * 560
+        d.text((x, 340), big, font=font('black', 118), fill=c)
+        d.multiline_text((x, 560), small.replace('\\n', '\n'), font=font('med', 40), fill=INK, spacing=12)
+    d.text((140, 840), 'buy singles for the deck.', font=font('black', 64), fill=INK); d.text((140, 920), 'buy packs for the night.', font=font('black', 64), fill=INK2)
+    save(img, 'card_recap.png')
+
 # ----------------------------------------------------------------------------- thumbnails
 def thumbs():
     for key, big, col, sub in [('a', '6¢', BLUE, 'what a god pack is worth to you'), ('b', '49¢', AQUA, 'per dollar, in cash. median play box.')]:
@@ -144,4 +180,4 @@ def thumbs():
         img.convert('RGB').save(os.path.join(OUT, f'thumb_{key}.png')); print('   thumb_' + key + '.png  (leave the right half for your face)')
 
 if __name__ == '__main__':
-    card_title(); card_end(); tags(); callouts(); lower(); badge(); thumbs()
+    card_title(); card_end(); card_myth(); card_receipts(); card_recap(); tags(); callouts(); lower(); badge(); thumbs()

@@ -16,6 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def C(id, phrase, type, asset, **kw): return dict(id=id, phrase=phrase, type=type, asset=asset, **kw)
 
 COLD = [
+    C('myth', 'okay now boxes are worth it', 'broll', 'card_myth.png', anchor='end', offset=0.3, dur=4),
     C('lower', 'i work at a game store', 'lower', 'lower_name.png', dur=5),
     C('six_cents', 'six cents', 'callout', 'callout_six_cents.png', dur=1.4, min_score=80),
     C('title', 'six cents', 'insert', 'card_title.png', same_as='six_cents', anchor='end', offset=0.9, dur=2.6),
@@ -34,8 +35,8 @@ A2 = [
     C('cash_46', 'cents on the dollar', 'callout', 'callout_cash_46.png', dur=4),
     C('chart04', 'i did that for every set', 'broll', '04_p_box_beats_price.png', until='anim_tiers', max=25),
     C('one_in_100', 'pays for itself in cash', 'callout', 'callout_one_in_100.png', dur=4),
-    C('anim_tiers', 'nobody puts in the thumbnail', 'broll', 'anim_where_the_ev_sits.mp4', until='plastic', max=14),
-    C('hours', 'about five hours of work', 'callout', 'callout_hours.png', dur=5),
+    C('anim_tiers', 'nobody puts in the thumbnail', 'broll', 'anim_where_the_ev_sits.mp4', until='anim_clock', max=14),
+    C('anim_clock', 'i ran the numbers on that too', 'broll', 'anim_selling_clock.mp4', until='plastic', max=16),
     C('plastic', "the money's gone when you crack the plastic", 'mark', ''),
     C('chart02', 'the median collector box sells for about one and a half', 'broll', '02_collector_boxes_ev_vs_price.png', until='tag_p3', max=20),
 ]
@@ -45,9 +46,8 @@ A3 = [
 ]
 A4 = [
     C('tag_p4', 'now the god pack', 'tag', 'tag_p4.png', dur=4),
-    C('chart05', 'now the god pack', 'broll', '05_godpack_value_and_odds.png', same_as='tag_p4', until='anim_god', max=25),
-    C('gp_63', 'if the celebration card is good', 'callout', 'callout_gp_63.png', dur=4),
-    C('six_cents_2', 'of the pack price', 'callout', 'callout_six_cents.png', dur=3),
+    C('chart05', 'now the god pack', 'broll', '05_godpack_value_and_odds.png', same_as='tag_p4', until='anim_reveal', max=25),
+    C('anim_reveal', 'ten regular rares two fancy-frame rares', 'broll', 'anim_godpack_reveal.mp4', until='anim_god', max=16),
     C('anim_god', 'chance of having one', 'broll', 'anim_godpack_odds.mp4', anchor='start', offset=-1.2, until='avg', max=16),
     C('gp_23', 'if you want a coin flip at seeing one', 'callout', 'callout_gp_23.png', dur=4),
     C('avg', 'is the average', 'mark', '', min_score=70),
@@ -55,24 +55,20 @@ A4 = [
 ]
 A4H = [
     C('tag_h1', 'what if god packs had always been a thing', 'tag', 'tag_h1.png', dur=4),
-    C('chart11', 'what if god packs had always been a thing', 'broll', '11_godpacks_through_history.png', same_as='tag_h1', until='gp_history', max=30),
-    C('gp_history', 'the most it ever adds is about', 'callout', 'callout_gp_history.png', dur=4),
-    C('gp_flip', 'not one box in ten years goes from losing to winning', 'callout', 'callout_gp_flip.png', dur=4),
+    C('chart11', 'what if god packs had always been a thing', 'broll', 'anim_godpack_history.mp4', same_as='tag_h1', max=16),
 ]
 A5 = [
     C('tag_p5', 'same post two paragraphs down', 'tag', 'tag_p5.png', dur=4),
-    C('chart07', 'price per card goes up', 'broll', '07_collector_shrink.png', offset=-2.5, until='chart12', max=20),
-    C('shrink', 'price per card goes up', 'callout', 'callout_shrink.png', same_as='chart07', dur=4),
+    C('anim_cut', 'fifteen cards to twelve', 'broll', 'anim_collector_cut.mp4', until='chart12', max=11),
     C('net_80', 'your collector booster got about', 'callout', 'callout_net_80.png', dur=4),
     C('chart12', 'run the same cut on every collector booster', 'broll', '12_collector_cut.png', until='chart06', max=20),
     C('cut_cash', 'in cash those three cards are worth about a dime', 'callout', 'callout_cut_cash.png', dur=4),
-    C('chart06', 'it comes down to one number wizards', 'broll', '06_foil_change_breakeven.png', until='tag_p6', max=25),
-    C('foil_85', 'if the new rate is better than one in', 'callout', 'callout_foil_85.png', dur=5),
+    C('chart06', 'it comes down to one number wizards', 'broll', 'anim_foil_breakeven.mp4', until='tag_p6', max=14),
 ]
 A6 = [
     C('tag_p6', 'one thing from my side of the counter', 'tag', 'tag_p6.png', dur=4),
     C('chart08', 'one thing from my side of the counter', 'broll', '08_store_economics.png', same_as='tag_p6', until='verdict', max=25),
-    C('verdict', 'buy singles for the deck', 'callout', 'callout_verdict.png', dur=5),
+    C('recap', "so here's the verdict", 'broll', 'card_recap.png', dur=7),
     C('repo', 'public github repo', 'badge', 'badge_repo.png', dur=60),
 ]
 END = [C('end', '', 'endcard', 'card_end.png', dur=6)]
@@ -83,13 +79,14 @@ cues_a = COLD + A1 + A2 + A3 + A4 + A4H + A5 + A6 + END
 B_COLD_EXTRA = [C('repo_early', 'public github repo in the description', 'badge', 'badge_repo.png', dur=8)]
 B1 = [
     C('tag_b1', 'three ingredients', 'tag', 'tag_b1.png', dur=4),
-    C('chart01_xc', 'a tracker that runs the same kind of math', 'broll', '01_play_boxes_ev_vs_price.png', max=10),
+    C('chart01_xc', 'a tracker that runs the same kind of math', 'broll', '01_play_boxes_ev_vs_price.png', until='receipts', max=10),
+    C('receipts', 'i found a bug in my own model', 'broll', 'card_receipts.png', dur=8),
 ]
 B2_EXTRA = [C('chart01_ub', 'look at the bottom of this chart', 'broll', '01_play_boxes_ev_vs_price.png', until='b_crossover', max=20),
             C('b_crossover', 'the box carries the premium', 'mark', '')]
 B3_EXTRA = [
-    C('anim_tiers_b', 'now the thing the haircut hides', 'broll', 'anim_where_the_ev_sits.mp4', until='b_trap', max=14),
-    C('hours_b', 'call it five hours', 'callout', 'callout_hours.png', dur=5),
+    C('anim_tiers_b', 'now the thing the haircut hides', 'broll', 'anim_where_the_ev_sits.mp4', until='anim_clock_b', max=14),
+    C('anim_clock_b', 'sorting the box at fifteen seconds a card', 'broll', 'anim_selling_clock.mp4', until='b_trap', max=16),
     C('b_trap', "here's the sunk cost trap", 'mark', ''),
 ]
 B4_EXTRA = [
