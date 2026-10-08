@@ -82,6 +82,19 @@ if os.path.exists(gh) and os.path.exists(cc):
     claim('collector cut: reality fracture per box ($)', fl(next(r for r in CC if r['product'] == 'fra-collector')['cut_per_box']), 12.8, 3)
     claim('collector cut: biggest box (MH3, $)', max(fl(r['cut_per_box']) for r in CC), 23.8, 5)
 
+# 8,000 packs of every product
+p8 = os.path.join(OUT, 'packs8000.csv')
+if os.path.exists(p8):
+    P8 = [r for r in csv.DictReader(open(p8)) if r['pack_price']]
+    sm = lambda rs, k: sum(fl(r[k]) for r in rs)
+    claim('8k packs: products that come out ahead in cash', sum(fl(r['p_ahead_cash']) > 0.5 for r in P8), 0, 0)
+    claim('8k packs: everything, cash / cost', sm(P8, 'cash_8k') / sm(P8, 'cost_8k'), 0.34, 0.06)
+    claim('8k packs: everything, total spent ($M)', sm(P8, 'cost_8k') / 1e6, 19.0, 1.5)
+    claim('8k packs: play boosters, market / cost', sm([r for r in P8 if r['kind'] == 'play'], 'market_8k') / sm([r for r in P8 if r['kind'] == 'play'], 'cost_8k'), 1.31, 0.1)
+    claim('8k packs: play boosters, cash / cost', sm([r for r in P8 if r['kind'] == 'play'], 'cash_8k') / sm([r for r in P8 if r['kind'] == 'play'], 'cost_8k'), 0.51, 0.06)
+    claim('8k packs: reality fracture cash break-even pack price ($)', fl(next(r for r in P8 if r['product'] == 'fra-play')['breakeven_price_cash']), 2.34, 0.4)
+    claim('8k packs: best cash break-even vs price (MH3 play, %)', 100 * max(fl(r['breakeven_price_cash']) / fl(r['pack_price']) for r in P8), 75, 8)
+
 # arithmetic that does not depend on prices at all
 claim('P(>=1 god pack) in a 30-pack box (%)', 100 * (1 - (1 - 1/1000) ** 30), 2.96, 0.01)
 claim('P(>=1 god pack) in a 6-box case (%)', 100 * (1 - (1 - 1/1000) ** 180), 16.5, 0.1)

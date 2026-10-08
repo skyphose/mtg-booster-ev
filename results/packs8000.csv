@@ -1,0 +1,100 @@
+set,name,year,product,kind,packs_per_box,pack_price,ev_pack,cash_pack,cost_8k,market_8k,cash_8k,net_market_8k,net_cash_8k,breakeven_price_market,breakeven_price_cash,p_ahead_market,p_ahead_cash,packs_to_95_market,best_pull
+soi,Shadows over Innistrad,2016,soi-draft,draft,36,,3.12,0.69,,24703.0,5365.0,,,3.12,0.69,,,,Eerie Interlude ($14.11)
+emn,Eldritch Moon,2016,emn-draft,draft,36,,3.87,1.1,,31249.0,9017.0,,,3.87,1.1,,,,"Emrakul, the Promised End ($34.07)"
+kld,Kaladesh,2016,kld-draft,draft,36,16.65,3.65,1.03,133220.0,29648.0,8488.0,-103572.0,-124732.0,3.65,1.03,0.0,0.0,,Aetherflux Reservoir ($35.42)
+aer,Aether Revolt,2017,aer-draft,draft,36,5.94,3.71,0.9,47553.0,29905.0,7419.0,-17649.0,-40135.0,3.71,0.9,0.0,0.0,,Paradox Engine ($19.70)
+akh,Amonkhet,2017,akh-draft,draft,36,11.35,4.89,1.55,90778.0,40871.0,13552.0,-49907.0,-77226.0,4.89,1.55,0.0,0.0,,Anointed Procession ($76.92)
+hou,Hour of Devastation,2017,hou-draft,draft,36,8.42,4.71,1.51,67333.0,36911.0,11557.0,-30423.0,-55776.0,4.71,1.51,0.0,0.0,,Torment of Hailfire ($53.14)
+xln,Ixalan,2017,xln-draft,draft,36,6.53,4.37,1.07,52278.0,35116.0,8700.0,-17162.0,-43578.0,4.37,1.07,0.0,0.0,,"Gishath, Sun's Avatar ($31.82)"
+rix,Rivals of Ixalan,2018,rix-draft,draft,36,5.94,5.33,1.59,47498.0,41972.0,12172.0,-5526.0,-35325.0,5.33,1.59,0.0,0.0,,"Nezahal, Primal Tide ($22.96)"
+dom,Dominaria,2018,dom-draft,draft,36,6.25,5.49,1.85,49996.0,43987.0,14841.0,-6009.0,-35154.0,5.49,1.85,0.0,0.0,,Mox Amber ($187.10)
+m19,Core Set 2019,2018,m19-draft,draft,36,6.11,5.0,1.52,48889.0,39737.0,11967.0,-9152.0,-36922.0,5.0,1.52,0.0,0.0,,Scapeshift ($41.50)
+grn,Guilds of Ravnica,2018,grn-draft,draft,36,4.86,4.05,1.13,38884.0,31947.0,8680.0,-6937.0,-30205.0,4.05,1.13,0.0,0.0,,Mnemonic Betrayal ($90.08)
+rna,Ravnica Allegiance,2019,rna-draft,draft,36,4.36,5.12,1.83,34884.0,41641.0,15127.0,6757.0,-19757.0,5.12,1.83,1.0,0.0,270,Smothering Tithe ($60.34)
+war,War of the Spark,2019,war-draft,draft,36,5.0,5.93,2.01,40000.0,46840.0,15775.0,6840.0,-24225.0,5.93,2.01,1.0,0.0,115,Emergence Zone ($88.18)
+m20,Core Set 2020,2019,m20-draft,draft,36,5.01,6.06,2.05,40111.0,47908.0,15907.0,7797.0,-24204.0,6.06,2.05,1.0,0.0,61,Field of the Dead ($41.86)
+eld,Throne of Eldraine,2019,eld-draft,draft,36,5.72,5.13,1.38,45767.0,41046.0,10978.0,-4720.0,-34789.0,5.13,1.38,0.0,0.0,,The Great Henge ($70.93)
+eld,Throne of Eldraine,2019,eld-collector,collector,12,,17.36,8.46,,138257.0,67204.0,,,17.36,8.46,,,,Wishclaw Talisman ($161.04)
+thb,Theros Beyond Death,2020,thb-draft,draft,36,5.0,6.85,2.71,40000.0,54865.0,21711.0,14865.0,-18289.0,6.85,2.71,1.0,0.0,37,Shadowspear ($42.53)
+thb,Theros Beyond Death,2020,thb-collector,collector,12,,21.1,10.86,,169788.0,87585.0,,,21.1,10.86,,,,Shadowspear ($87.60)
+iko,Ikoria,2020,iko-draft,draft,36,6.69,7.04,2.56,53556.0,55404.0,19803.0,1849.0,-33752.0,7.04,2.56,1.0,0.0,2077,The Ozolith ($64.21)
+iko,Ikoria,2020,iko-collector,collector,12,58.08,42.34,26.14,464667.0,337096.0,208007.0,-127571.0,-256660.0,42.34,26.14,0.0,0.0,,"Kinnan, Bonder Prodigy ($161.62)"
+m21,Core Set 2021,2020,m21-draft,draft,36,5.07,5.99,1.8,40556.0,47965.0,14410.0,7410.0,-26146.0,5.99,1.8,1.0,0.0,114,Chromatic Orrery ($36.52)
+m21,Core Set 2021,2020,m21-collector,collector,12,41.83,24.67,13.65,334667.0,197237.0,108994.0,-137430.0,-225673.0,24.67,13.65,0.0,0.0,,Terror of the Peaks ($90.71)
+znr,Zendikar Rising,2020,znr-draft,draft,36,5.0,6.11,2.32,39998.0,48347.0,18218.0,8349.0,-21780.0,6.11,2.32,1.0,0.0,78,"Sea Gate Restoration // Sea Gate, Reborn ($40.18)"
+znr,Zendikar Rising,2020,znr-set,set,30,6.17,8.01,3.77,49333.0,62970.0,29382.0,13636.0,-19952.0,8.01,3.77,1.0,0.0,56,"Nykthos, Shrine to Nyx ($57.25)"
+znr,Zendikar Rising,2020,znr-collector,collector,12,40.0,26.4,15.35,319987.0,208444.0,120891.0,-111543.0,-199096.0,26.4,15.35,0.0,0.0,,Ancient Tomb ($170.31)
+khm,Kaldheim,2021,khm-draft,draft,36,5.56,6.84,2.2,44442.0,55560.0,18194.0,11118.0,-26248.0,6.84,2.2,1.0,0.0,68,"Vorinclex, Monstrous Raider ($56.58)"
+khm,Kaldheim,2021,khm-set,set,30,7.83,8.53,3.52,62667.0,67506.0,27627.0,4839.0,-35040.0,8.53,3.52,1.0,0.0,429,"Vorinclex, Monstrous Raider ($75.30)"
+khm,Kaldheim,2021,khm-collector,collector,12,34.17,25.17,13.81,273327.0,198488.0,108386.0,-74838.0,-164940.0,25.17,13.81,0.0,0.0,,"Vorinclex, Monstrous Raider ($75.30)"
+stx,Strixhaven,2021,stx-draft,draft,36,5.25,5.81,1.89,41998.0,45674.0,14505.0,3676.0,-27493.0,5.81,1.89,1.0,0.0,495,Demonic Tutor ($126.29)
+stx,Strixhaven,2021,stx-set,set,30,6.2,6.94,2.89,49600.0,55085.0,22927.0,5485.0,-26673.0,6.94,2.89,1.0,0.0,510,Demonic Tutor ($126.29)
+stx,Strixhaven,2021,stx-collector,collector,12,52.49,36.69,21.95,419933.0,298106.0,178906.0,-121828.0,-241028.0,36.69,21.95,0.0,0.0,,Demonic Tutor ($542.32)
+afr,Forgotten Realms,2021,afr-draft,draft,36,7.08,6.19,1.74,56667.0,49927.0,14194.0,-6740.0,-42473.0,6.19,1.74,0.0,0.0,,Old Gnawbone ($67.85)
+afr,Forgotten Realms,2021,afr-set,set,30,10.17,7.2,2.81,81333.0,58219.0,22877.0,-23114.0,-58457.0,7.2,2.81,0.0,0.0,,Old Gnawbone ($106.36)
+afr,Forgotten Realms,2021,afr-collector,collector,12,33.67,21.08,11.18,269340.0,168699.0,89484.0,-100641.0,-179856.0,21.08,11.18,0.0,0.0,,Old Gnawbone ($106.36)
+mid,Midnight Hunt,2021,mid-draft,draft,36,4.44,4.33,0.76,35556.0,35206.0,6495.0,-349.0,-29060.0,4.33,0.76,0.0,0.0,,The Meathook Massacre ($29.50)
+mid,Midnight Hunt,2021,mid-set,set,30,6.62,5.83,1.98,52931.0,46636.0,15867.0,-6295.0,-37063.0,5.83,1.98,0.0,0.0,,Ancient Tomb ($127.78)
+mid,Midnight Hunt,2021,mid-collector,collector,12,22.33,12.61,5.26,178667.0,101755.0,42698.0,-76912.0,-135969.0,12.61,5.26,0.0,0.0,,The Meathook Massacre ($35.32)
+vow,Crimson Vow,2021,vow-draft,draft,36,4.25,5.16,1.03,33973.0,41143.0,8168.0,7170.0,-25805.0,5.16,1.03,1.0,0.0,22,"Toxrill, the Corrosive ($20.90)"
+vow,Crimson Vow,2021,vow-set,set,30,11.0,6.36,2.15,88000.0,51263.0,17463.0,-36737.0,-70537.0,6.36,2.15,0.0,0.0,,Ancient Tomb ($127.78)
+vow,Crimson Vow,2021,vow-collector,collector,12,26.67,14.31,6.41,213333.0,113413.0,50468.0,-99920.0,-162866.0,14.31,6.41,0.0,0.0,,Sorin the Mirthless ($21.58)
+neo,Neon Dynasty,2022,neo-draft,draft,36,6.94,7.52,2.76,55533.0,61015.0,22643.0,5482.0,-32890.0,7.52,2.76,1.0,0.0,540,"Boseiju, Who Endures ($147.37)"
+neo,Neon Dynasty,2022,neo-set,set,30,13.27,9.43,4.27,106131.0,75178.0,33994.0,-30952.0,-72136.0,9.43,4.27,0.0,0.0,,"Boseiju, Who Endures ($147.37)"
+neo,Neon Dynasty,2022,neo-collector,collector,12,50.42,28.69,16.21,403333.0,230826.0,130686.0,-172507.0,-272648.0,28.69,16.21,0.0,0.0,,"Hidetsugu, Devouring Chaos ($513.63)"
+snc,New Capenna,2022,snc-draft,draft,36,4.03,5.49,1.5,32222.0,42873.0,11276.0,10651.0,-20946.0,5.49,1.5,1.0,0.0,25,Spara's Headquarters ($42.98)
+snc,New Capenna,2022,snc-set,set,30,6.27,6.45,2.44,50133.0,53116.0,20634.0,2983.0,-29499.0,6.45,2.44,0.991,0.0,4410,Anointed Procession ($65.19)
+snc,New Capenna,2022,snc-collector,collector,12,26.58,17.9,9.34,212667.0,143704.0,75121.0,-68963.0,-137546.0,17.9,9.34,0.0,0.0,,Jetmir's Garden ($49.17)
+dmu,Dominaria United,2022,dmu-draft,draft,36,5.12,5.37,1.39,41000.0,43793.0,11642.0,2793.0,-29358.0,5.37,1.39,0.995,0.0,3305,"Sheoldred, the Apocalypse ($110.94)"
+dmu,Dominaria United,2022,dmu-set,set,30,9.33,6.72,2.53,74667.0,53685.0,20184.0,-20982.0,-54483.0,6.72,2.53,0.0,0.0,,"Sheoldred, the Apocalypse ($106.74)"
+dmu,Dominaria United,2022,dmu-collector,collector,12,32.08,23.46,12.68,256667.0,184406.0,99150.0,-72260.0,-157517.0,23.46,12.68,0.0,0.0,,Living Plane ($208.78)
+bro,Brothers' War,2022,bro-draft,draft,36,6.33,6.97,2.71,50664.0,55393.0,21451.0,4729.0,-29213.0,6.97,2.71,1.0,0.0,551,Mox Amber ($249.50)
+bro,Brothers' War,2022,bro-set,set,30,12.63,8.82,4.12,101067.0,69438.0,32238.0,-31628.0,-68828.0,8.82,4.12,0.0,0.0,,Mox Amber ($249.50)
+bro,Brothers' War,2022,bro-collector,collector,12,70.08,29.56,16.89,560640.0,234017.0,133476.0,-326623.0,-427164.0,29.56,16.89,0.0,0.0,,"Ashnod's Altar ($1,199.99)"
+one,All Will Be One,2023,one-draft,draft,36,7.06,7.41,2.64,56444.0,60398.0,21943.0,3954.0,-34502.0,7.41,2.64,0.995,0.0,3319,"Sheoldred, the Apocalypse ($198.85)"
+one,All Will Be One,2023,one-set,set,30,9.83,8.72,3.87,78667.0,72745.0,33099.0,-5922.0,-45568.0,8.72,3.87,0.0,0.0,,"Sheoldred, the Apocalypse ($198.85)"
+one,All Will Be One,2023,one-collector,collector,12,99.97,31.07,18.37,799787.0,248273.0,146696.0,-551513.0,-653091.0,31.07,18.37,0.0,0.0,,"Elesh Norn, Mother of Machines ($398.90)"
+mom,March of the Machine,2023,mom-draft,draft,36,5.39,7.78,3.09,43111.0,61746.0,24372.0,18634.0,-18739.0,7.78,3.09,1.0,0.0,28,"Ragavan, Nimble Pilferer ($42.53)"
+mom,March of the Machine,2023,mom-set,set,30,9.9,9.19,4.34,79192.0,72968.0,34313.0,-6224.0,-44879.0,9.19,4.34,0.0,0.0,,"Ragavan, Nimble Pilferer ($80.65)"
+mom,March of the Machine,2023,mom-collector,collector,12,78.08,37.81,23.04,624673.0,309925.0,189496.0,-314748.0,-435177.0,37.81,23.04,0.0,0.0,,"Elesh Norn // The Argent Etchings ($3,999.99)"
+ltr,LotR: Tales of Middle-earth,2023,ltr-draft,draft,36,11.67,9.9,4.26,93333.0,79369.0,34245.0,-13964.0,-59088.0,9.9,4.26,0.0,0.0,,The One Ring ($139.47)
+ltr,LotR: Tales of Middle-earth,2023,ltr-set,set,30,10.26,11.71,5.76,82051.0,90042.0,43564.0,7992.0,-38487.0,11.71,5.76,1.0,0.0,312,The One Ring ($139.47)
+ltr,LotR: Tales of Middle-earth,2023,ltr-collector,collector,12,173.33,60.53,38.38,1386667.0,475032.0,300524.0,-911635.0,-1086142.0,60.53,38.38,0.0,0.0,,"Sol Ring ($3,750.00)"
+woe,Wilds of Eldraine,2023,woe-draft,draft,36,8.91,11.15,5.06,71267.0,88651.0,40130.0,17384.0,-31137.0,11.15,5.06,1.0,0.0,170,Smothering Tithe ($210.04)
+woe,Wilds of Eldraine,2023,woe-set,set,30,11.65,12.8,6.51,93197.0,102649.0,52219.0,9452.0,-40978.0,12.8,6.51,1.0,0.0,782,Rhystic Study ($420.13)
+woe,Wilds of Eldraine,2023,woe-collector,collector,12,75.0,38.27,23.06,600000.0,308913.0,186376.0,-291087.0,-413624.0,38.27,23.06,0.0,0.0,,"Smothering Tithe ($1,760.07)"
+lci,Lost Caverns of Ixalan,2023,lci-draft,draft,36,7.32,6.98,2.5,58556.0,57032.0,20856.0,-1523.0,-37700.0,6.98,2.5,0.001,0.0,,Cavern of Souls ($64.20)
+lci,Lost Caverns of Ixalan,2023,lci-set,set,30,14.76,9.12,4.2,118120.0,72768.0,33492.0,-45352.0,-84628.0,9.12,4.2,0.0,0.0,,Hunting Velociraptor ($67.24)
+lci,Lost Caverns of Ixalan,2023,lci-collector,collector,12,108.33,44.71,27.54,866627.0,357751.0,220281.0,-508876.0,-646346.0,44.71,27.54,0.0,0.0,,"Cavern of Souls ($4,900.00)"
+mkm,Murders at Karlov Manor,2024,mkm-play,play,36,3.89,6.66,2.89,31109.0,52167.0,22297.0,21058.0,-8812.0,6.66,2.89,1.0,0.0,20,Undercity Sewers ($55.98)
+mkm,Murders at Karlov Manor,2024,mkm-collector,collector,12,34.16,25.54,15.12,273320.0,202492.0,119696.0,-70828.0,-153624.0,25.54,15.12,0.0,0.0,,"Aurelia, the Law Above ($699.99)"
+otj,Outlaws of Thunder Junction,2024,otj-play,play,36,5.5,7.84,3.34,44000.0,64021.0,27654.0,20021.0,-16346.0,7.84,3.34,1.0,0.0,40,Scapeshift ($58.24)
+otj,Outlaws of Thunder Junction,2024,otj-collector,collector,12,39.58,27.43,16.02,316660.0,219848.0,128556.0,-96812.0,-188104.0,27.43,16.02,0.0,0.0,,Mana Drain ($340.79)
+mh3,Modern Horizons 3,2024,mh3-play,play,36,8.33,12.41,6.21,66667.0,99435.0,49886.0,32769.0,-16780.0,12.41,6.21,1.0,0.0,19,Ocelot Pride ($162.60)
+mh3,Modern Horizons 3,2024,mh3-collector,collector,12,73.79,54.12,34.05,590353.0,427121.0,268340.0,-163232.0,-322013.0,54.12,34.05,0.0,0.0,,"Kozilek, the Broken Reality ($1,574.99)"
+blb,Bloomburrow,2024,blb-play,play,36,5.67,7.74,2.91,45331.0,62689.0,23930.0,17358.0,-21401.0,7.74,2.91,1.0,0.0,43,Three Tree City ($84.40)
+blb,Bloomburrow,2024,blb-collector,collector,12,104.33,41.51,25.27,834647.0,351390.0,215814.0,-483257.0,-618833.0,41.51,25.27,0.0,0.0,,"Ms. Bumbleflower ($1,442.22)"
+dsk,Duskmourn,2024,dsk-play,play,36,5.83,7.26,2.98,46656.0,57867.0,23668.0,11212.0,-22988.0,7.26,2.98,1.0,0.0,45,"Valgavoth, Terror Eater ($31.02)"
+dsk,Duskmourn,2024,dsk-collector,collector,12,68.01,30.55,17.85,544100.0,243923.0,142355.0,-300177.0,-401745.0,30.55,17.85,0.0,0.0,,Enduring Vitality ($340.27)
+fdn,Foundations,2024,fdn-play,play,36,4.83,7.39,2.69,38669.0,58162.0,20821.0,19493.0,-17847.0,7.39,2.69,1.0,0.0,20,Twinflame Tyrant ($55.88)
+fdn,Foundations,2024,fdn-collector,collector,12,75.74,43.34,26.49,605920.0,352671.0,216188.0,-253249.0,-389732.0,43.34,26.49,0.0,0.0,,Llanowar Elves ($954.27)
+dft,Aetherdrift,2025,dft-play,play,30,3.82,5.4,1.66,30528.0,43767.0,13663.0,13239.0,-16865.0,5.4,1.66,1.0,0.0,65,Chrome Mox ($172.36)
+dft,Aetherdrift,2025,dft-collector,collector,12,27.08,15.83,7.79,216627.0,128561.0,63634.0,-88065.0,-152993.0,15.83,7.79,0.0,0.0,,"The Aetherspark ($1,875.00)"
+tdm,Tarkir: Dragonstorm,2025,tdm-play,play,30,5.57,6.24,2.3,44531.0,51550.0,19525.0,7019.0,-25005.0,6.24,2.3,1.0,0.0,421,Scalding Tarn ($71.66)
+tdm,Tarkir: Dragonstorm,2025,tdm-collector,collector,12,41.67,33.98,20.21,333333.0,271347.0,161412.0,-61986.0,-171922.0,33.98,20.21,0.0,0.0,,"Mox Jasper ($2,824.99)"
+fin,Final Fantasy,2025,fin-play,play,30,8.52,8.94,3.84,68176.0,70683.0,30268.0,2507.0,-37908.0,8.94,3.84,0.997,0.0,2444,Vivi Ornitier ($182.31)
+fin,Final Fantasy,2025,fin-collector,collector,12,138.48,83.02,53.96,1107867.0,644798.0,418252.0,-463069.0,-689614.0,83.02,53.96,0.0,0.0,,"Traveling Chocobo ($1,920.35)"
+eoe,Edge of Eternities,2025,eoe-play,play,30,6.27,7.91,3.56,50133.0,64238.0,29143.0,14105.0,-20990.0,7.91,3.56,1.0,0.0,115,Ancient Tomb ($197.47)
+eoe,Edge of Eternities,2025,eoe-collector,collector,12,60.75,40.67,24.95,485993.0,330120.0,202982.0,-155873.0,-283011.0,40.67,24.95,0.0,0.0,,"Sothera, the Supervoid ($1,355.63)"
+spm,Spider-Man,2025,spm-play,play,30,4.26,5.42,1.76,34120.0,43196.0,13975.0,9076.0,-20145.0,5.42,1.76,1.0,0.0,171,The Soul Stone ($124.63)
+spm,Spider-Man,2025,spm-collector,collector,12,35.07,26.43,14.96,280600.0,212924.0,120705.0,-67676.0,-159895.0,26.43,14.96,0.0,0.0,,"The Soul Stone ($1,842.74)"
+tla,Avatar: The Last Airbender,2025,tla-play,play,30,4.51,5.91,2.13,36104.0,48839.0,18110.0,12735.0,-17994.0,5.91,2.13,1.0,0.0,77,Badgermole Cub ($90.47)
+tla,Avatar: The Last Airbender,2025,tla-collector,collector,12,41.06,37.81,22.46,328447.0,307556.0,183260.0,-20891.0,-145187.0,37.81,22.46,0.011,0.0,,"Avatar Aang // Aang, Master of Elements ($4,815.78)"
+ecl,Lorwyn Eclipsed,2026,ecl-play,play,30,3.83,5.44,1.87,30653.0,43508.0,14940.0,12855.0,-15713.0,5.44,1.87,1.0,0.0,32,Hexing Squelcher ($61.42)
+ecl,Lorwyn Eclipsed,2026,ecl-collector,collector,12,34.99,19.34,10.08,279927.0,154005.0,80108.0,-125922.0,-199819.0,19.34,10.08,0.0,0.0,,Bloom Tender ($448.15)
+hob,The Hobbit,2026,hob-play,play,30,5.19,4.82,1.45,41560.0,38773.0,11765.0,-2787.0,-29795.0,4.82,1.45,0.0,0.0,,Gleaming Splendor ($124.58)
+hob,The Hobbit,2026,hob-collector,collector,12,59.58,49.62,31.35,476640.0,379814.0,238744.0,-96826.0,-237896.0,49.62,31.35,0.004,0.0,,Mox Amber ($546.07)
+sos,Secrets of Strixhaven,2026,sos-play,play,30,4.83,5.42,1.66,38651.0,43015.0,13033.0,4365.0,-25617.0,5.42,1.66,1.0,0.0,269,Force of Will ($62.49)
+sos,Secrets of Strixhaven,2026,sos-collector,collector,12,41.92,30.89,17.78,335333.0,241392.0,138210.0,-93941.0,-197124.0,30.89,17.78,0.0,0.0,,"Emeritus of Ideation // Ancestral Recall ($2,900.00)"
+fra,Reality Fracture,2026,fra-play,play,30,5.03,7.05,2.34,40256.0,57407.0,19433.0,17151.0,-20823.0,7.05,2.34,1.0,0.0,28,"Samut, Tyrant of Naktamun ($42.44)"
+fra,Reality Fracture,2026,fra-collector,collector,12,38.07,35.11,20.02,304560.0,276619.0,157109.0,-27941.0,-147451.0,35.11,20.02,0.0,0.0,,Omnipresence ($748.75)
