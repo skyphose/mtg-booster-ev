@@ -31,7 +31,7 @@ ax.barh(y, [fl(r['ev_box']) for r in play], color=BLUE, height=0.62, label='EV o
 ax.barh(y, [fl(r['real_box']) for r in play], color=AQUA, height=0.62, label='What you could actually cash out (bulk = $0, $1-5 cards at 50%, $5+ at 70%)')
 ax.scatter([fl(r['box_price_sales_median']) for r in play], list(y), color=YELLOW, s=160, zorder=5, marker='D', label='Box price: median of recent completed sales')
 ax.set_yticks(list(y)); ax.set_yticklabels(labels); ax.invert_yaxis(); ax.xaxis.set_major_formatter(usd)
-ax.set_title('Play Booster boxes 2024-26: cards "worth" more than the box - until you sell them')
+ax.set_title('Play Booster boxes 2024-26: the cards beat the box price, until you sell them')
 ax.legend(loc='lower right', fontsize=14)
 save(f, '01_play_boxes_ev_vs_price.png', 'Model: official pack odds x TCGplayer market prices (Scryfall bulk, 2026-10-05). 4,000 simulated boxes per set. Box price = median of the 5 most recent completed TCGplayer sales.')
 
@@ -44,7 +44,7 @@ ax.barh(y, [fl(r['ev_box']) for r in coll], color=BLUE, height=0.62, label='EV o
 ax.barh(y, [fl(r['real_box']) for r in coll], color=AQUA, height=0.62, label='Cash-out value')
 ax.scatter([fl(r['box_price_sales_median']) for r in coll], list(y), color=YELLOW, s=160, zorder=5, marker='D', label='Box price (recent sales)')
 ax.set_yticks(list(y)); ax.set_yticklabels(labels); ax.invert_yaxis(); ax.xaxis.set_major_formatter(usd)
-ax.set_title('Collector Booster boxes: the box costs more than the cards inside, almost every time')
+ax.set_title('Collector Booster boxes: the box costs more than the cards inside, every time')
 ax.legend(loc='lower right', fontsize=14)
 save(f, '02_collector_boxes_ev_vs_price.png', 'Same method. Collector boxes carry a sealed premium: buyers pay for the lottery ticket, not the expected contents.')
 
@@ -107,8 +107,8 @@ be = fl(gp['break-even new foil R/M rate so pack EV is unchanged (%)']); today =
 ax.axvline(today, color=ORANGE, lw=2); ax.text(today + 0.3, max(ys) * 0.9, f'today: foil rare/mythic in {today:.1f}% of packs\n(1 in {100/today:.0f})', color=ORANGE, fontsize=14)
 ax.axvline(be, color=AQUA, lw=2); ax.text(be + 0.3, max(ys) * 0.55, f'break-even: {be:.1f}% (1 in {100/be:.1f})\nif Wizards sets the new rate here, pack EV is unchanged', color=AQUA, fontsize=14)
 ax.set_xlabel('New chance of a foil rare/mythic in a Booster Pack (%)'); ax.set_ylabel('Change in box EV vs today (30 packs)'); ax.yaxis.set_major_formatter(usd)
-ax.set_title('The foil change: what foil-rare rate pays back the $0.33/pack of lost foil commons?')
-save(f, '06_foil_change_breakeven.png', 'Wizards has not published the new foil rare/mythic rate. Today foil commons+uncommons are 83% of the foil slot. Modelled on Reality Fracture.')
+ax.set_title(f"The foil change: what foil-rare rate pays back the ${fl(gp['today: EV contributed by foil commons/uncommons ($/pack)']):.2f}/pack of lost foil commons?")
+save(f, '06_foil_change_breakeven.png', f"Wizards has not published the new foil rare/mythic rate. Today foil commons+uncommons are {fl(gp['today: share of foil slot that is common/uncommon (%)']):.0f}% of the foil slot. Modelled on Reality Fracture.")
 
 # ---------------------------------------------------------------- 7. Collector shrink
 f, ax = fig(19.2, 10.8)
@@ -155,14 +155,25 @@ ax.hist(simr, bins=40, color=AQUA, alpha=0.9, label='Cash-out value')
 ax.axvline(151, color=YELLOW, lw=3); ax.text(153, ax.get_ylim()[1] * 0.9, 'box price $151\n(recent sales)', color=YELLOW, fontsize=15)
 ax.axvline(164.70, color=INK2, lw=2, ls='--'); ax.text(166, ax.get_ylim()[1] * 0.75, 'MSRP $164.70', color=INK2, fontsize=14)
 ax.set_xlabel('Value of one Reality Fracture Play Booster box (30 packs)'); ax.set_ylabel('Simulated boxes'); ax.xaxis.set_major_formatter(usd)
-ax.set_title('One box, 400 simulations: on paper 96% beat the price - in cash, under 1% do')
+_fra = next(r for r in rows if r['product'] == 'fra-play'); _pm = 100 * fl(_fra['p_box_beats_price']); _pc = 100 * fl(_fra['p_box_beats_price_realizable'])
+ax.set_title(f'One box, {len(sim)} simulations: on paper {_pm:.0f}% beat the price - in cash, ' + ('under 1%' if _pc < 1 else f'{_pc:.0f}%') + ' do')
 ax.legend(loc='upper right', fontsize=14)
 save(f, '09_box_distribution_fra.png', 'Monte Carlo of 30-pack boxes using Reality Fracture sheet odds and 2026-10-05 prices.')
 print('charts written:', sorted(os.listdir(CH)))
 
 # ---------------------------------------------------------------- 10. Where the "EV" sits: cards vs dollars by price tier (Reality Fracture box)
 plt.rcParams['text.usetex'] = False
-tiers = [('under \\$1', 396.0, 96.6), ('\\$1-5', 18.2, 37.2), ('\\$5-20', 4.8, 45.3), ('\\$20+', 0.9, 28.0)]
+import sys; sys.path.insert(0, HERE)
+import ev_model as M   # expected cards and dollars per price tier in one reality fracture play box, straight from the sheets
+_x = M.BY_CODE['fra-play']; _tw = sum(b['weight'] for b in _x['boosters']); _acc = [[0.0, 0.0] for _ in range(4)]
+for _b in _x['boosters']:
+    for _s, _n in _b['sheets'].items():
+        _sh = _x['sheets'][_s]; _sw = sum(_sh['cards'].values())
+        for _k, _w in _sh['cards'].items():
+            _p = M.card_price(_k)[0]; _e = 30 * _b['weight'] / _tw * _n * _w / _sw
+            _i = 0 if _p < 1 else 1 if _p < 5 else 2 if _p < 20 else 3; _acc[_i][0] += _e; _acc[_i][1] += _e * _p
+tiers = [(nm, c, v) for nm, (c, v) in zip(['under \\$1', '\\$1-5', '\\$5-20', '\\$20+'], _acc)]
+_tot_c = sum(c for _, c, _ in tiers); _tot_v = sum(v for _, _, v in tiers)
 f, (a1, a2) = plt.subplots(1, 2, figsize=(19.2, 10.8), dpi=100)
 cols = [MUTED, BLUE, AQUA, YELLOW]
 def stacked(ax, idx, title, fmt, yfmt):
@@ -179,7 +190,7 @@ def stacked(ax, idx, title, fmt, yfmt):
         ax.plot([0.26, 0.36], [m, yy], color=col, lw=1.5); ax.text(0.38, yy, lab, va='center', fontsize=17, color=INK)
     ax.set_xlim(-0.4, 1.3); ax.set_xticks([]); ax.set_title(title); ax.grid(False)
     ax.yaxis.set_major_formatter(FuncFormatter(yfmt))
-stacked(a1, 0, 'Cards in the box (420)', lambda v: f'{v:.0f} cards', lambda v, _: f'{v:.0f}')
-stacked(a2, 1, 'Dollars of "EV" in the box (\\$207 at market)', lambda v: f'\\${v:.0f}', lambda v, _: f'\\${v:.0f}')
-save(f, '10_where_the_ev_sits.png', 'Reality Fracture Play Booster box, expected counts and values by price tier. 94% of the cards and 47% of the "EV" are in cards nobody will buy individually.')
+stacked(a1, 0, f'Cards in the box ({_tot_c:.0f})', lambda v: f'{v:.0f} cards', lambda v, _: f'{v:.0f}')
+stacked(a2, 1, f'Dollars of "EV" in the box (\\${_tot_v:.0f} at market)', lambda v: f'\\${v:.0f}', lambda v, _: f'\\${v:.0f}')
+save(f, '10_where_the_ev_sits.png', f'Reality Fracture Play Booster box, expected counts and values by price tier. {100 * tiers[0][1] / _tot_c:.0f}% of the cards and {100 * tiers[0][2] / _tot_v:.0f}% of the "EV" are in cards nobody will buy individually.')
 print('chart 10 written')

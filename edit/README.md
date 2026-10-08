@@ -56,31 +56,31 @@ python3 edit/make_cues.py     # rebuilds cues_a.json / cues_b.json from the cue 
 | six cents *(pause)* | "six cents" callout, then the title card |
 | here's what surprised me | part 1 tag |
 | take every play booster box since | chart 01 |
-| of cards in it for every dollar the box sells for | $1.27 callout |
+| of cards in it for every dollar the box sells for | $1.35 callout |
 | so the box is worth more than it costs | chart 01 ends |
 | here's one box of reality fracture | part 2 tag + box-opening animation |
-| of them are under a dollar | 396 of 420 callout |
+| of them are under a dollar | 395 of 420 callout |
 | same product, four thousand simulated boxes | histogram animation |
-| cents on the dollar | 46¢ callout |
+| cents on the dollar | 49¢ callout |
 | i did that for every set | chart 04 |
-| pays for itself in cash | ~1 in 100 callout |
+| pays for itself in cash | ~1 in 70 callout |
 | nobody puts in the thumbnail | where-the-ev-sits animation |
 | about five hours of work | hours callout |
 | the money's gone when you crack the plastic | animation ends |
-| the median collector box sells for almost twice | chart 02 |
+| the median collector box sells for about one and a half | chart 02 |
 | this isn't a bad set problem | part 3 tag + ten-years animation |
 | now the god pack | part 4 tag + chart 05 |
-| if the celebration card is good | $63 callout |
+| if the celebration card is good | $65 callout |
 | of the pack price | six cents callout again |
 | chance of having one | god pack odds animation |
 | if you want a coin flip at seeing one | 23 boxes callout |
 | is the average | animation ends |
-| the median one is | $50 callout |
+| the median one is | $51 callout |
 | same post, two paragraphs down | part 5 tag |
 | price per card goes up | chart 07 + 15 → 12 callout |
-| your collector booster got about | −$0.80 callout |
+| your collector booster got about | −$0.85 callout |
 | it comes down to one number wizards | chart 06 |
-| if the new rate is better than one in | 1 in 8.5 callout |
+| if the new rate is better than one in | 1 in 8 callout |
 | one thing from my side of the counter | part 6 tag + chart 08 |
 | buy singles for the deck | verdict callout |
 | public github repo | repo badge until the end card |
@@ -93,7 +93,7 @@ the nerd cut reads script a's parts plus the new bits, in the order the doc lays
 |---|---|
 | public github repo in the description | repo badge (cold open) |
 | three ingredients | part 1 tag |
-| an independent tracker that does the same math | chart 01 flash |
+| a tracker that runs the same kind of math | chart 01 flash |
 | look at the bottom of this chart | chart 01 |
 | the box carries the premium | chart 01 ends |
 | now the thing the haircut hides | where-the-ev-sits animation |
@@ -101,8 +101,8 @@ the nerd cut reads script a's parts plus the new bits, in the order the doc lays
 | here's the sunk cost trap | animation ends |
 | caveat about the left side of this chart | chart 03 |
 | significance since someone's gonna ask | chart 09 |
-| treat each set as one data point | p ≈ 0.0002 callout |
-| the one thing that isn't significant | 15 of 31 callout |
+| treat each set as one data point | p ≈ 0.00005 callout |
+| the one thing that isn't significant | 17 of 31 callout |
 | the contents are published, the values are mine | chart 05 |
 | solve for break even | chart 06 |
 | two foil commons and one foil uncommon | part 7 tag + chart 07 |

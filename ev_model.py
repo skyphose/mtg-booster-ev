@@ -26,6 +26,9 @@ def card_price(key):
     s, cn = parts[0], parts[1]
     finish = parts[2] if len(parts) > 2 else 'nonfoil'
     row = prices.get((s, cn))
+    if row is None and cn[-1:].isalpha():
+        # double-faced / split cards: the sheet data calls the front face '100a', scryfall files the card under '100'
+        row = prices.get((s, cn.rstrip('abcdefghijklmnopqrstuvwxyz')))
     if row is None:
         return BULK['r'], False, '?', key
     r = row['rarity']

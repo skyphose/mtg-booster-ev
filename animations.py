@@ -35,6 +35,7 @@ def ease(t): return 1 - (1 - t) ** 3   # ease-out cubic
 def tier_color(p): return MUTED if p < 1 else (BLUE if p < 5 else (AQUA if p < 20 else YELLOW))
 
 rows = list(csv.DictReader(open(os.path.join(OUT, 'set_summary.csv'))))
+GP_VALUE = float({r[0]: r[1] for r in csv.reader(open(os.path.join(OUT, 'godpack.csv')))}['Booster Pack GOD PACK value (10 R/M + 2 BF + 2 foil BF, no celeb card)'])
 FRA_PRICE = box_price('fra', 'play')[0]
 
 # ----------------------------------------------------------------------------- shared: draw one simulated box, card by card
@@ -53,12 +54,12 @@ def simulate_one_box(code, packs, seed):
     return out
 
 def anim_box(seconds=24):
-    packs = simulate_one_box('fra-play', 30, seed=5)
+    packs = simulate_one_box('fra-play', 30, seed=typical_seed('fra-play', 30))  # a typical box, not a lucky one
     per_pack = FPS * seconds // 30
     frames = per_pack * 30 + FPS * 3
     f, (ax, side) = plt.subplots(1, 2, figsize=(19.2, 10.8), dpi=100, gridspec_kw={'width_ratios': [2.2, 1]})
     f.suptitle('opening one reality fracture box, pack by pack', x=0.02, ha='left', fontsize=28, fontweight='bold')
-    ax.set_xlim(0, 30); ax.set_ylim(0, 260); ax.yaxis.set_major_formatter(usd); ax.set_xlabel('packs opened'); ax.grid(True)
+    ax.set_xlim(0, 30); ax.set_ylim(0, max(260, 1.1 * sum(sum(p) for p in packs))); ax.yaxis.set_major_formatter(usd); ax.set_xlabel('packs opened'); ax.grid(True)
     ax.axhline(FRA_PRICE, color=YELLOW, lw=2.5, ls='--'); ax.text(0.3, FRA_PRICE + 4, f'box price ${FRA_PRICE:.0f} (recent sales)', color=YELLOW, fontsize=17)
     lm, = ax.plot([], [], color=BLUE, lw=4, label='cards at market price'); lc, = ax.plot([], [], color=AQUA, lw=4, label='what you could cash out')
     ax.legend(loc='upper left', fontsize=17, bbox_to_anchor=(0, 0.93))
@@ -83,7 +84,7 @@ def anim_box(seconds=24):
             xs2[-1] = k + ease(t)
         lm.set_data(xs2, ym); lc.set_data(xs2, yc)
         tm.set_text(f'market  ${ym[-1]:,.0f}'); tc.set_text(f'cash     ${yc[-1]:,.0f}')
-        if fr >= per_pack * 30: note.set_text(f'30 packs. {int((mv[-1] > FRA_PRICE))*"on paper the box won." or "on paper the box lost."}\nin cash it returned ${cv[-1]:.0f} on a ${FRA_PRICE:.0f} box.')
+        if fr >= per_pack * 30: note.set_text(f'30 packs. {int((mv[-1] > FRA_PRICE))*"on paper the box won." or "on paper the box lost."}\nin cash it returned \\${cv[-1]:.0f} on a \\${FRA_PRICE:.0f} box.')
         return [lm, lc, tm, tc, note, *tiles, *labels]
     a = FuncAnimation(f, upd, frames=frames, blit=False)
     a.save(os.path.join(AN, 'anim_open_a_box.mp4'), writer=writer()); plt.close(f); print('box done')
@@ -133,13 +134,28 @@ def anim_god(seconds=16):
         cols = [BLUE] * k + [SURF] * (max_packs - k)
         if k > god_at: cols[god_at] = YELLOW
         cells.set_color(cols); ln.set_data(xs[: k + 1], ys[: k + 1])
-        t1.set_text(f'{k:,} packs   =   {k / 30:.1f} boxes'); t2.set_text(f'${k * 5.49:,.0f} at msrp'); t3.set_text(f'chance of a god pack so far: {ys[k]:.0f}%' + ('   there it is. about $63.' if k > god_at else ''))
+        t1.set_text(f'{k:,} packs   =   {k / 30:.1f} boxes'); t2.set_text(f'${k * 5.49:,.0f} at msrp'); t3.set_text(f'chance of a god pack so far: {ys[k]:.0f}%' + (f'   there it is. about ${GP_VALUE:.0f}.' if k > god_at else ''))
         return [cells, ln, t1, t2, t3]
     a = FuncAnimation(f, upd, frames=frames, blit=False)
     a.save(os.path.join(AN, 'anim_godpack_odds.mp4'), writer=writer()); plt.close(f); print('god done')
 
+def typical_seed(code, packs, tries=400):
+    """the seed whose box lands closest to the model's expected count per price tier, so the clip matches what gets said over it"""
+    x = BY_CODE[code]; tw = sum(b['weight'] for b in x['boosters']); exp = [0.0] * 4
+    for b in x['boosters']:
+        for s_, n_ in b['sheets'].items():
+            sh = x['sheets'][s_]; sw = sum(sh['cards'].values())
+            for k_, w_ in sh['cards'].items():
+                p_ = card_price(k_)[0]; exp[0 if p_ < 1 else 1 if p_ < 5 else 2 if p_ < 20 else 3] += packs * b['weight'] / tw * n_ * w_ / sw
+    exp = [round(e) for e in exp]
+    def counts(seed):
+        c = [0] * 4
+        for v in (v for p in simulate_one_box(code, packs, seed) for v in p): c[0 if v < 1 else 1 if v < 5 else 2 if v < 20 else 3] += 1
+        return c
+    return min(range(tries), key=lambda sd: sum(abs(a - b) for a, b in zip(counts(sd), exp)))
+
 def anim_tiers(seconds=14):
-    packs = simulate_one_box('fra-play', 30, seed=5); cards = sorted([v for p in packs for v in p])
+    packs = simulate_one_box('fra-play', 30, seed=typical_seed('fra-play', 30)); cards = sorted([v for p in packs for v in p])
     n = len(cards); frames = FPS * seconds; hold = FPS * 3
     tiers = [('under $1', lambda p: p < 1), ('$1-5', lambda p: 1 <= p < 5), ('$5-20', lambda p: 5 <= p < 20), ('$20+', lambda p: p >= 20)]
     cols = [MUTED, BLUE, AQUA, YELLOW]
@@ -160,8 +176,8 @@ def anim_tiers(seconds=14):
     def upd(fr):
         t = ease(min(1, fr / (frames - hold)))
         sc.set_offsets(np.c_[sx + (tx - sx) * t, sy + (ty - sy) * t]); sc.set_color(tc if t > 0.5 else [INK2] * n)
-        for i, c in enumerate(cnts): c.set_text(f'{int(counters[i] * t)} cards  ·  ${vals[i] * t:,.0f}')
-        if fr > frames - hold: msg.set_text(f'{counters[0]} of {n} cards are under a dollar. together: ${vals[0]:.0f} on paper, about $1.50 at bulk.')
+        for i, c in enumerate(cnts): c.set_text(f'{int(counters[i] * t)} card' + ('' if int(counters[i] * t) == 1 else 's') + f'  ·  ${vals[i] * t:,.0f}')
+        if fr > frames - hold: msg.set_text(f'{counters[0]} of {n} cards are under a dollar. together: \\${vals[0]:.0f} on paper, about \\${counters[0] * 4 / 1000:.2f} at bulk.')
         return [sc, *cnts, msg]
     a = FuncAnimation(f, upd, frames=frames, blit=False)
     a.save(os.path.join(AN, 'anim_where_the_ev_sits.mp4'), writer=writer()); plt.close(f); print('tiers done')

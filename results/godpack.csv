@@ -1,18 +1,18 @@
 metric,value
-"Reality Fracture Play Booster EV (market, today)",6.9
-"Reality Fracture Collector Booster EV (market, today)",34.27
-avg default-frame R/M non-foil (play rare slot),2.51
-avg Booster Fun R/M non-foil,3.18
-avg Booster Fun R/M foil,15.92
-avg default-frame R/M foil,2.95
-"Booster Pack GOD PACK value (10 R/M + 2 BF + 2 foil BF, no celeb card)",63.28
-"Collector GOD PACK value (foil land + 3 foil R/M + 3 BF + 5 foil BF, no celeb)",98.85
-EV lift per Booster Pack from god packs ($),0.0564
-EV lift per Collector Booster from god packs ($),0.2153
-EV lift per 30-pack Booster box ($),1.69
-EV lift per 12-pack Collector box ($),2.58
-EV lift as % of Booster Pack MSRP $5.49,1.03
-EV lift as % of Collector MSRP $26.99,0.8
+"Reality Fracture Play Booster EV (market, today)",7.13
+"Reality Fracture Collector Booster EV (market, today)",35.06
+avg default-frame R/M non-foil (play rare slot),2.62
+avg Booster Fun R/M non-foil,3.31
+avg Booster Fun R/M foil,16.23
+avg default-frame R/M foil,3.07
+"Booster Pack GOD PACK value (10 R/M + 2 BF + 2 foil BF, no celeb card)",65.26
+"Collector GOD PACK value (foil land + 3 foil R/M + 3 BF + 5 foil BF, no celeb)",101.14
+EV lift per Booster Pack from god packs ($),0.0581
+EV lift per Collector Booster from god packs ($),0.2203
+EV lift per 30-pack Booster box ($),1.74
+EV lift per 12-pack Collector box ($),2.64
+EV lift as % of Booster Pack MSRP $5.49,1.06
+EV lift as % of Collector MSRP $26.99,0.82
 P(at least one Booster god pack) in 1 pack,0.1
 P(at least one Booster god pack) in 1 box (30),2.96
 P(at least one Booster god pack) in 1 case (6 boxes),16.48
@@ -25,35 +25,35 @@ Booster boxes to buy for a 50% chance of a god pack,23.1
 Collector boxes to buy for a 50% chance of a god pack,17.3
 $ spent (MSRP) for a 50% chance - Booster,3803.0
 $ spent (MSRP) for a 50% chance - Collector,5603.0
-Booster god pack value if celebration card = $0,63.28
-Booster god pack value if celebration card = $10,73.28
-Booster god pack value if celebration card = $25,88.28
+Booster god pack value if celebration card = $0,65.26
+Booster god pack value if celebration card = $10,75.26
+Booster god pack value if celebration card = $25,90.26
 --- FOIL CHANGE (Booster Packs) ---,
-today: foil slot EV ($),0.621
-today: share of foil slot that is common/uncommon (%),83.3
-today: P(foil rare or mythic in a pack) (%),7.53
-today: avg value of a foil rare/mythic from that slot ($),3.65
-today: EV contributed by foil commons/uncommons ($/pack),0.333
-avg foil common ($),0.333
-avg foil uncommon ($),0.472
-plain common/uncommon filler value ($),0.217
-collector sheet avg foil common ($),0.31
-collector sheet avg foil uncommon ($),0.399
-break-even new foil R/M rate so pack EV is unchanged (%),11.78
-break-even expressed as 1 in N packs,8.5
+today: foil slot EV ($),0.643
+today: share of foil slot that is common/uncommon (%),91.9
+today: P(foil rare or mythic in a pack) (%),8.11
+today: avg value of a foil rare/mythic from that slot ($),3.52
+today: EV contributed by foil commons/uncommons ($/pack),0.358
+avg foil common ($),0.325
+avg foil uncommon ($),0.465
+plain common/uncommon filler value ($),0.228
+collector sheet avg foil common ($),0.324
+collector sheet avg foil uncommon ($),0.422
+break-even new foil R/M rate so pack EV is unchanged (%),12.59
+break-even expressed as 1 in N packs,7.9
 --- COLLECTOR SHRINK ---,
-EV removed per Collector Booster (2 foil C + 1 foil U) ($),1.018
-as % of Collector Booster EV,2.97
-as % of Collector MSRP $26.99,3.77
-net Collector EV change incl. god pack lift ($/pack),-0.803
+EV removed per Collector Booster (2 foil C + 1 foil U) ($),1.069
+as % of Collector Booster EV,3.05
+as % of Collector MSRP $26.99,3.96
+net Collector EV change incl. god pack lift ($/pack),-0.849
 cards per Collector Booster before -> after,15 -> 12
 price per card at MSRP before -> after,1.80 -> 2.25
 --- SUPPLY ---,
-rares+mythics per Booster Pack today (all slots),1.282
-R/M per 1000 packs: normal vs added by one god pack,1282 vs +12.7 (+0.99%)
-foil commons/uncommons per Booster Pack today -> 2027,0.833 -> 0
+rares+mythics per Booster Pack today (all slots),1.379
+R/M per 1000 packs: normal vs added by one god pack,1379 vs +12.6 (+0.91%)
+foil commons/uncommons per Booster Pack today -> 2027,0.919 -> 0
 foil C/U per Collector Booster today -> 2027,6 (+echo pairs) -> 3 fewer
 "--- BOX DISTRIBUTION (Reality Fracture Booster box, market value) ---",
-mean / median / P10 / P90 / P99 without god packs,207 / 203 / 163 / 255 / 305
-mean / median / P10 / P90 / P99 with god packs,208 / 204 / 164 / 259 / 312
-std dev without -> with,36.4 -> 37.5
+mean / median / P10 / P90 / P99 without god packs,214 / 210 / 170 / 262 / 311
+mean / median / P10 / P90 / P99 with god packs,215 / 211 / 171 / 266 / 317
+std dev without -> with,36.4 -> 37.6

@@ -77,6 +77,16 @@ for p, w in draws:
 cards_per_pack = tot
 F['fra_cards_per_pack'] = round(cards_per_pack, 1)
 F['fra_msrp_per_card_cents'] = round(549 / cards_per_pack)
+# price tiers in one box (feeds the Selling Time sheet in the workbook)
+tiers = {'lt1': [0.0, 0.0], 'ge1': [0.0, 0.0], 'ge5': [0.0, 0.0]}
+for pr, wgt in draws:
+    e = wgt * packs
+    t = tiers['lt1' if pr < 1 else 'ge1']; t[0] += e; t[1] += e * pr
+    if pr >= 5: tiers['ge5'][0] += e; tiers['ge5'][1] += e * pr
+F['fra_box_cards'] = round(cards_per_pack * packs)
+F['fra_box_under_1_count'] = round(tiers['lt1'][0]); F['fra_box_under_1_value'] = round(tiers['lt1'][1], 1)
+F['fra_box_listable_count'] = round(tiers['ge1'][0]); F['fra_box_listable_value'] = round(tiers['ge1'][1], 1)
+F['fra_box_over_5_count'] = round(tiers['ge5'][0])
 # rares and mythics: how many are bulk
 rs = M.BY_CODE[code]['sheets']['rare_mythic']['cards']  # the rare slot itself (scryfall's booster flag lags on new sets)
 rm = [(M.card_price(k)[0], M.card_price(k)[3]) for k in rs]
@@ -114,7 +124,7 @@ F['fra_rare_slot_over_10_per_box'] = round(30 * sum(w for k, w in rsw.items() if
 gp = {r['metric']: r['value'] for r in csv.DictReader(open(os.path.join(RES, 'godpack.csv')))}
 F['godpack_vs_top_card'] = round((1 / 1000) / top[0], 2)  # >1: a god pack is more likely than the top card
 F['god_pack_cards'] = 14
-F['rm_added_per_1000_packs_pct'] = 0.99
+F['rm_added_per_1000_packs_pct'] = float(gp['R/M per 1000 packs: normal vs added by one god pack'].split('(+')[1].rstrip('%)'))
 
 # ----------------------------------------------------------------------------- across every box we modeled
 F['products_modeled'] = len(summary)

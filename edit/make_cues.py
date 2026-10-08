@@ -37,7 +37,7 @@ A2 = [
     C('anim_tiers', 'nobody puts in the thumbnail', 'broll', 'anim_where_the_ev_sits.mp4', until='plastic', max=14),
     C('hours', 'about five hours of work', 'callout', 'callout_hours.png', dur=5),
     C('plastic', "the money's gone when you crack the plastic", 'mark', ''),
-    C('chart02', 'the median collector box sells for almost twice', 'broll', '02_collector_boxes_ev_vs_price.png', until='tag_p3', max=20),
+    C('chart02', 'the median collector box sells for about one and a half', 'broll', '02_collector_boxes_ev_vs_price.png', until='tag_p3', max=20),
 ]
 A3 = [
     C('tag_p3', "this isn't a bad set problem", 'tag', 'tag_p3.png', dur=4),
@@ -75,7 +75,7 @@ cues_a = COLD + A1 + A2 + A3 + A4 + A5 + A6 + END
 B_COLD_EXTRA = [C('repo_early', 'public github repo in the description', 'badge', 'badge_repo.png', dur=8)]
 B1 = [
     C('tag_b1', 'three ingredients', 'tag', 'tag_b1.png', dur=4),
-    C('chart01_xc', 'an independent tracker that does the same math', 'broll', '01_play_boxes_ev_vs_price.png', max=10),
+    C('chart01_xc', 'a tracker that runs the same kind of math', 'broll', '01_play_boxes_ev_vs_price.png', max=10),
 ]
 B2_EXTRA = [C('chart01_ub', 'look at the bottom of this chart', 'broll', '01_play_boxes_ev_vs_price.png', until='b_crossover', max=20),
             C('b_crossover', 'the box carries the premium', 'mark', '')]

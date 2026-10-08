@@ -85,20 +85,20 @@ def tags():
 # ----------------------------------------------------------------------------- callouts (right third)
 CALLOUTS = [
     ('six_cents', 'six cents', 'what a god pack adds to a $5.49 pack', BLUE),
-    ('ratio_127', '$1.27', 'of cards per $1 of box, on paper', BLUE),
-    ('cash_46', '46¢', 'per $1 if you actually sell it all', AQUA),
-    ('bulk_396', '396 of 420', 'cards in a box are under a dollar', MUTED),
-    ('hours', '~5 hrs → ~$48', 'sorting, listing, shipping. under $10/hr', YELLOW),
-    ('one_in_100', '~1 in 100', 'boxes pay for themselves in cash', AQUA),
-    ('gp_63', '$63', 'average god pack (reality fracture prices)', YELLOW),
-    ('gp_50', '$50', 'the median god pack. half are worth less', YELLOW),
+    ('ratio_127', '$1.35', 'of cards per $1 of box, on paper', BLUE),
+    ('cash_46', '49¢', 'per $1 if you actually sell it all', AQUA),
+    ('bulk_396', '395 of 420', 'cards in a box are under a dollar', MUTED),
+    ('hours', '~5 hrs → ~$50', 'sorting, listing, shipping. about $10/hr', YELLOW),
+    ('one_in_100', '~1 in 70', 'boxes pay for themselves in cash (median set)', AQUA),
+    ('gp_63', '$65', 'average god pack (reality fracture prices)', YELLOW),
+    ('gp_50', '$51', 'the median god pack. half are worth less', YELLOW),
     ('gp_23', '23 boxes', '~$3,800 at msrp for a coin flip at one', RED),
     ('shrink', '15 → 12', 'cards per collector booster, same $26.99', MAGENTA),
-    ('net_80', '−$0.80', 'net change per collector booster', RED),
-    ('foil_85', '1 in 8.5', 'foil-rare rate that breaks even (today: 1 in 13)', BLUE),
+    ('net_80', '−$0.85', 'net change per collector booster', RED),
+    ('foil_85', '1 in 8', 'foil-rare rate that breaks even (today: 1 in 12)', BLUE),
     ('verdict', 'singles for the deck.', 'packs for the night.', INK),
-    ('wilcoxon', 'p ≈ 0.0002', 'play boosters above 1 at market, 14 of 16 sets', BLUE),
-    ('coin_flip', '15 of 31', 'old draft boxes above the line: a coin flip', MUTED),
+    ('wilcoxon', 'p ≈ 0.00005', 'play boosters above 1 at market, 15 of 16 sets', BLUE),
+    ('coin_flip', '17 of 31', 'old draft boxes above the line: still a coin flip', MUTED),
 ]
 def callouts():
     for key, big, small, col in CALLOUTS:
@@ -130,7 +130,7 @@ def badge():
 
 # ----------------------------------------------------------------------------- thumbnails
 def thumbs():
-    for key, big, col, sub in [('a', '6¢', BLUE, 'what a god pack is worth to you'), ('b', '46¢', AQUA, 'per dollar. every box. ten years.')]:
+    for key, big, col, sub in [('a', '6¢', BLUE, 'what a god pack is worth to you'), ('b', '49¢', AQUA, 'per dollar, in cash. median play box.')]:
         img = Image.new('RGBA', (1280, 720), SURF + (255,)); d = ImageDraw.Draw(img)
         d.text((70, 60), 'GOD PACKS', font=font('black', 120), fill=INK)
         d.text((70, 200), big, font=font('black', 330), fill=col)

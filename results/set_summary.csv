@@ -1,100 +1,100 @@
 set,name,year,product,kind,packs,ev_pack,ev_box,real_pack,real_box,box_price_sales_median,box_sales_min,box_sales_max,box_market_price,box_product,msrp_box,ev_to_price,real_to_price,p_box_beats_price,p_box_beats_price_realizable,box_p10,box_median,box_p90,price_coverage
-soi,Shadows over Innistrad,2016,soi-draft,draft,36,3.0,107.91,0.63,22.57,,,,,,,,,,,89.53,106.21,128.32,0.924
-emn,Eldritch Moon,2016,emn-draft,draft,36,3.82,137.62,1.09,39.2,,,,,,,,,,,101.87,134.04,177.35,0.946
+soi,Shadows over Innistrad,2016,soi-draft,draft,36,3.12,112.38,0.69,24.78,,,,,,,,,,,93.34,110.54,133.59,1.0
+emn,Eldritch Moon,2016,emn-draft,draft,36,3.89,140.15,1.11,40.13,,,,,,,,,,,104.31,136.53,179.37,1.0
 kld,Kaladesh,2016,kld-draft,draft,36,3.71,133.48,1.07,38.38,599.49,349.95,606.98,537.1,Kaladesh - Booster Box,,0.223,0.064,0.0,0.0,106.02,131.6,163.81,1.0
 aer,Aether Revolt,2017,aer-draft,draft,36,3.74,134.78,0.94,33.87,213.99,210.0,222.22,202.64,Aether Revolt - Booster Box,,0.63,0.158,0.001,0.0,112.51,133.68,159.37,1.0
-akh,Amonkhet,2017,akh-draft,draft,36,4.88,175.67,1.59,57.38,408.5,399.0,445.96,395.72,Amonkhet - Booster Box,,0.43,0.14,0.001,0.0,124.89,159.69,255.29,0.975
-hou,Hour of Devastation,2017,hou-draft,draft,36,4.63,166.58,1.48,53.27,303.0,294.99,314.99,295.31,Hour of Devastation - Booster Box,,0.55,0.176,0.002,0.0,125.07,161.84,215.99,0.975
-xln,Ixalan,2017,xln-draft,draft,36,3.84,138.25,0.73,26.29,235.25,149.99,245.95,235.8,Ixalan - Booster Box,,0.588,0.112,0.0,0.0,117.7,136.24,164.45,0.99
-rix,Rivals of Ixalan,2018,rix-draft,draft,36,4.99,179.61,1.37,49.2,213.74,200.0,223.59,206.52,Rivals of Ixalan - Booster Box,,0.84,0.23,0.046,0.0,156.5,177.74,204.15,0.992
+akh,Amonkhet,2017,akh-draft,draft,36,4.92,177.24,1.6,57.46,408.5,399.0,445.96,395.72,Amonkhet - Booster Box,,0.434,0.141,0.001,0.0,126.48,161.15,256.71,0.999
+hou,Hour of Devastation,2017,hou-draft,draft,36,4.66,167.78,1.48,53.32,303.0,294.99,314.99,295.31,Hour of Devastation - Booster Box,,0.554,0.176,0.002,0.0,126.21,163.08,217.31,0.999
+xln,Ixalan,2017,xln-draft,draft,36,4.38,157.76,1.09,39.06,235.25,149.99,245.95,235.8,Ixalan - Booster Box,,0.671,0.166,0.001,0.0,133.01,155.89,185.86,1.0
+rix,Rivals of Ixalan,2018,rix-draft,draft,36,5.3,190.97,1.57,56.53,213.74,200.0,223.59,206.52,Rivals of Ixalan - Booster Box,,0.893,0.264,0.123,0.0,166.99,189.4,216.68,1.0
 dom,Dominaria,2018,dom-draft,draft,36,5.4,194.35,1.78,64.22,224.98,223.99,239.95,222.15,Dominaria - Booster Box,,0.864,0.285,0.266,0.004,146.52,174.01,263.86,1.0
-m19,Core Set 2019,2018,m19-draft,draft,36,4.86,174.89,1.42,51.15,220.0,195.99,229.95,205.08,Core Set 2019 - Booster Box,,0.795,0.233,0.099,0.0,138.74,169.53,219.64,0.999
-grn,Guilds of Ravnica,2018,grn-draft,draft,36,3.98,143.43,1.1,39.69,174.98,159.99,174.98,161.19,Guilds of Ravnica - Booster Box,,0.82,0.227,0.072,0.0,117.99,141.34,170.42,0.982
-rna,Ravnica Allegiance,2019,rna-draft,draft,36,5.13,184.52,1.84,66.29,156.98,149.99,160.98,156.17,Ravnica Allegiance - Booster Box,,1.175,0.422,0.67,0.013,133.37,177.42,246.23,0.982
+m19,Core Set 2019,2018,m19-draft,draft,36,5.01,180.38,1.53,55.0,220.0,195.99,229.95,205.08,Core Set 2019 - Booster Box,,0.82,0.25,0.124,0.0,141.82,175.58,225.7,1.0
+grn,Guilds of Ravnica,2018,grn-draft,draft,36,4.01,144.31,1.1,39.71,174.98,159.99,174.98,161.19,Guilds of Ravnica - Booster Box,,0.825,0.227,0.076,0.0,118.89,142.29,171.28,1.0
+rna,Ravnica Allegiance,2019,rna-draft,draft,36,5.15,185.55,1.84,66.29,156.98,149.99,160.98,156.17,Ravnica Allegiance - Booster Box,,1.182,0.422,0.679,0.013,134.46,178.46,247.27,1.0
 war,War of the Spark,2019,war-draft,draft,36,5.9,212.33,2.0,71.92,180.0,179.98,199.95,191.33,War of the Spark - Booster Box,,1.18,0.4,0.807,0.002,169.46,207.23,261.33,1.0
 m20,Core Set 2020,2019,m20-draft,draft,36,6.06,218.16,2.06,74.04,180.5,135.96,180.5,173.41,Core Set 2020 - Booster Box,,1.209,0.41,0.917,0.0,182.89,215.41,258.75,1.0
-eld,Throne of Eldraine,2019,eld-draft,draft,36,5.02,180.59,1.34,48.13,205.95,199.99,208.5,201.23,Throne of Eldraine - Booster Box,,0.877,0.234,0.238,0.0,144.22,166.71,232.14,0.877
-eld,Throne of Eldraine,2019,eld-collector,collector,12,16.49,197.94,8.37,100.49,,,,,,,,,,,134.59,181.03,289.58,0.66
+eld,Throne of Eldraine,2019,eld-draft,draft,36,5.13,184.82,1.36,48.99,205.95,199.99,208.5,201.23,Throne of Eldraine - Booster Box,,0.897,0.238,0.253,0.0,148.36,170.95,235.94,1.0
+eld,Throne of Eldraine,2019,eld-collector,collector,12,17.57,210.88,8.56,102.73,,,,,,,,,,,147.8,194.08,303.68,1.0
 thb,Theros Beyond Death,2020,thb-draft,draft,36,6.8,244.74,2.66,95.76,180.0,175.0,189.95,182.03,Theros Beyond Death - Booster Box,,1.36,0.532,0.966,0.005,195.25,240.83,295.92,1.0
 thb,Theros Beyond Death,2020,thb-collector,collector,12,21.19,254.24,10.93,131.16,,,,,,,,,,,189.09,247.86,327.44,1.0
 iko,Ikoria,2020,iko-draft,draft,36,7.03,252.95,2.55,91.86,241.0,239.99,241.0,243.65,Ikoria: Lair of Behemoths - Booster Box,,1.05,0.381,0.536,0.002,185.25,245.72,331.23,1.0
 iko,Ikoria,2020,iko-collector,collector,12,42.29,507.5,26.17,314.01,697.0,685.99,709.0,679.16,Ikoria: Lair of Behemoths - Collector Booster Display,,0.728,0.451,0.06,0.0,374.13,498.8,653.19,1.0
 m21,Core Set 2021,2020,m21-draft,draft,36,5.97,214.99,1.8,64.68,182.5,182.5,188.88,182.93,Core Set 2021 - Booster Box,,1.178,0.354,0.807,0.0,171.65,212.11,263.38,1.0
 m21,Core Set 2021,2020,m21-collector,collector,12,24.69,296.27,13.65,163.85,502.0,498.5,504.98,505.3,Core Set 2021 - Collector Booster Display,,0.59,0.326,0.002,0.0,227.4,290.09,373.28,1.0
-znr,Zendikar Rising,2020,znr-draft,draft,36,3.64,131.01,0.73,26.23,179.99,174.99,184.0,172.04,Zendikar Rising - Draft Booster Box,,0.728,0.146,0.004,0.0,111.37,129.7,151.76,0.931
-znr,Zendikar Rising,2020,znr-set,set,30,4.84,145.33,1.75,52.39,185.0,179.0,186.99,191.35,Zendikar Rising - Set Booster Display,,0.786,0.283,0.108,0.0,111.24,141.48,187.14,0.887
-znr,Zendikar Rising,2020,znr-collector,collector,12,18.37,220.44,10.08,120.98,479.98,478.98,479.99,476.29,Zendikar Rising - Collector Booster Display,,0.459,0.252,0.01,0.0,121.09,203.45,338.49,0.905
-khm,Kaldheim,2021,khm-draft,draft,36,5.5,198.04,1.31,47.07,199.99,185.0,209.9,189.78,Kaldheim - Draft Booster Box,,0.99,0.235,0.366,0.0,168.36,191.18,240.81,0.987
-khm,Kaldheim,2021,khm-set,set,30,6.95,208.62,2.44,73.08,235.0,235.0,260.0,257.03,Kaldheim - Set Booster Display,,0.888,0.311,0.224,0.0,161.52,201.85,262.5,0.981
-khm,Kaldheim,2021,khm-collector,collector,12,17.74,212.89,8.73,104.8,409.99,399.99,418.99,405.4,Kaldheim - Collector Booster Display,,0.519,0.256,0.001,0.0,162.07,206.52,272.93,0.939
-stx,Strixhaven,2021,stx-draft,draft,36,5.62,202.42,1.75,63.15,188.99,170.0,189.99,188.78,Strixhaven: School of Mages - Draft Booster Box,,1.071,0.334,0.506,0.004,155.01,189.72,262.27,0.987
-stx,Strixhaven,2021,stx-set,set,30,6.63,198.84,2.72,81.47,186.0,179.99,198.98,192.9,Strixhaven: School of Mages - Set Booster Display,,1.069,0.438,0.513,0.018,140.13,188.23,274.01,0.983
-stx,Strixhaven,2021,stx-collector,collector,12,35.52,426.23,21.15,253.8,629.9,600.0,644.44,629.28,Strixhaven: School of Mages - Collector Booster Display,,0.677,0.403,0.088,0.012,284.25,386.45,609.03,0.971
+znr,Zendikar Rising,2020,znr-draft,draft,36,6.0,216.13,2.24,80.73,179.99,174.99,184.0,172.04,Zendikar Rising - Draft Booster Box,,1.201,0.449,0.854,0.001,173.84,213.16,260.02,1.0
+znr,Zendikar Rising,2020,znr-set,set,30,8.05,241.42,3.81,114.18,185.0,179.0,186.99,191.35,Zendikar Rising - Set Booster Display,,1.305,0.617,0.913,0.018,187.8,239.19,300.92,1.0
+znr,Zendikar Rising,2020,znr-collector,collector,12,26.03,312.41,15.01,180.07,479.98,478.98,479.99,476.29,Zendikar Rising - Collector Booster Display,,0.651,0.375,0.049,0.001,204.67,296.12,433.79,1.0
+khm,Kaldheim,2021,khm-draft,draft,36,6.86,247.1,2.22,80.0,199.99,185.0,209.9,189.78,Kaldheim - Draft Booster Box,,1.236,0.4,0.917,0.001,202.54,242.36,297.61,1.0
+khm,Kaldheim,2021,khm-set,set,30,8.64,259.19,3.58,107.37,235.0,235.0,260.0,257.03,Kaldheim - Set Booster Display,,1.103,0.457,0.653,0.001,199.86,253.51,324.0,1.0
+khm,Kaldheim,2021,khm-collector,collector,12,25.16,301.88,13.82,165.87,409.99,399.99,418.99,405.4,Kaldheim - Collector Booster Display,,0.736,0.405,0.038,0.0,234.47,297.38,375.44,1.0
+stx,Strixhaven,2021,stx-draft,draft,36,5.87,211.37,1.9,68.41,188.99,170.0,189.99,188.78,Strixhaven: School of Mages - Draft Booster Box,,1.118,0.362,0.62,0.005,162.42,199.12,271.28,1.0
+stx,Strixhaven,2021,stx-set,set,30,6.9,206.92,2.87,86.12,186.0,179.99,198.98,192.9,Strixhaven: School of Mages - Set Booster Display,,1.112,0.463,0.578,0.022,146.76,195.85,281.94,1.0
+stx,Strixhaven,2021,stx-collector,collector,12,36.8,441.6,21.96,263.51,629.9,600.0,644.44,629.28,Strixhaven: School of Mages - Collector Booster Display,,0.701,0.418,0.095,0.013,298.99,403.01,622.0,1.0
 afr,Forgotten Realms,2021,afr-draft,draft,36,6.22,224.08,1.76,63.48,255.0,249.0,265.68,250.77,Adventures in the Forgotten Realms - Draft Booster Box,,0.879,0.249,0.189,0.0,182.5,216.54,275.0,1.0
-afr,Forgotten Realms,2021,afr-set,set,30,7.21,216.3,2.83,84.76,305.0,305.0,310.99,306.83,Adventures in the Forgotten Realms - Set Booster Display,,0.709,0.278,0.047,0.0,162.26,209.42,282.13,1.0
+afr,Forgotten Realms,2021,afr-set,set,30,7.21,216.31,2.83,84.76,305.0,305.0,310.99,306.83,Adventures in the Forgotten Realms - Set Booster Display,,0.709,0.278,0.047,0.0,162.26,209.42,282.13,1.0
 afr,Forgotten Realms,2021,afr-collector,collector,12,20.93,251.1,11.07,132.87,404.01,398.88,409.0,404.02,Adventures in the Forgotten Realms - Collector Booster Display,,0.622,0.329,0.018,0.0,185.38,240.7,332.13,1.0
-mid,Midnight Hunt,2021,mid-draft,draft,36,4.21,151.48,0.75,26.89,160.0,155.0,169.9,155.01,Innistrad: Midnight Hunt - Draft Booster Box,,0.947,0.168,0.252,0.0,133.46,148.4,172.66,0.863
-mid,Midnight Hunt,2021,mid-set,set,30,5.53,165.93,1.9,56.99,198.49,198.49,202.99,189.47,Innistrad: Midnight Hunt - Set Booster Display,,0.836,0.287,0.16,0.001,127.92,158.42,215.99,0.798
-mid,Midnight Hunt,2021,mid-collector,collector,12,11.5,137.99,4.85,58.16,268.0,249.98,269.85,266.48,Innistrad: Midnight Hunt - Collector Booster Display,,0.515,0.217,0.0,0.0,110.59,134.71,168.69,0.732
-vow,Crimson Vow,2021,vow-draft,draft,36,4.88,175.54,0.95,34.34,152.88,146.0,157.75,145.91,Innistrad: Crimson Vow - Draft Booster Box,,1.148,0.225,0.938,0.0,156.4,174.39,196.02,0.863
-vow,Crimson Vow,2021,vow-set,set,30,5.94,178.26,2.01,60.28,330.0,283.0,347.5,260.95,Innistrad: Crimson Vow - Set Booster Display,,0.54,0.183,0.004,0.0,139.9,170.92,226.11,0.834
-vow,Crimson Vow,2021,vow-collector,collector,12,12.33,148.01,5.34,64.09,320.0,312.87,329.85,305.34,Innistrad: Crimson Vow - Collector Booster Display,,0.463,0.2,0.0,0.0,118.58,146.47,180.84,0.846
-neo,Neon Dynasty,2022,neo-draft,draft,36,7.37,265.45,2.7,97.12,249.9,240.0,254.0,238.65,Kamigawa: Neon Dynasty - Draft Booster Box,,1.062,0.389,0.567,0.001,207.22,257.71,331.32,0.925
-neo,Neon Dynasty,2022,neo-set,set,30,9.23,276.82,4.22,126.64,397.99,388.0,399.99,406.1,Kamigawa: Neon Dynasty - Set Booster Display,,0.696,0.318,0.051,0.0,207.19,268.78,359.98,0.894
-neo,Neon Dynasty,2022,neo-collector,collector,12,27.92,335.02,15.73,188.7,605.0,600.0,659.9,649.59,Kamigawa: Neon Dynasty - Collector Booster Display,,0.554,0.312,0.01,0.0,236.27,320.02,445.39,0.905
+mid,Midnight Hunt,2021,mid-draft,draft,36,4.37,157.28,0.78,28.18,160.0,155.0,169.9,155.01,Innistrad: Midnight Hunt - Draft Booster Box,,0.983,0.176,0.369,0.0,139.22,154.25,178.68,1.0
+mid,Midnight Hunt,2021,mid-set,set,30,5.81,174.28,1.98,59.43,198.49,198.49,202.99,189.47,Innistrad: Midnight Hunt - Set Booster Display,,0.878,0.299,0.197,0.001,135.8,166.77,224.23,1.0
+mid,Midnight Hunt,2021,mid-collector,collector,12,12.67,152.0,5.28,63.39,268.0,249.98,269.85,266.48,Innistrad: Midnight Hunt - Collector Booster Display,,0.567,0.237,0.0,0.0,123.86,148.62,183.65,1.0
+vow,Crimson Vow,2021,vow-draft,draft,36,5.17,185.99,1.03,37.25,152.88,146.0,157.75,145.91,Innistrad: Crimson Vow - Draft Booster Box,,1.217,0.244,0.994,0.0,166.6,184.98,206.64,1.0
+vow,Crimson Vow,2021,vow-set,set,30,6.33,189.75,2.13,63.81,330.0,283.0,347.5,260.95,Innistrad: Crimson Vow - Set Booster Display,,0.575,0.193,0.008,0.0,150.6,181.94,237.2,1.0
+vow,Crimson Vow,2021,vow-collector,collector,12,14.31,171.75,6.39,76.72,320.0,312.87,329.85,305.34,Innistrad: Crimson Vow - Collector Booster Display,,0.537,0.24,0.0,0.0,141.62,169.86,203.57,1.0
+neo,Neon Dynasty,2022,neo-draft,draft,36,7.6,273.51,2.79,100.6,249.9,240.0,254.0,238.65,Kamigawa: Neon Dynasty - Draft Booster Box,,1.094,0.403,0.631,0.001,215.26,265.72,338.53,1.0
+neo,Neon Dynasty,2022,neo-set,set,30,9.5,284.92,4.34,130.12,397.99,388.0,399.99,406.1,Kamigawa: Neon Dynasty - Set Booster Display,,0.716,0.327,0.058,0.0,215.22,276.83,368.69,1.0
+neo,Neon Dynasty,2022,neo-collector,collector,12,28.79,345.46,16.18,194.14,605.0,600.0,659.9,649.59,Kamigawa: Neon Dynasty - Collector Booster Display,,0.571,0.321,0.011,0.0,246.28,330.3,456.77,1.0
 snc,New Capenna,2022,snc-draft,draft,36,5.44,195.85,1.47,52.79,145.0,140.0,153.0,141.64,Streets of New Capenna - Draft Booster Box,,1.351,0.364,0.989,0.0,163.07,193.88,231.55,1.0
-snc,New Capenna,2022,snc-set,set,30,6.43,192.82,2.44,73.35,188.0,182.42,188.0,188.98,Streets of New Capenna - Set Booster Display,,1.026,0.39,0.501,0.001,146.84,188.07,247.07,0.999
+snc,New Capenna,2022,snc-set,set,30,6.43,193.05,2.44,73.35,188.0,182.42,188.0,188.98,Streets of New Capenna - Set Booster Display,,1.027,0.39,0.505,0.001,146.95,188.42,247.32,1.0
 snc,New Capenna,2022,snc-collector,collector,12,17.86,214.3,9.28,111.41,319.0,308.0,319.99,310.7,Streets of New Capenna - Collector Booster Display,,0.672,0.349,0.015,0.0,161.88,210.37,270.35,1.0
 dmu,Dominaria United,2022,dmu-draft,draft,36,5.39,194.11,1.39,49.87,184.5,172.0,198.98,179.02,Dominaria United - Draft Booster Box,,1.052,0.27,0.295,0.004,154.47,171.98,270.59,1.0
-dmu,Dominaria United,2022,dmu-set,set,30,6.68,200.49,2.53,76.0,280.0,280.0,290.0,278.32,Dominaria United - Set Booster Box,,0.716,0.271,0.103,0.0,146.41,181.32,281.99,1.0
+dmu,Dominaria United,2022,dmu-set,set,30,6.69,200.6,2.54,76.05,280.0,280.0,290.0,278.32,Dominaria United - Set Booster Box,,0.716,0.272,0.104,0.0,146.48,181.35,282.04,1.0
 dmu,Dominaria United,2022,dmu-collector,collector,12,22.66,271.94,12.1,145.2,385.0,385.0,392.0,393.51,Dominaria United - Collector Booster Display,,0.706,0.377,0.134,0.008,164.8,257.8,409.71,1.0
 bro,Brothers' War,2022,bro-draft,draft,36,7.03,252.94,2.74,98.8,227.99,227.99,227.99,224.2,The Brothers' War - Draft Booster Box,,1.109,0.433,0.612,0.016,190.06,240.76,326.55,1.0
-bro,Brothers' War,2022,bro-set,set,30,8.52,255.56,3.95,118.63,379.0,372.0,387.95,383.6,The Brothers' War - Set Booster Display,,0.674,0.313,0.053,0.001,184.07,243.38,338.81,0.992
-bro,Brothers' War,2022,bro-collector,collector,12,23.5,282.05,12.97,155.58,840.96,825.0,844.93,838.51,The Brothers' War - Collector Booster Display,,0.335,0.185,0.005,0.002,190.66,254.53,396.94,0.933
+bro,Brothers' War,2022,bro-set,set,30,8.83,265.05,4.15,124.47,379.0,372.0,387.95,383.6,The Brothers' War - Set Booster Display,,0.699,0.328,0.061,0.001,192.59,253.45,349.19,1.0
+bro,Brothers' War,2022,bro-collector,collector,12,29.54,354.46,16.91,202.91,840.96,825.0,844.93,838.51,The Brothers' War - Collector Booster Display,,0.421,0.241,0.011,0.002,241.33,318.92,505.91,1.0
 one,All Will Be One,2023,one-draft,draft,36,7.35,264.55,2.62,94.4,254.0,253.35,268.9,249.37,Phyrexia: All Will Be One - Draft Booster Box,,1.042,0.372,0.452,0.013,189.38,245.21,374.46,1.0
 one,All Will Be One,2023,one-set,set,30,8.85,265.4,3.95,118.41,295.0,290.99,297.95,292.52,Phyrexia: All Will Be One - Set Booster Display,,0.9,0.401,0.285,0.012,176.57,247.22,379.69,1.0
 one,All Will Be One,2023,one-collector,collector,12,30.61,367.3,17.97,215.64,1199.68,1099.0,1200.0,1115.41,Phyrexia: All Will Be One - Collector Booster Display,,0.306,0.18,0.0,0.0,223.19,334.4,561.79,1.0
-mom,March of the Machine,2023,mom-draft,draft,36,6.51,234.22,2.28,82.16,194.0,193.75,199.9,188.95,March of the Machine - Draft Booster Box,,1.207,0.424,0.865,0.001,188.95,230.05,284.97,0.864
-mom,March of the Machine,2023,mom-set,set,30,7.67,230.14,3.4,102.06,296.97,296.5,296.99,301.81,March of the Machine - Set Booster Display,,0.775,0.344,0.09,0.0,174.5,226.53,293.83,0.786
-mom,March of the Machine,2023,mom-collector,collector,12,24.01,288.09,13.6,163.24,937.01,659.99,943.98,957.18,March of the Machine - Collector Booster Display,,0.307,0.174,0.006,0.002,188.58,251.92,411.04,0.901
+mom,March of the Machine,2023,mom-draft,draft,36,7.83,281.8,3.12,112.45,194.0,193.75,199.9,188.95,March of the Machine - Draft Booster Box,,1.453,0.58,0.986,0.012,226.37,278.72,344.85,1.0
+mom,March of the Machine,2023,mom-set,set,30,9.2,276.03,4.37,131.22,296.97,296.5,296.99,301.81,March of the Machine - Set Booster Display,,0.929,0.442,0.334,0.0,211.87,273.06,348.1,1.0
+mom,March of the Machine,2023,mom-collector,collector,12,36.01,432.09,22.81,273.68,937.01,659.99,943.98,957.18,March of the Machine - Collector Booster Display,,0.461,0.292,0.045,0.032,227.85,302.59,577.36,1.0
 ltr,LotR: Tales of Middle-earth,2023,ltr-draft,draft,36,9.96,358.68,4.3,154.71,420.0,400.0,422.89,,LTR - Draft Booster Box,,0.854,0.368,0.198,0.0,269.57,346.11,465.73,1.0
-ltr,LotR: Tales of Middle-earth,2023,ltr-set,set,30,11.57,347.02,5.67,169.95,307.69,306.11,309.99,,LTR - Set Booster Box,,1.128,0.552,0.641,0.03,251.38,335.23,462.15,1.0
+ltr,LotR: Tales of Middle-earth,2023,ltr-set,set,30,11.57,347.08,5.67,169.99,307.69,306.11,309.99,,LTR - Set Booster Box,,1.128,0.552,0.641,0.03,251.33,335.23,462.2,1.0
 ltr,LotR: Tales of Middle-earth,2023,ltr-collector,collector,12,59.88,718.55,38.58,462.94,2080.0,2035.0,2087.9,,LTR - Collector Booster Display,,0.345,0.223,0.022,0.009,452.68,641.28,1002.36,1.0
-woe,Wilds of Eldraine,2023,woe-draft,draft,36,10.47,376.93,4.74,170.73,320.7,274.99,329.7,321.4,Wilds of Eldraine - Draft Booster Display,,1.175,0.532,0.7,0.04,275.29,356.84,509.7,0.861
-woe,Wilds of Eldraine,2023,woe-set,set,30,12.37,370.95,6.35,190.56,349.49,349.0,363.99,362.78,Wilds of Eldraine - Set Booster Display,,1.061,0.545,0.514,0.041,254.76,352.58,505.05,0.863
-woe,Wilds of Eldraine,2023,woe-collector,collector,12,37.51,450.11,22.54,270.52,900.0,869.99,988.88,861.93,Wilds of Eldraine - Collector Booster Display,,0.5,0.301,0.034,0.025,255.78,372.67,643.2,0.851
-lci,Lost Caverns of Ixalan,2023,lci-draft,draft,36,6.11,219.85,1.99,71.66,263.5,256.35,264.98,257.55,The Lost Caverns of Ixalan - Draft Booster Display,,0.834,0.272,0.191,0.0,159.68,211.68,288.8,0.918
-lci,Lost Caverns of Ixalan,2023,lci-set,set,30,7.97,239.21,3.53,105.95,442.95,439.01,449.48,444.77,The Lost Caverns of Ixalan - Set Booster Display,,0.54,0.239,0.004,0.0,163.47,231.47,324.46,0.869
-lci,Lost Caverns of Ixalan,2023,lci-collector,collector,12,36.84,442.07,22.34,268.07,1299.94,649.99,1299.99,1193.89,The Lost Caverns of Ixalan - Collector Booster Display,,0.34,0.206,0.015,0.002,263.1,380.64,669.38,0.86
-mkm,Murders at Karlov Manor,2024,mkm-play,play,36,6.6,237.71,2.84,102.13,139.99,139.99,140.0,138.99,Murders at Karlov Manor - Play Booster Display,,1.698,0.73,0.997,0.113,184.58,234.42,293.88,0.983
-mkm,Murders at Karlov Manor,2024,mkm-collector,collector,12,25.23,302.75,14.72,176.67,409.98,399.95,409.98,396.88,Murders at Karlov Manor - Collector Booster Display,,0.738,0.431,0.108,0.08,171.54,248.84,445.02,0.981
-otj,Outlaws of Thunder Junction,2024,otj-play,play,36,7.92,285.18,3.38,121.58,198.0,190.0,198.78,196.99,Outlaws of Thunder Junction - Play Booster Display,,1.44,0.614,0.97,0.035,219.85,279.38,353.36,0.999
-otj,Outlaws of Thunder Junction,2024,otj-collector,collector,12,27.2,326.36,15.68,188.19,474.99,472.0,487.9,473.7,Outlaws of Thunder Junction - Collector Booster Display,,0.687,0.396,0.07,0.004,216.22,306.18,448.68,0.999
-mh3,Modern Horizons 3,2024,mh3-play,play,36,10.7,385.37,5.16,185.69,300.0,293.86,308.86,303.08,Modern Horizons 3 - Play Booster Display,,1.285,0.619,0.935,0.015,312.72,378.6,466.91,0.94
-mh3,Modern Horizons 3,2024,mh3-collector,collector,12,49.76,597.14,31.21,374.55,885.53,885.53,908.59,899.02,Modern Horizons 3 - Collector Booster Display,,0.674,0.423,0.015,0.004,458.73,583.19,737.07,0.954
+woe,Wilds of Eldraine,2023,woe-draft,draft,36,10.94,393.93,4.93,177.38,320.7,274.99,329.7,321.4,Wilds of Eldraine - Draft Booster Display,,1.228,0.553,0.786,0.044,291.06,373.89,527.48,1.0
+woe,Wilds of Eldraine,2023,woe-set,set,30,12.89,386.64,6.57,197.21,349.49,349.0,363.99,362.78,Wilds of Eldraine - Set Booster Display,,1.106,0.564,0.579,0.045,270.05,367.83,521.72,1.0
+woe,Wilds of Eldraine,2023,woe-collector,collector,12,39.23,470.72,23.47,281.61,900.0,869.99,988.88,861.93,Wilds of Eldraine - Collector Booster Display,,0.523,0.313,0.038,0.025,275.68,392.87,660.03,1.0
+lci,Lost Caverns of Ixalan,2023,lci-draft,draft,36,7.0,251.98,2.51,90.5,263.5,256.35,264.98,257.55,The Lost Caverns of Ixalan - Draft Booster Display,,0.956,0.343,0.376,0.0,185.68,245.34,324.32,1.0
+lci,Lost Caverns of Ixalan,2023,lci-set,set,30,9.19,275.59,4.24,127.21,442.95,439.01,449.48,444.77,The Lost Caverns of Ixalan - Set Booster Display,,0.622,0.287,0.013,0.0,195.54,268.08,364.16,1.0
+lci,Lost Caverns of Ixalan,2023,lci-collector,collector,12,44.75,537.04,27.52,330.24,1299.94,649.99,1299.99,1193.89,The Lost Caverns of Ixalan - Collector Booster Display,,0.413,0.254,0.017,0.002,357.71,479.14,764.74,1.0
+mkm,Murders at Karlov Manor,2024,mkm-play,play,36,6.6,237.74,2.84,102.13,139.99,139.99,140.0,138.99,Murders at Karlov Manor - Play Booster Display,,1.698,0.73,0.997,0.113,184.57,234.29,293.86,0.998
+mkm,Murders at Karlov Manor,2024,mkm-collector,collector,12,25.25,302.99,14.72,176.67,409.98,399.95,409.98,396.88,Murders at Karlov Manor - Collector Booster Display,,0.739,0.431,0.108,0.08,171.76,249.1,445.1,0.994
+otj,Outlaws of Thunder Junction,2024,otj-play,play,36,7.93,285.56,3.38,121.81,198.0,190.0,198.78,196.99,Outlaws of Thunder Junction - Play Booster Display,,1.442,0.615,0.97,0.035,220.03,279.62,353.98,1.0
+otj,Outlaws of Thunder Junction,2024,otj-collector,collector,12,27.26,327.09,15.72,188.65,474.99,472.0,487.9,473.7,Outlaws of Thunder Junction - Collector Booster Display,,0.689,0.397,0.071,0.004,217.69,307.18,449.12,1.0
+mh3,Modern Horizons 3,2024,mh3-play,play,36,12.5,450.15,6.29,226.38,300.0,293.86,308.86,303.08,Modern Horizons 3 - Play Booster Display,,1.501,0.755,0.997,0.067,373.98,445.05,535.33,1.0
+mh3,Modern Horizons 3,2024,mh3-collector,collector,12,54.03,648.34,34.07,408.83,885.53,885.53,908.59,899.02,Modern Horizons 3 - Collector Booster Display,,0.732,0.462,0.028,0.004,509.44,633.71,793.64,0.998
 blb,Bloomburrow,2024,blb-play,play,36,7.77,279.87,2.95,106.06,203.99,194.99,210.0,205.19,Bloomburrow - Play Booster Display,,1.372,0.52,0.975,0.011,223.69,274.05,342.67,1.0
-blb,Bloomburrow,2024,blb-collector,collector,12,42.33,507.9,25.87,310.45,1251.97,1237.01,1309.99,1310.6,Bloomburrow - Collector Booster Display,,0.406,0.248,0.03,0.009,302.01,424.72,797.35,0.998
-dsk,Duskmourn,2024,dsk-play,play,36,6.9,248.22,2.78,99.97,209.95,199.97,215.0,206.75,Duskmourn: House of Horror - Play Booster Display,,1.182,0.476,0.878,0.0,206.22,246.86,293.79,0.926
-dsk,Duskmourn,2024,dsk-collector,collector,12,29.2,350.37,17.02,204.25,816.15,799.0,825.95,764.47,Duskmourn: House of Horror - Collector Booster Display,,0.429,0.25,0.003,0.0,243.81,327.24,486.58,0.929
+blb,Bloomburrow,2024,blb-collector,collector,12,42.39,508.73,25.91,310.89,1251.97,1237.01,1309.99,1310.6,Bloomburrow - Collector Booster Display,,0.406,0.248,0.03,0.009,302.73,425.29,798.88,1.0
+dsk,Duskmourn,2024,dsk-play,play,36,7.24,260.55,2.97,106.99,209.95,199.97,215.0,206.75,Duskmourn: House of Horror - Play Booster Display,,1.241,0.51,0.94,0.0,218.53,259.92,305.64,1.0
+dsk,Duskmourn,2024,dsk-collector,collector,12,30.56,366.75,17.81,213.73,816.15,799.0,825.95,764.47,Duskmourn: House of Horror - Collector Booster Display,,0.449,0.262,0.004,0.0,260.41,344.13,500.95,1.0
 fdn,Foundations,2024,fdn-play,play,36,7.4,266.49,2.7,97.31,174.01,174.01,176.98,175.04,Magic: The Gathering Foundations - Play Booster Display,189.0,1.531,0.559,1.0,0.015,215.8,262.19,323.64,1.0
 fdn,Foundations,2024,fdn-collector,collector,12,43.26,519.16,26.34,316.03,908.88,875.0,940.0,901.96,Magic: The Gathering Foundations - Collector Booster Display,299.88,0.571,0.348,0.052,0.011,320.22,462.09,773.77,1.0
 dft,Aetherdrift,2025,dft-play,play,30,5.52,165.58,1.74,52.23,114.48,114.47,114.49,113.31,Aetherdrift - Play Booster Display,164.7,1.446,0.456,0.973,0.044,126.26,157.07,202.94,1.0
 dft,Aetherdrift,2025,dft-collector,collector,12,15.79,189.54,7.82,93.84,324.94,311.0,324.95,317.37,Aetherdrift - Collector Booster Display,299.88,0.583,0.289,0.062,0.003,130.29,172.37,249.42,1.0
-tdm,Tarkir: Dragonstorm,2025,tdm-play,play,30,6.13,183.89,2.24,67.15,166.99,166.97,168.0,165.49,Tarkir: Dragonstorm - Play Booster Display,164.7,1.101,0.402,0.585,0.009,129.97,176.53,243.62,0.944
-tdm,Tarkir: Dragonstorm,2025,tdm-collector,collector,12,32.47,389.66,19.42,233.04,500.0,499.0,500.0,496.92,Tarkir: Dragonstorm - Collector Booster Display,299.88,0.779,0.466,0.182,0.052,219.84,327.84,666.51,0.878
-fin,Final Fantasy,2025,fin-play,play,30,7.93,237.91,3.24,97.12,255.66,225.0,264.0,,FINAL FANTASY - Play Booster Display,209.7,0.931,0.38,0.307,0.003,170.44,225.5,322.96,0.953
-fin,Final Fantasy,2025,fin-collector,collector,12,69.28,831.35,45.01,540.08,1661.8,1256.0,1680.0,,FINAL FANTASY - Collector Booster Display,455.88,0.5,0.325,0.073,0.02,417.72,704.3,1381.74,0.907
+tdm,Tarkir: Dragonstorm,2025,tdm-play,play,30,6.3,189.09,2.31,69.45,166.99,166.97,168.0,165.49,Tarkir: Dragonstorm - Play Booster Display,164.7,1.132,0.416,0.625,0.01,134.22,181.31,250.98,1.0
+tdm,Tarkir: Dragonstorm,2025,tdm-collector,collector,12,34.07,408.89,20.33,243.94,500.0,499.0,500.0,496.92,Tarkir: Dragonstorm - Collector Booster Display,299.88,0.818,0.488,0.196,0.058,236.72,349.55,685.71,1.0
+fin,Final Fantasy,2025,fin-play,play,30,8.95,268.46,3.85,115.46,255.66,225.0,264.0,,FINAL FANTASY - Play Booster Display,209.7,1.05,0.452,0.494,0.012,192.55,254.95,362.53,1.0
+fin,Final Fantasy,2025,fin-collector,collector,12,83.4,1000.81,54.62,655.48,1661.8,1256.0,1680.0,,FINAL FANTASY - Collector Booster Display,455.88,0.602,0.394,0.101,0.03,538.58,870.1,1668.91,1.0
 eoe,Edge of Eternities,2025,eoe-play,play,30,7.9,236.97,3.59,107.72,188.0,188.0,194.0,188.28,Edge of Eternities - Play Booster Display,164.7,1.26,0.573,0.827,0.05,175.49,228.87,309.88,1.0
 eoe,Edge of Eternities,2025,eoe-collector,collector,12,40.47,485.6,25.09,301.1,728.99,714.99,728.99,739.19,Edge of Eternities - Collector Booster Display,299.88,0.666,0.413,0.082,0.03,301.76,426.79,685.35,1.0
-spm,Spider-Man,2025,spm-play,play,30,5.11,153.36,1.6,48.09,127.95,120.99,127.98,119.89,Marvel's Spider-Man - Play Booster Display,209.7,1.199,0.376,0.583,0.045,111.07,132.81,221.61,0.996
-spm,Spider-Man,2025,spm-collector,collector,12,21.99,263.84,11.87,142.5,420.9,414.0,422.99,406.37,Marvel's Spider-Man - Collector Booster Display,455.88,0.627,0.339,0.064,0.019,180.42,219.02,347.85,0.987
-tla,Avatar: The Last Airbender,2025,tla-play,play,30,5.59,167.69,1.95,58.46,135.39,120.39,135.39,134.44,Avatar: The Last Airbender - Play Booster Display,209.7,1.239,0.432,0.765,0.015,121.31,161.81,224.18,0.993
-tla,Avatar: The Last Airbender,2025,tla-collector,collector,12,33.62,403.45,19.55,234.65,492.67,449.99,497.0,466.2,Avatar: The Last Airbender - Collector Booster Display,455.88,0.819,0.476,0.106,0.041,288.48,372.01,497.75,0.985
-ecl,Lorwyn Eclipsed,2026,ecl-play,play,30,5.24,157.21,1.76,52.71,114.95,110.0,117.97,112.24,Lorwyn Eclipsed - Play Booster Display,164.7,1.368,0.459,0.948,0.006,122.52,154.35,196.49,0.991
-ecl,Lorwyn Eclipsed,2026,ecl-collector,collector,12,17.22,206.69,8.68,104.22,419.89,417.94,420.0,422.62,Lorwyn Eclipsed - Collector Booster Display,323.88,0.492,0.248,0.011,0.004,141.07,196.55,275.56,0.966
-hob,The Hobbit,2026,hob-play,play,30,4.43,132.79,1.21,36.42,155.85,150.85,155.95,152.92,The Hobbit - Play Booster Display,209.7,0.852,0.234,0.197,0.0,99.89,127.96,173.03,0.917
-hob,The Hobbit,2026,hob-collector,collector,12,46.55,558.64,30.73,368.77,714.96,700.0,720.0,722.14,The Hobbit - Collector Booster Display,455.88,0.781,0.516,0.148,0.027,299.66,454.37,822.16,0.9
-sos,Secrets of Strixhaven,2026,sos-play,play,30,4.95,148.48,1.43,42.79,144.94,132.84,144.97,143.27,Secrets of Strixhaven - Play Booster Display,164.7,1.024,0.295,0.435,0.001,118.63,140.68,190.5,0.894
-sos,Secrets of Strixhaven,2026,sos-collector,collector,12,28.94,347.32,16.49,197.89,503.0,499.99,508.69,506.75,Secrets of Strixhaven - Collector Booster Display,323.88,0.691,0.393,0.104,0.041,203.93,293.78,513.85,0.903
-fra,Reality Fracture,2026,fra-play,play,30,6.9,207.02,2.33,69.86,150.96,150.96,152.0,151.0244,Reality Fracture - Play Booster Display,164.7,1.371,0.463,0.961,0.003,163.46,203.06,255.82,0.913
-fra,Reality Fracture,2026,fra-collector,collector,12,34.27,411.19,19.59,235.08,456.84,456.84,456.85,454.39,Reality Fracture - Collector Booster Display,323.88,0.9,0.515,0.232,0.057,275.5,368.32,609.35,0.932
+spm,Spider-Man,2025,spm-play,play,30,5.49,164.61,1.85,55.43,127.95,120.99,127.98,119.89,Marvel's Spider-Man - Play Booster Display,209.7,1.287,0.433,0.776,0.051,119.03,145.82,234.74,1.0
+spm,Spider-Man,2025,spm-collector,collector,12,26.55,318.56,15.13,181.52,420.9,414.0,422.99,406.37,Marvel's Spider-Man - Collector Booster Display,455.88,0.757,0.431,0.121,0.025,205.03,265.95,449.26,1.0
+tla,Avatar: The Last Airbender,2025,tla-play,play,30,5.95,178.43,2.17,65.06,135.39,120.39,135.39,134.44,Avatar: The Last Airbender - Play Booster Display,209.7,1.318,0.481,0.865,0.022,131.18,172.57,234.54,1.0
+tla,Avatar: The Last Airbender,2025,tla-collector,collector,12,38.35,460.25,22.86,274.32,492.67,449.99,497.0,466.2,Avatar: The Last Airbender - Collector Booster Display,455.88,0.934,0.557,0.155,0.059,308.88,393.2,533.52,1.0
+ecl,Lorwyn Eclipsed,2026,ecl-play,play,30,5.47,164.04,1.89,56.76,114.95,110.0,117.97,112.24,Lorwyn Eclipsed - Play Booster Display,164.7,1.427,0.494,0.97,0.013,128.15,161.38,204.51,1.0
+ecl,Lorwyn Eclipsed,2026,ecl-collector,collector,12,19.44,233.3,10.15,121.77,419.89,417.94,420.0,422.62,Lorwyn Eclipsed - Collector Booster Display,323.88,0.556,0.29,0.014,0.004,165.61,223.79,302.56,1.0
+hob,The Hobbit,2026,hob-play,play,30,4.76,142.77,1.41,42.39,155.85,150.85,155.95,152.92,The Hobbit - Play Booster Display,209.7,0.916,0.272,0.29,0.001,107.26,137.63,185.41,1.0
+hob,The Hobbit,2026,hob-collector,collector,12,51.05,612.63,33.7,404.36,714.96,700.0,720.0,722.14,The Hobbit - Collector Booster Display,455.88,0.857,0.566,0.193,0.033,342.73,512.73,877.49,1.0
+sos,Secrets of Strixhaven,2026,sos-play,play,30,5.35,160.36,1.6,47.92,144.94,132.84,144.97,143.27,Secrets of Strixhaven - Play Booster Display,164.7,1.106,0.331,0.633,0.001,127.87,153.11,202.91,1.0
+sos,Secrets of Strixhaven,2026,sos-collector,collector,12,30.87,370.47,17.8,213.59,503.0,499.99,508.69,506.75,Secrets of Strixhaven - Collector Booster Display,323.88,0.737,0.425,0.116,0.046,221.81,312.89,534.62,1.0
+fra,Reality Fracture,2026,fra-play,play,30,7.13,213.84,2.39,71.79,150.96,150.96,152.0,151.0244,Reality Fracture - Play Booster Display,164.7,1.417,0.476,0.981,0.004,170.28,210.22,262.83,1.0
+fra,Reality Fracture,2026,fra-collector,collector,12,35.06,420.7,19.98,239.72,456.84,456.84,456.85,454.39,Reality Fracture - Collector Booster Display,323.88,0.921,0.525,0.247,0.058,285.21,377.62,619.69,1.0

@@ -1,4 +1,4 @@
-import csv, os, math
+import csv, os, math, json
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
@@ -27,7 +27,7 @@ lines = [
  ('"Cash-out value" = what you net if you sell everything: cards under $1 = $0, $1-5 cards at 50% of market, $5+ at 70%. Change these levers on the Set Summary sheet (yellow cells) - the ratios recompute.', B),
  ('Store Economics sheet uses figures from one independent store\'s launch order, rounded UP to the nearest $10 and with no distributor or store named. Do not reverse-engineer.', B),
  ('Blue text = hardcoded input you can change. Black = formula. Yellow fill = key assumption.', B),
- ('Caveats: (1) EV uses TODAY\'s prices, not at-release prices; new-set singles typically fall 30%+ in the first 3 months (MTGStocks, Aetherdrift check-in May 2025). (2) Older boxes (2016-2019) are priced today as aged sealed, so their EV/price ratio reflects the sealed premium, not launch economics. (3) God pack values assume Reality Fracture averages, 3 days post-release (generous); the celebration card is valued at $0. (4) Wizards has not published the new foil rare/mythic rate - see Foil Change sheet for the break-even.', B),
+ ('Caveats: (1) EV uses TODAY\'s prices, not at-release prices; new-set prices fall after release (MTGStocks, May 2025: Aetherdrift\'s two top mythics lost nearly half and its Collector boxes ~33% in under 3 months). (2) Older boxes (2016-2019) are priced today as aged sealed, so their EV/price ratio reflects the sealed premium, not launch economics. (3) God pack values assume Reality Fracture averages, 3 days post-release (generous); the celebration card is valued at $0. (4) Wizards has not published the new foil rare/mythic rate - see Foil Change sheet for the break-even.', B),
 ]
 for i, (t, f) in enumerate(lines, 1):
     c = ws.cell(row=i, column=1, value=t); c.font = f; c.alignment = Alignment(wrap_text=True, vertical='top')
@@ -217,9 +217,11 @@ widths(ws, [110, 90])
 # ------------------------------------------------------------------ Selling Time (the second price)
 ws = wb.create_sheet('Selling Time')
 ws['A1'] = 'The second price: hours and sunk cost to turn a box into cash. Blue = assumptions you can change. Modelled on a Reality Fracture Play Booster box.'; ws['A1'].font = BOLD
-inp = [('Cards in the box', 420), ('Cards worth $1 or more (listable)', 24), ('Cards worth $5 or more', 6), ('Market value of listable cards ($)', 110.5), ('Market value of sub-$1 cards ($)', 96.6),
+FF = json.load(open(os.path.join(OUT, 'fun_facts.json')))  # tiers come from the model (fun_facts.py), not typed in
+inp = [('Cards in the box', FF['fra_box_cards']), ('Cards worth $1 or more (listable)', FF['fra_box_listable_count']), ('Cards worth $5 or more', FF['fra_box_over_5_count']),
+       ('Market value of listable cards ($)', FF['fra_box_listable_value']), ('Market value of sub-$1 cards ($)', FF['fra_box_under_1_value']),
        ('Seconds to sort / identify / condition-check each card', 15), ('Minutes to list each listable card', 3), ('Share of listed cards that sell within 90 days at market', 0.6),
-       ('Price cut needed to move the rest after 90 days (new-set decay)', 0.3), ('Minutes to pack, label and mail each order', 8), ('Marketplace + payment fees', 0.13), ('Supplies per order: envelope, sleeve, toploader, stamp ($)', 0.75),
+       ('Price cut needed to move the rest after 90 days (assumption; Aetherdrift top mythics lost ~half and its boxes ~30% in 3 months)', 0.3), ('Minutes to pack, label and mail each order', 8), ('Marketplace + payment fees', 0.13), ('Supplies per order: envelope, sleeve, toploader, stamp ($)', 0.75),
        ('Bulk buylist rate per 1,000 commons/uncommons ($)', 4), ('Your hourly value of time ($)', 20)]
 for i, (k, v) in enumerate(inp, 3):
     ws.cell(row=i, column=1, value=k); c = ws.cell(row=i, column=2, value=v); c.font = BLUE
@@ -238,7 +240,7 @@ outs = [('Hours sorting the whole box', '=B3*B8/3600', '0.0'), ('Hours listing',
 for i, (k, f, nf) in enumerate(outs, r + 1):
     ws.cell(row=i, column=1, value=k); c = ws.cell(row=i, column=2, value=f); c.number_format = nf
 ws['B33'].font = GREEN
-ws['A36'] = 'Reading: the box money is sunk the moment you open it; the hours are a second payment. The 396 sub-$1 cards are worth about $97 on paper and about $1.50 at a bulk buylist, and that gap is most of the difference between "EV" and cash.'
+ws['A36'] = 'Reading: the box money is sunk the moment you open it; the hours are a second payment. The sub-$1 pile (about 395 cards) is worth about $100 on paper and about $1.60 at a bulk buylist, and that gap is most of the difference between "EV" and cash.'
 ws['A36'].font = Font(name=F, italic=True)
 widths(ws, [72, 14])
 

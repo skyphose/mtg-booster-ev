@@ -7,7 +7,7 @@ four separate things could be wrong, so i test them separately:
   B. five sales          - the box price is the median of only 5 completed sales. bootstrap them and see how much the answer moves.
   C. card prices         - tcgplayer market prices are estimates. shake every card price by lognormal noise (20%) 300 times.
   D. across sets         - each set is one data point. wilcoxon signed-rank + sign test on log(ratio), by box type.
-  E. god pack spread     - "$63" is an average. simulate 20,000 god packs and look at the distribution.
+  E. god pack spread     - the god pack value is an average. simulate 20,000 god packs and look at the distribution.
 
     python3 significance.py     # ~4 min, writes results/significance_*.csv
 """

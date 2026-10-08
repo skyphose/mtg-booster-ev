@@ -6,14 +6,14 @@ this is the model behind the video. i work at a game store and i order, sell, an
 
 | what i checked | what i got |
 |---|---|
-| median 2024-26 play booster box: cards at tcgplayer market ÷ what the box actually sells for | **1.27×** (range 0.85× to 1.70×). on paper, you win. |
-| same boxes if you actually sell everything (bulk = $0, $1-5 cards at 50%, $5+ at 70%) | **46¢ on the dollar** |
-| chance one box pays for itself in cash (4,000 simulated boxes per set) | **about 1%** for the typical set. karlov manor is the best at 11%. |
-| median collector booster box, cards at market ÷ box price | **0.58×**. under water even on paper. |
-| a 2027 booster-pack god pack (14 rares/mythics, reality fracture prices) | **mean $63, median $50.** half of them are under fifty bucks. |
-| what that adds to a $5.49 pack at 1 in 1,000 | **six cents.** $1.70 on a box. |
-| the foil change: break-even for the new foil-rare rate wizards hasn't published yet | **1 in 8.5 packs** (today it's 1 in 13) |
-| collector boosters: 15 cards → 12 at the same $26.99 | **+25% per card**, about -$1.02 of ev per pack |
+| median 2024-26 play booster box: cards at tcgplayer market ÷ what the box actually sells for | **1.35×** (range 0.92× to 1.70×). on paper, you win. |
+| same boxes if you actually sell everything (bulk = $0, $1-5 cards at 50%, $5+ at 70%) | **49¢ on the dollar** |
+| chance one box pays for itself in cash (4,000 simulated boxes per set) | **about 1 in 70** for the typical set. karlov manor is the best at 11%. |
+| median collector booster box, cards at market ÷ box price | **0.62×**. under water even on paper, all 33 of them. |
+| a 2027 booster-pack god pack (14 rares/mythics, reality fracture prices) | **mean $65, median $51.** about half of them are under fifty bucks. |
+| what that adds to a $5.49 pack at 1 in 1,000 | **six cents.** $1.74 on a box. |
+| the foil change: break-even for the new foil-rare rate wizards hasn't published yet | **about 1 in 8 packs** (today it's about 1 in 12) |
+| collector boosters: 15 cards → 12 at the same $26.99 | **+25% per card**, about -$1.07 of ev per pack |
 
 ## run it yourself
 
@@ -37,11 +37,11 @@ everything lands in `results/`: `set_summary.csv` (one row per box product), `bo
 
 ## how it works
 
-1. **pack structure.** wizards publishes slot-by-slot odds for every set in the "collecting <set>" articles. `data/sealed_basic_data.json` (from [mtg.wtf](https://mtg.wtf) via [taw/magic-sealed-data](https://github.com/taw/magic-sealed-data)) turns those into card-level weights: every booster variant, every sheet it pulls from, how many cards from each sheet, and each printing's weight on the sheet. reality fracture's play booster alone is 109 sheets.
-2. **card prices.** scryfall's bulk file carries tcgplayer market price for every printing, foil and non-foil. market price is tcgplayer's smoothed estimate of what things actually sold for, not a listing price. a card with no price falls back to bulk ($0.03-0.25 by rarity); how much of each product had a real price is in `price_coverage` (median 98%).
+1. **pack structure.** wizards publishes slot-by-slot odds in its "collecting <set>" articles (2019 on; for older draft boosters the odds are mtg.wtf's estimates). `data/sealed_basic_data.json` (from [mtg.wtf](https://mtg.wtf) via [taw/magic-sealed-data](https://github.com/taw/magic-sealed-data)) turns those into card-level weights: every booster variant, every sheet it pulls from, how many cards from each sheet, and each printing's weight on the sheet. reality fracture's play booster alone is 109 sheets.
+2. **card prices.** scryfall's bulk file carries tcgplayer market price for every printing, foil and non-foil. market price is tcgplayer's smoothed estimate of what things actually sold for, not a listing price. a card with no price falls back to bulk ($0.03-0.25 by rarity); how much of each product had a real price is in `price_coverage` (median 100%). double-faced cards are listed as `100a` in the sheet data and `100` on scryfall, and the model matches them up (an earlier version didn't, which priced every double-faced card as bulk; fixed 2026-10-08).
 3. **box price.** the median of the five most recent *completed* tcgplayer sales for that box. not "market price," not the cheapest listing. if nobody paid it, it isn't the price.
 4. **ev.** per pack: for each slot, expected cards from that sheet × the sheet's weighted average price. per box: × packs (36 for draft and 2024 play boosters, 30 for set and 2025+ play boosters, 12 collector). then 4,000 simulated boxes per product for the spread and the odds a box beats its price.
-5. **cash-out.** what you net if you sell every card. under $1 is bulk and counts as zero. $1-5 you keep half (fees, shipping, buylist spread). $5+ you keep 70%. these are flags (`--bulk-below`, `--mid-keep`, `--high-keep`). even at a very generous 80% on everything over a dollar, the median box gives back 57¢.
+5. **cash-out.** what you net if you sell every card. under $1 is bulk and counts as zero. $1-5 you keep half (fees, shipping, buylist spread). $5+ you keep 70%. these are flags (`--bulk-below`, `--mid-keep`, `--high-keep`). even at a very generous 80% on everything over a dollar, the median box gives back 60¢, and the best (modern horizons 3) 93¢. you'd have to keep 90% of every $1+ card for a single box (mh3) to clear a dollar.
 6. **god packs and the foil change** (`godpack_model.py`) use reality fracture's sheets as the stand-in for nauctis. god pack = 10 default-frame rares/mythics + 2 non-foil booster fun + 2 foil booster fun (+ a celebration card, which i value at $0 because nobody's seen it). collector god pack = foil land + 3 foil rares/mythics + 3 non-foil booster fun + 5 foil booster fun. the foil change: foil commons/uncommons leave the foil slot, a foil rare/mythic shows up at some rate *p*, a plain card otherwise. i solve for the *p* where pack ev doesn't move.
 
 ## is it statistically significant?
@@ -50,25 +50,28 @@ yes, and the one place it isn't is worth saying out loud. `significance.py` pull
 
 | what could be wrong | how i tested it | what happened |
 |---|---|---|
-| monte carlo noise | one-sample t-test, simulated boxes vs box price, per product | not the problem. every 2024-26 product has \|t\| > 5; cash-out is below price for all 32 products at p < 10⁻⁶ |
-| the box price is only 5 sales | bootstrap the 5 sales, recompute everything 2,000 times | intervals are tight because the 5 sales cluster. reality fracture play box: 1.37-1.38 at market, 0.46-0.47 cash. widest is final fantasy play at 0.90-1.06, which is why i call that one "about break-even on paper" |
-| tcgplayer prices are estimates | lognormal noise, σ = 20% on every printing, 300 redraws | median play ratio 1.27-1.34 at market, 0.45-0.49 in cash. 300 of 300 redraws keep the median set above 1 on paper and below 1 in cash. a *systematic* bias would have to be over 21% to pull the market ratio under 1. nothing plausible rescues the cash number |
-| is this the product, or just these 16 sets? | wilcoxon signed-rank + exact sign test on log(ratio), one observation per set | play boosters above 1 at market: 14 of 16, p = 2×10⁻⁴. below 1 in cash: 16 of 16, p = 1.5×10⁻⁵. collector boxes below 1 at market: 33 of 33, p = 3×10⁻⁷. **draft boxes 2016-23 at market: not significant** (15 of 31 above 1, median 0.99). coin flip. |
+| monte carlo noise | one-sample t-test, simulated boxes vs box price, per product | not the problem. 15 of 16 play boxes sit above price on paper at t > 5 (the hobbit sits below); cash-out is below price for all 32 products at p < 10⁻⁶ |
+| the box price is only 5 sales | bootstrap the 5 sales, recompute everything 2,000 times | intervals are tight because the 5 sales cluster. reality fracture play box: 1.41-1.42 at market, 0.48 cash. widest is final fantasy play at 1.02-1.20, which is why i call that one "about break-even on paper" |
+| tcgplayer prices are estimates | lognormal noise, σ = 20% on every printing, 300 redraws | median play ratio 1.34-1.41 at market, 0.48-0.52 in cash. 300 of 300 redraws keep the median set above 1 on paper and below 1 in cash. a *systematic* bias would have to be over 25% to pull the market ratio under 1. nothing plausible rescues the cash number |
+| is this the product, or just these 16 sets? | wilcoxon signed-rank + exact sign test on log(ratio), one observation per set | play boosters above 1 at market: 15 of 16, p = 5×10⁻⁵. below 1 in cash: 16 of 16, p = 1.5×10⁻⁵. collector boxes below 1 at market: 33 of 33, p = 3×10⁻⁷. **draft boxes 2016-23 at market: not significant** (17 of 31 above 1, median 1.05, p = 0.54). coin flip. |
 
-god packs have a spread, not a value: 20,000 simulated god packs give a mean of $64, a median of $50, 10th-90th percentile $23-$106, and 1% over $400. the average gets dragged up by the two foil booster fun slots.
+god packs have a spread, not a value: 20,000 simulated god packs give a mean of $66, a median of $51, 10th-90th percentile $25-$107, and 1% over $400. the average gets dragged up by the two foil booster fun slots.
 
 ## what this doesn't do, so you don't have to tell me
 
-- **today's prices, not launch prices.** new-set singles usually drop 30%+ in the first three months ([mtgstocks on aetherdrift](https://www.mtgstocks.com/news/17099-checking-in-on-aetherdrift-prices)). if you opened on release day you did worse than this.
+- **release-week prices for reality fracture.** it came out three days before the price pull, and new-set prices fall: aetherdrift's two top mythics lost nearly half their value and its collector boxes about a third in under three months ([mtgstocks](https://www.mtgstocks.com/news/17099-checking-in-on-aetherdrift-prices)). nobody publishes a clean set-wide number for singles, so i don't put one on it. older sets are priced today, months or years after release.
 - **no sealed-appreciation model.** a 2017 box is priced today as a collectible, so its ratio is about the sealed premium, not about cracking it. the opening argument is the 2024-26 rows.
 - **five sales is thin.** that's what tcgplayer shows without a login. the min/max of the five are in `set_summary.csv` so you can see how tight they are.
 - **sell-through is a guess.** the selling-time tab assumes 60% of listings sell in 90 days. nobody publishes that number. it's a yellow cell, change it.
-- **god pack values are generous.** reality fracture was three days old when i pulled prices, and the foil booster fun sheet average ($16) includes shattered-mirror and serialized stuff that won't be in a god pack (cap any card at $100 and it's $13).
+- **collector ev leans on a few huge foils.** on some collector boxes, up to 29% of the ev comes from cards priced at $300+ (march of the machine, final fantasy), and those prices come from thin markets. if they're too high, collector boxes look even worse, so this cuts in my favor, but it's why the simulated *median* box sits well under the mean.
+- **five sales is thin.** for reality fracture (play and collector) and foundations play, the five sales look like one seller's listing bought out on one day. they line up with tcgplayer market and retail prices, so i kept them, but it's really one data point. shipping isn't included in box prices (adding it moves the play median by about 0.03×).
+- **the sheet data isn't perfect.** aetherdrift's play booster rare slot gives borderless rares about twice the share wizards publishes (16% vs 8%). fixing it moves that box by about 6 cents, so i left the data as-is. the simulation draws cards with replacement inside a sheet, which doesn't change ev and barely touches the spread.
+- **god pack values are generous.** reality fracture was three days old when i pulled prices, and the foil booster fun sheet average ($16) includes japan showcase fracture foils and other rare treatments wizards hasn't said can show up in a god pack (cap any card at $100 and it's $13; drop the japan showcase cards and the god pack is about $54 instead of $65).
 - **store numbers are rounded and anonymous.** the store-economics bits come from one independent store's launch order, rounded up to the nearest $10, no store or distributor named. the raw files are not here and won't be.
 
 ## did someone else get the same answer?
 
-[tabletopmeta](https://www.tabletopmeta.com/ev) does the same kind of math with live prices. same day: foundations $265 vs my $266, aetherdrift $171 vs $166, modern horizons 3 $417 vs $385, final fantasy collector $722 vs $831.
+[tabletopmeta](https://www.tabletopmeta.com/ev) does the same kind of math with live prices, and it agrees with me within about 1% on most sets (foundations, aetherdrift, bloomburrow, edge of eternities, lorwyn). that's not independent confirmation: it looks like it uses the same scryfall prices and booster data, and it still matches my *old* numbers on sets with lots of double-faced cards (final fantasy collector: $829 there, $1,001 here after the fix), so it probably has the same double-faced-card gap mine had.
 
 ## sources
 
