@@ -213,6 +213,36 @@
   "dur": 5
  },
  {
+  "id": "tag_h1",
+  "phrase": "what if god packs had always been a thing",
+  "type": "tag",
+  "asset": "tag_h1.png",
+  "dur": 4
+ },
+ {
+  "id": "chart11",
+  "phrase": "what if god packs had always been a thing",
+  "type": "broll",
+  "asset": "11_godpacks_through_history.png",
+  "same_as": "tag_h1",
+  "until": "gp_history",
+  "max": 30
+ },
+ {
+  "id": "gp_history",
+  "phrase": "the most it ever adds is about",
+  "type": "callout",
+  "asset": "callout_gp_history.png",
+  "dur": 4
+ },
+ {
+  "id": "gp_flip",
+  "phrase": "not one box in ten years goes from losing to winning",
+  "type": "callout",
+  "asset": "callout_gp_flip.png",
+  "dur": 4
+ },
+ {
   "id": "tag_p5",
   "phrase": "same post two paragraphs down",
   "type": "tag",
@@ -225,7 +255,7 @@
   "type": "broll",
   "asset": "07_collector_shrink.png",
   "offset": -2.5,
-  "until": "chart06",
+  "until": "chart12",
   "max": 20
  },
  {
@@ -241,6 +271,21 @@
   "phrase": "your collector booster got about",
   "type": "callout",
   "asset": "callout_net_80.png",
+  "dur": 4
+ },
+ {
+  "id": "chart12",
+  "phrase": "run the same cut on every collector booster",
+  "type": "broll",
+  "asset": "12_collector_cut.png",
+  "until": "chart06",
+  "max": 20
+ },
+ {
+  "id": "cut_cash",
+  "phrase": "in cash those three cards are worth about a dime",
+  "type": "callout",
+  "asset": "callout_cut_cash.png",
   "dur": 4
  },
  {

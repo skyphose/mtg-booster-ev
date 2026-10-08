@@ -305,6 +305,34 @@
   "max": 25
  },
  {
+  "id": "tag_h1_b",
+  "phrase": "what if god packs had always existed",
+  "type": "tag",
+  "asset": "tag_h1.png",
+  "dur": 4
+ },
+ {
+  "id": "chart11_b",
+  "phrase": "the top of the list",
+  "type": "broll",
+  "asset": "11_godpacks_through_history.png",
+  "max": 30
+ },
+ {
+  "id": "gp_history_b",
+  "phrase": "the most a god pack ever adds to a box",
+  "type": "callout",
+  "asset": "callout_gp_history.png",
+  "dur": 4
+ },
+ {
+  "id": "gp_flip_b",
+  "phrase": "god packs flip zero of them",
+  "type": "callout",
+  "asset": "callout_gp_flip.png",
+  "dur": 4
+ },
+ {
   "id": "tag_b6",
   "phrase": "same post two paragraphs down",
   "type": "tag",
@@ -317,7 +345,7 @@
   "type": "broll",
   "asset": "07_collector_shrink.png",
   "offset": -2.5,
-  "until": "chart06",
+  "until": "chart12",
   "max": 20
  },
  {
@@ -333,6 +361,21 @@
   "phrase": "your collector booster got about",
   "type": "callout",
   "asset": "callout_net_80.png",
+  "dur": 4
+ },
+ {
+  "id": "chart12",
+  "phrase": "run the same cut on every collector booster",
+  "type": "broll",
+  "asset": "12_collector_cut.png",
+  "until": "chart06",
+  "max": 20
+ },
+ {
+  "id": "cut_cash",
+  "phrase": "in cash those three cards are worth about a dime",
+  "type": "callout",
+  "asset": "callout_cut_cash.png",
   "dur": 4
  },
  {
@@ -371,6 +414,27 @@
   "asset": "07_collector_shrink.png",
   "same_as": "tag_b7",
   "max": 25
+ },
+ {
+  "id": "cut_box",
+  "phrase": "how much is wizards actually taking out",
+  "type": "callout",
+  "asset": "callout_cut_box.png",
+  "dur": 5
+ },
+ {
+  "id": "chart12_b",
+  "phrase": "i ran the cut on all",
+  "type": "broll",
+  "asset": "12_collector_cut.png",
+  "max": 25
+ },
+ {
+  "id": "cut_cash_b",
+  "phrase": "in cash it's a different story",
+  "type": "callout",
+  "asset": "callout_cut_cash.png",
+  "dur": 5
  },
  {
   "id": "tag_b8",

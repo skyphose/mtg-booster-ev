@@ -1,0 +1,65 @@
+set,name,year,product,kind,packs,rare_slot_avg,gp_mean,gp_median,gp_p10,gp_p90,gp_p99,pack_ev,gp_vs_pack_x,lift_pack,lift_box,p_gp_in_box,top_foil_card,box_price,ratio_before,ratio_after,ratio_after_1in100,p_cash_before,p_cash_after
+soi,Shadows over Innistrad,2016,soi-draft,draft,36,1.06,17.26,15.32,7.42,29.1,42.64,3.12,5.5,0.0141,0.51,0.0354,Eerie Interlude ($14 foil),,,,,,
+emn,Eldritch Moon,2016,emn-draft,draft,36,1.68,27.45,21.74,9.64,50.92,79.0,3.89,7.1,0.0236,0.85,0.0354,"Emrakul, the Promised End ($34 foil)",,,,,,
+kld,Kaladesh,2016,kld-draft,draft,36,1.65,26.6,23.86,11.07,46.85,71.89,3.71,7.2,0.0229,0.82,0.0354,Aetherflux Reservoir ($35 foil),599.49,0.223,0.224,0.236,0.0,0.0
+aer,Aether Revolt,2017,aer-draft,draft,36,1.5,24.37,22.53,11.03,39.98,56.96,3.74,6.5,0.0206,0.74,0.0354,Paradox Engine ($20 foil),213.99,0.63,0.633,0.665,0.0,0.0
+akh,Amonkhet,2017,akh-draft,draft,36,1.99,31.69,18.03,9.33,82.44,148.1,4.92,6.4,0.0268,0.96,0.0354,Anointed Procession ($77 foil),408.5,0.434,0.436,0.457,0.0,0.0
+hou,Hour of Devastation,2017,hou-draft,draft,36,2.16,34.43,27.6,11.03,68.34,106.16,4.66,7.4,0.0298,1.07,0.0354,Torment of Hailfire ($53 foil),303.0,0.554,0.557,0.589,0.0,0.0
+xln,Ixalan,2017,xln-draft,draft,36,1.78,29.17,26.84,14.1,47.68,69.24,4.38,6.7,0.0248,0.89,0.0354,"Gishath, Sun's Avatar ($32 foil)",235.25,0.671,0.674,0.709,0.0,0.0
+rix,Rivals of Ixalan,2018,rix-draft,draft,36,1.77,29.24,27.41,15.36,44.55,61.95,5.3,5.5,0.0239,0.86,0.0354,"Nezahal, Primal Tide ($23 foil)",213.74,0.893,0.898,0.934,0.0,0.0
+dom,Dominaria,2018,dom-draft,draft,36,2.02,33.55,21.66,11.38,100.27,204.3,5.4,6.2,0.0282,1.01,0.0354,Mox Amber ($187 foil),224.98,0.864,0.868,0.909,0.0035,0.0039
+m19,Core Set 2019,2018,m19-draft,draft,36,2.07,33.66,26.93,14.54,64.03,100.13,5.01,6.7,0.0286,1.03,0.0354,Scapeshift ($66 foil),220.0,0.82,0.825,0.867,0.0,0.0
+grn,Guilds of Ravnica,2018,grn-draft,draft,36,1.7,27.99,24.93,11.42,44.21,104.47,4.01,7.0,0.024,0.86,0.0354,Mnemonic Betrayal ($90 foil),174.98,0.825,0.83,0.874,0.0,0.0
+rna,Ravnica Allegiance,2019,rna-draft,draft,36,2.56,40.31,30.43,13.14,82.55,134.85,5.15,7.8,0.0352,1.27,0.0354,Smothering Tithe ($60 foil),156.98,1.182,1.19,1.263,0.013,0.0144
+war,War of the Spark,2019,war-draft,draft,36,2.29,35.09,29.69,14.0,60.59,97.36,5.9,5.9,0.0292,1.05,0.0354,Finale of Devastation ($63 foil),180.0,1.18,1.185,1.238,0.001,0.0011
+m20,Core Set 2020,2019,m20-draft,draft,36,2.76,43.63,40.38,23.57,68.4,95.3,6.06,7.2,0.0376,1.35,0.0354,Field of the Dead ($42 foil),180.5,1.209,1.216,1.284,0.0005,0.0006
+eld,Throne of Eldraine,2019,eld-draft,draft,36,1.91,28.61,21.46,11.31,76.49,102.55,5.13,5.6,0.0235,0.85,0.0354,The Great Henge ($71 foil),205.95,0.897,0.902,0.938,0.0,0.0
+thb,Theros Beyond Death,2020,thb-draft,draft,36,2.76,40.27,37.03,11.01,73.47,109.73,6.8,5.9,0.0335,1.2,0.0354,Shadowspear ($43 foil),180.0,1.36,1.366,1.427,0.0065,0.0081
+iko,Ikoria,2020,iko-draft,draft,36,3.67,54.06,45.57,15.46,100.47,166.72,7.03,7.7,0.047,1.69,0.0354,The Ozolith ($64 foil),241.0,1.05,1.057,1.12,0.0015,0.0016
+m21,Core Set 2021,2020,m21-draft,draft,36,2.59,37.26,34.42,13.62,66.94,100.98,5.97,6.2,0.0313,1.13,0.0354,Chromatic Orrery ($37 foil),182.5,1.178,1.184,1.24,0.0,0.0001
+znr,Zendikar Rising,2020,znr-draft,draft,36,2.42,34.61,30.82,15.29,59.61,88.77,6.0,5.8,0.0286,1.03,0.0354,"Sea Gate Restoration // Sea Gate, Reborn ($40 foil)",179.99,1.201,1.207,1.258,0.001,0.0011
+znr,Zendikar Rising,2020,znr-set,set,30,2.42,34.61,30.55,15.07,60.64,92.07,8.05,4.3,0.0266,0.8,0.0296,"Sea Gate Restoration // Sea Gate, Reborn ($40 foil)",185.0,1.305,1.309,1.348,0.0235,0.0253
+khm,Kaldheim,2021,khm-draft,draft,36,3.04,44.67,39.42,19.18,77.55,119.83,6.86,6.5,0.0378,1.36,0.0354,"Vorinclex, Monstrous Raider ($75 foil)",199.99,1.236,1.242,1.304,0.0,0.0005
+khm,Kaldheim,2021,khm-set,set,30,3.04,44.67,39.33,18.84,77.76,122.31,8.64,5.2,0.036,1.08,0.0296,"Vorinclex, Monstrous Raider ($75 foil)",235.0,1.103,1.108,1.149,0.0025,0.0027
+stx,Strixhaven,2021,stx-draft,draft,36,1.07,16.23,14.2,6.71,26.19,50.82,5.87,2.8,0.0104,0.37,0.0354,Shadrix Silverquill ($45 foil),188.99,1.118,1.12,1.138,0.0015,0.0018
+stx,Strixhaven,2021,stx-set,set,30,0.95,13.94,12.84,6.3,23.53,35.45,6.9,2.0,0.007,0.21,0.0296,"Blex, Vexing Pest // Search for Blex ($15 foil)",186.0,1.112,1.114,1.124,0.014,0.014
+afr,Forgotten Realms,2021,afr-draft,draft,36,2.4,34.97,28.18,13.93,66.94,119.41,6.22,5.6,0.0287,1.03,0.0354,Old Gnawbone ($106 foil),255.0,0.879,0.883,0.919,0.0,0.0
+afr,Forgotten Realms,2021,afr-set,set,30,2.29,33.02,27.95,13.37,64.14,99.93,7.21,4.6,0.0258,0.77,0.0296,Old Gnawbone ($59 foil),305.0,0.709,0.712,0.735,0.0,0.0
+mid,Midnight Hunt,2021,mid-draft,draft,36,1.31,19.12,16.99,9.01,31.89,51.11,4.37,4.4,0.0148,0.53,0.0354,The Meathook Massacre ($30 foil),160.0,0.983,0.986,1.016,0.0,0.0
+mid,Midnight Hunt,2021,mid-set,set,30,1.28,18.51,16.14,8.98,31.5,49.13,5.81,3.2,0.0127,0.38,0.0296,The Meathook Massacre ($30 foil),198.49,0.878,0.88,0.897,0.0015,0.0015
+vow,Crimson Vow,2021,vow-draft,draft,36,1.44,20.99,19.59,10.8,33.27,46.37,5.17,4.1,0.0158,0.57,0.0354,Sorin the Mirthless ($22 foil),152.88,1.217,1.22,1.254,0.0,0.0
+vow,Crimson Vow,2021,vow-set,set,30,1.36,19.65,18.24,10.47,31.08,44.5,6.33,3.1,0.0133,0.4,0.0296,"Toxrill, the Corrosive ($21 foil)",330.0,0.575,0.576,0.587,0.0,0.0
+neo,Neon Dynasty,2022,neo-draft,draft,36,3.01,44.96,34.53,15.68,86.73,163.81,7.6,5.9,0.0374,1.34,0.0354,"Boseiju, Who Endures ($147 foil)",249.9,1.094,1.1,1.148,0.002,0.0022
+neo,Neon Dynasty,2022,neo-set,set,30,2.57,37.13,28.1,12.52,72.63,122.27,9.5,3.9,0.0276,0.83,0.0296,"Boseiju, Who Endures ($54 foil)",397.99,0.716,0.718,0.737,0.0,0.0
+snc,New Capenna,2022,snc-draft,draft,36,2.1,30.77,28.39,11.63,52.85,77.45,5.44,5.7,0.0253,0.91,0.0354,Jetmir's Garden ($49 foil),145.0,1.351,1.357,1.414,0.0,0.0001
+snc,New Capenna,2022,snc-set,set,30,1.98,28.51,26.93,10.98,48.3,68.73,6.43,4.4,0.0221,0.66,0.0296,Jetmir's Garden ($18 foil),188.0,1.027,1.03,1.062,0.0005,0.0008
+dmu,Dominaria United,2022,dmu-draft,draft,36,1.89,27.3,17.8,10.03,34.82,130.42,5.39,5.1,0.0219,0.79,0.0354,"Sheoldred, the Apocalypse ($111 foil)",184.5,1.052,1.056,1.095,0.005,0.006
+dmu,Dominaria United,2022,dmu-set,set,30,1.89,27.17,17.48,9.87,36.67,128.03,6.69,4.1,0.0205,0.61,0.0296,"Sheoldred, the Apocalypse ($107 foil)",280.0,0.716,0.719,0.738,0.0005,0.0006
+bro,Brothers' War,2022,bro-draft,draft,36,2.1,30.3,25.33,12.28,59.58,95.43,7.03,4.3,0.0233,0.84,0.0354,Portal to Phyrexia ($54 foil),227.99,1.109,1.113,1.146,0.0145,0.0151
+bro,Brothers' War,2022,bro-set,set,30,2.06,29.49,23.98,11.39,58.87,95.25,8.83,3.3,0.0207,0.62,0.0296,Portal to Phyrexia ($54 foil),379.0,0.699,0.701,0.716,0.001,0.001
+one,All Will Be One,2023,one-draft,draft,36,2.65,38.18,30.46,13.74,69.94,139.68,7.35,5.2,0.0308,1.11,0.0354,"Elesh Norn, Mother of Machines ($153 foil)",254.0,1.042,1.046,1.085,0.0165,0.0169
+one,All Will Be One,2023,one-set,set,30,2.65,38.18,30.59,13.49,70.5,144.52,8.85,4.3,0.0293,0.88,0.0296,"Elesh Norn, Mother of Machines ($153 foil)",295.0,0.9,0.903,0.929,0.0105,0.0106
+mom,March of the Machine,2023,mom-draft,draft,36,2.85,40.92,38.05,18.11,69.41,97.18,7.83,5.2,0.0331,1.19,0.0354,"Etali, Primal Conqueror // Etali, Primal Sickness ($34 foil)",194.0,1.453,1.459,1.514,0.015,0.0171
+mom,March of the Machine,2023,mom-set,set,30,2.82,40.49,37.95,17.81,66.43,100.14,9.2,4.4,0.0313,0.94,0.0296,"Etali, Primal Conqueror // Etali, Primal Sickness ($34 foil)",296.97,0.929,0.933,0.961,0.0005,0.0005
+ltr,LotR: Tales of Middle-earth,2023,ltr-draft,draft,36,4.7,68.61,56.73,26.84,123.33,210.43,9.96,6.9,0.0586,2.11,0.0354,The One Ring ($139 foil),420.0,0.854,0.859,0.904,0.0005,0.0005
+ltr,LotR: Tales of Middle-earth,2023,ltr-set,set,30,4.67,68.27,55.34,25.8,139.31,213.65,11.57,5.9,0.0567,1.7,0.0296,The One Ring ($139 foil),307.69,1.128,1.134,1.183,0.0185,0.0201
+woe,Wilds of Eldraine,2023,woe-draft,draft,36,1.56,22.64,17.9,8.66,48.04,73.48,10.94,2.1,0.0117,0.42,0.0354,Agatha's Soul Cauldron ($43 foil),320.7,1.228,1.23,1.241,0.0415,0.0416
+woe,Wilds of Eldraine,2023,woe-set,set,30,1.54,22.23,17.2,8.63,44.82,73.95,12.89,1.7,0.0093,0.28,0.0296,Agatha's Soul Cauldron ($43 foil),349.49,1.106,1.107,1.114,0.0455,0.0457
+lci,Lost Caverns of Ixalan,2023,lci-draft,draft,36,3.35,48.24,40.6,15.44,94.25,148.46,7.0,6.9,0.0412,1.48,0.0354,Cavern of Souls ($64 foil),263.5,0.956,0.962,1.013,0.0,0.0003
+lci,Lost Caverns of Ixalan,2023,lci-set,set,30,3.45,49.43,41.08,15.15,95.85,154.07,9.19,5.4,0.0402,1.21,0.0296,Roaming Throne ($54 foil),442.95,0.622,0.625,0.649,0.0,0.0
+mkm,Murders at Karlov Manor,2024,mkm-play,play,36,1.15,16.67,13.2,5.61,37.69,59.25,6.6,2.5,0.0101,0.36,0.0354,"Delney, Streetwise Lookout ($42 foil)",139.99,1.698,1.701,1.724,0.1085,0.1094
+otj,Outlaws of Thunder Junction,2024,otj-play,play,36,2.02,29.12,24.47,13.85,54.23,80.89,7.93,3.7,0.0212,0.76,0.0354,"Bristly Bill, Spine Sower ($43 foil)",198.0,1.442,1.446,1.481,0.0375,0.039
+mh3,Modern Horizons 3,2024,mh3-play,play,36,4.59,67.62,63.86,35.53,103.43,152.83,12.5,5.4,0.0551,1.98,0.0354,Ocelot Pride ($163 foil),300.0,1.5,1.507,1.567,0.066,0.0719
+blb,Bloomburrow,2024,blb-play,play,36,3.17,47.12,41.63,21.46,78.67,134.79,7.77,6.1,0.0393,1.42,0.0354,"Lumra, Bellow of the Woods ($117 foil)",203.99,1.372,1.379,1.441,0.0045,0.0059
+dsk,Duskmourn,2024,dsk-play,play,36,3.15,45.75,44.48,25.7,68.94,93.34,7.24,6.3,0.0385,1.39,0.0354,"Valgavoth, Terror Eater ($31 foil)",209.95,1.241,1.248,1.307,0.0,0.0
+fdn,Foundations,2024,fdn-play,play,36,2.85,41.6,35.5,18.68,70.07,108.34,7.4,5.6,0.0342,1.23,0.0354,Sire of Seven Deaths ($63 foil),174.01,1.531,1.539,1.602,0.013,0.0149
+dft,Aetherdrift,2025,dft-play,play,30,1.88,27.06,24.61,10.01,46.17,67.11,5.52,4.9,0.0215,0.65,0.0296,The Aetherspark ($24 foil),114.48,1.446,1.452,1.503,0.05,0.0508
+tdm,Tarkir: Dragonstorm,2025,tdm-play,play,30,2.51,36.35,30.34,14.55,68.04,107.29,6.3,5.8,0.03,0.9,0.0296,"Elspeth, Storm Slayer ($51 foil)",166.99,1.132,1.138,1.186,0.0115,0.0124
+fin,Final Fantasy,2025,fin-play,play,30,3.36,50.6,41.28,19.65,90.36,169.67,8.95,5.7,0.0416,1.25,0.0296,Vivi Ornitier ($182 foil),255.66,1.05,1.055,1.099,0.015,0.0155
+eoe,Edge of Eternities,2025,eoe-play,play,30,3.35,47.66,43.8,20.75,77.81,114.7,7.9,6.0,0.0398,1.19,0.0296,"Tezzeret, Cruel Captain ($89 foil)",188.0,1.26,1.267,1.324,0.038,0.0396
+spm,Spider-Man,2025,spm-play,play,30,2.1,30.86,20.91,11.52,93.54,144.02,5.49,5.6,0.0254,0.76,0.0296,The Soul Stone ($125 foil),127.95,1.287,1.292,1.346,0.0505,0.0519
+tla,Avatar: The Last Airbender,2025,tla-play,play,30,2.45,35.62,28.25,14.56,67.08,110.52,5.95,6.0,0.0297,0.89,0.0296,Badgermole Cub ($90 foil),135.39,1.318,1.324,1.384,0.0185,0.0191
+ecl,Lorwyn Eclipsed,2026,ecl-play,play,30,2.15,31.14,28.57,11.96,53.72,79.01,5.47,5.7,0.0257,0.77,0.0296,Hexing Squelcher ($61 foil),114.95,1.427,1.434,1.494,0.008,0.0099
+hob,The Hobbit,2026,hob-play,play,30,1.94,28.15,22.02,10.32,53.25,96.94,4.76,5.9,0.0234,0.7,0.0296,Gleaming Splendor ($125 foil),155.85,0.916,0.921,0.961,0.0,0.0001
+sos,Secrets of Strixhaven,2026,sos-play,play,30,1.35,19.29,17.85,10.52,29.51,42.56,5.35,3.6,0.0139,0.42,0.0296,"Witherbloom, the Balancer ($21 foil)",144.94,1.106,1.109,1.135,0.0015,0.0015
+fra,Reality Fracture,2026,fra-play,play,30,2.62,38.13,33.55,16.67,65.31,100.77,7.13,5.3,0.031,0.93,0.0296,"The Theorist, Jace Beleren ($56 foil)",150.96,1.417,1.423,1.478,0.006,0.0067

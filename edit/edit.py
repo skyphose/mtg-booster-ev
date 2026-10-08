@@ -202,7 +202,7 @@ def plan(src, cut, max_gap):
 CHAPTER_NAMES = {'tag_p1.png': 'the number everyone gets wrong', 'tag_p2.png': 'where the money actually goes', 'tag_p3.png': 'ten years',
                  'tag_p4.png': "what's a god pack worth", 'tag_p5.png': 'the part you skipped', 'tag_p6.png': 'from behind the counter',
                  'tag_b1.png': 'how the model works', 'tag_b2.png': 'on paper, you win', 'tag_b3.png': 'the haircut, and the hours', 'tag_b4.png': 'ten years, with the caveats',
-                 'tag_b5.png': 'pricing a god pack', 'tag_b6.png': 'the foil change is the real ev story', 'tag_b7.png': 'collector shrink', 'tag_b8.png': 'behind the counter'}
+                 'tag_b5.png': 'pricing a god pack', 'tag_b6.png': 'the foil change is the real ev story', 'tag_b7.png': 'collector shrink', 'tag_b8.png': 'behind the counter', 'tag_h1.png': 'what if god packs had always existed'}
 
 def fmt_srt(t): h, r = divmod(t, 3600); mi, s = divmod(r, 60); return f'{int(h):02d}:{int(mi):02d}:{s:06.3f}'.replace('.', ',')
 def fmt_ass(t): h, r = divmod(t, 3600); mi, s = divmod(r, 60); return f'{int(h)}:{int(mi):02d}:{s:05.2f}'

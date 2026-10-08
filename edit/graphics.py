@@ -70,6 +70,7 @@ CHAPTERS = [
     ('b6', 'part 6', 'the foil change is the real ev story'),
     ('b7', 'part 7', 'collector shrink, with the math'),
     ('b8', 'part 8', 'behind the counter'),
+    ('h1', 'what if', 'god packs had always existed'),
 ]
 def tags():
     for key, a, b in CHAPTERS:
@@ -98,6 +99,10 @@ CALLOUTS = [
     ('foil_85', '1 in 8', 'foil-rare rate that breaks even (today: 1 in 12)', BLUE),
     ('verdict', 'singles for the deck.', 'packs for the night.', INK),
     ('wilcoxon', 'p ≈ 0.00005', 'play boosters above 1 at market, 15 of 16 sets', BLUE),
+    ('gp_history', '~$2', 'the most a god pack would ever have added to a box', YELLOW),
+    ('gp_flip', '0 of 62', 'boxes since 2016 that god packs would flip to a win', RED),
+    ('cut_box', '−$12.83', 'what the cut takes out of a reality fracture collector box', MAGENTA),
+    ('cut_cash', '3¢', 'what those three cards sell for, per pack', AQUA),
     ('coin_flip', '17 of 31', 'old draft boxes above the line: still a coin flip', MUTED),
 ]
 def callouts():

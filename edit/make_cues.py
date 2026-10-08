@@ -53,11 +53,19 @@ A4 = [
     C('avg', 'is the average', 'mark', '', min_score=70),
     C('gp_50', 'the median one is', 'callout', 'callout_gp_50.png', dur=5),
 ]
+A4H = [
+    C('tag_h1', 'what if god packs had always been a thing', 'tag', 'tag_h1.png', dur=4),
+    C('chart11', 'what if god packs had always been a thing', 'broll', '11_godpacks_through_history.png', same_as='tag_h1', until='gp_history', max=30),
+    C('gp_history', 'the most it ever adds is about', 'callout', 'callout_gp_history.png', dur=4),
+    C('gp_flip', 'not one box in ten years goes from losing to winning', 'callout', 'callout_gp_flip.png', dur=4),
+]
 A5 = [
     C('tag_p5', 'same post two paragraphs down', 'tag', 'tag_p5.png', dur=4),
-    C('chart07', 'price per card goes up', 'broll', '07_collector_shrink.png', offset=-2.5, until='chart06', max=20),
+    C('chart07', 'price per card goes up', 'broll', '07_collector_shrink.png', offset=-2.5, until='chart12', max=20),
     C('shrink', 'price per card goes up', 'callout', 'callout_shrink.png', same_as='chart07', dur=4),
     C('net_80', 'your collector booster got about', 'callout', 'callout_net_80.png', dur=4),
+    C('chart12', 'run the same cut on every collector booster', 'broll', '12_collector_cut.png', until='chart06', max=20),
+    C('cut_cash', 'in cash those three cards are worth about a dime', 'callout', 'callout_cut_cash.png', dur=4),
     C('chart06', 'it comes down to one number wizards', 'broll', '06_foil_change_breakeven.png', until='tag_p6', max=25),
     C('foil_85', 'if the new rate is better than one in', 'callout', 'callout_foil_85.png', dur=5),
 ]
@@ -69,7 +77,7 @@ A6 = [
 ]
 END = [C('end', '', 'endcard', 'card_end.png', dur=6)]
 
-cues_a = COLD + A1 + A2 + A3 + A4 + A5 + A6 + END
+cues_a = COLD + A1 + A2 + A3 + A4 + A4H + A5 + A6 + END
 
 # ---------------------------------------------------------------- nerd cut: same spine, extra beats in between
 B_COLD_EXTRA = [C('repo_early', 'public github repo in the description', 'badge', 'badge_repo.png', dur=8)]
@@ -91,13 +99,24 @@ B4_EXTRA = [
     C('coin_flip', "the one thing that isn't significant", 'callout', 'callout_coin_flip.png', dur=6),
 ]
 B5_EXTRA = [C('chart05_b', 'the contents are published the values are mine', 'broll', '05_godpack_value_and_odds.png', max=25)]
+B5H = [
+    C('tag_h1_b', 'what if god packs had always existed', 'tag', 'tag_h1.png', dur=4),
+    C('chart11_b', 'the top of the list', 'broll', '11_godpacks_through_history.png', max=30),
+    C('gp_history_b', 'the most a god pack ever adds to a box', 'callout', 'callout_gp_history.png', dur=4),
+    C('gp_flip_b', 'god packs flip zero of them', 'callout', 'callout_gp_flip.png', dur=4),
+]
 B6 = [C('chart06_b', 'solve for break even', 'broll', '06_foil_change_breakeven.png', max=20)]
 B7 = [C('tag_b7', 'two foil commons and one foil uncommon', 'tag', 'tag_b7.png', dur=4),
       C('chart07_b', 'two foil commons and one foil uncommon', 'broll', '07_collector_shrink.png', same_as='tag_b7', max=25)]
+B7_EXTRA = [
+    C('cut_box', 'how much is wizards actually taking out', 'callout', 'callout_cut_box.png', dur=5),
+    C('chart12_b', 'i ran the cut on all', 'broll', '12_collector_cut.png', max=25),
+    C('cut_cash_b', "in cash it's a different story", 'callout', 'callout_cut_cash.png', dur=5),
+]
 B8 = [C('chart08_b', 'the margin chain', 'broll', '08_store_economics.png', max=30)]
 
 cues_b = (COLD + B_COLD_EXTRA + B1 + A1 + B2_EXTRA + A2 + B3_EXTRA + A3 + B4_EXTRA
-          + A4 + B5_EXTRA + A5 + B6 + B7 + A6 + B8 + END)
+          + A4 + B5_EXTRA + B5H + A5 + B6 + B7 + B7_EXTRA + A6 + B8 + END)
 # the nerd cut numbers its parts differently, so the script-a part tags get swapped for nerd-cut ones at the same spots
 TAG_B = {'tag_p1': 'b2', 'tag_p2': 'b3', 'tag_p3': 'b4', 'tag_p4': 'b5', 'tag_p5': 'b6', 'tag_p6': 'b8'}
 cues_b = [dict(c, id='tag_' + TAG_B[c['id']], asset=f"tag_{TAG_B[c['id']]}.png") if c['id'] in TAG_B else c for c in cues_b]

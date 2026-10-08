@@ -64,6 +64,24 @@ if os.path.exists(ffp):
     claim('selling time: listable ($1+) cards in a box', ff['fra_box_listable_count'], 25, 4)
     claim('ad-lib: omnipresence chase, boxes for a coin flip', ff['fra_collector_top_boxes_for_half'], 130, 30)
 
+# what-ifs: god packs in every set since 2016, and the collector cut on every collector box since 2019
+gh = os.path.join(OUT, 'godpack_history.csv'); cc = os.path.join(OUT, 'collector_cut.csv')
+if os.path.exists(gh) and os.path.exists(cc):
+    G = list(csv.DictReader(open(gh))); CC = list(csv.DictReader(open(cc)))
+    Gp = [r for r in G if r['ratio_before']]
+    claim('history: boxes that flip across 1.0 on paper with 1-in-1,000 god packs', sum((fl(r['ratio_before']) < 1) != (fl(r['ratio_after']) < 1) for r in Gp), 0, 0)
+    claim('history: boxes that flip on paper at 1 in 100', sum((fl(r['ratio_before']) < 1) != (fl(r['ratio_after_1in100']) < 1) for r in Gp), 2, 1)
+    claim('history: most a god pack ever adds to a box ($)', max(fl(r['lift_box']) for r in G), 2.1, 0.6)
+    claim('history: median god pack lift per box ($)', st.median(fl(r['lift_box']) for r in G), 0.9, 0.3)
+    claim('history: biggest change in P(box pays in cash), pct points', max(100 * (fl(r['p_cash_after']) - fl(r['p_cash_before'])) for r in Gp), 0.6, 0.6)
+    claim('history: most valuable god pack (LotR / MH3, $)', max(fl(r['gp_mean']) for r in G), 69, 15)
+    claim('collector cut: median value removed per pack ($)', st.median(fl(r['cut_per_pack']) for r in CC), 0.97, 0.3)
+    claim('collector cut: median value removed per box ($)', st.median(fl(r['cut_per_box']) for r in CC), 11.6, 3)
+    claim('collector cut: median share of pack ev (%)', 100 * st.median(fl(r['share_of_pack_ev']) for r in CC), 3.0, 1.5)
+    claim('collector cut: median cash value per pack ($)', st.median(fl(r['cut_cash_per_pack']) for r in CC), 0.10, 0.08)
+    claim('collector cut: reality fracture per box ($)', fl(next(r for r in CC if r['product'] == 'fra-collector')['cut_per_box']), 12.8, 3)
+    claim('collector cut: biggest box (MH3, $)', max(fl(r['cut_per_box']) for r in CC), 23.8, 5)
+
 # arithmetic that does not depend on prices at all
 claim('P(>=1 god pack) in a 30-pack box (%)', 100 * (1 - (1 - 1/1000) ** 30), 2.96, 0.01)
 claim('P(>=1 god pack) in a 6-box case (%)', 100 * (1 - (1 - 1/1000) ** 180), 16.5, 0.1)

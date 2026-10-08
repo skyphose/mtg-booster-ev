@@ -44,6 +44,11 @@ everything lands in `results/`: `set_summary.csv` (one row per box product), `bo
 5. **cash-out.** what you net if you sell every card. under $1 is bulk and counts as zero. $1-5 you keep half (fees, shipping, buylist spread). $5+ you keep 70%. these are flags (`--bulk-below`, `--mid-keep`, `--high-keep`). even at a very generous 80% on everything over a dollar, the median box gives back 60¢, and the best (modern horizons 3) 93¢. you'd have to keep 90% of every $1+ card for a single box (mh3) to clear a dollar.
 6. **god packs and the foil change** (`godpack_model.py`) use reality fracture's sheets as the stand-in for nauctis. god pack = 10 default-frame rares/mythics + 2 non-foil booster fun + 2 foil booster fun (+ a celebration card, which i value at $0 because nobody's seen it). collector god pack = foil land + 3 foil rares/mythics + 3 non-foil booster fun + 5 foil booster fun. the foil change: foil commons/uncommons leave the foil slot, a foil rare/mythic shows up at some rate *p*, a plain card otherwise. i solve for the *p* where pack ev doesn't move.
 
+## what-ifs
+
+- **what if god packs had always existed?** `godpack_history.py` bolts the 2027 rule (1 in 1,000 packs, 14 cards from the set's own rare slot, 2 foil) onto all 64 draft, set and play boosters since 2016. the best god pack ever would be lotr or mh3, about $69 today; a 2016 one is $17-34. it adds a median $0.89 to a box, $2.11 at most, and flips zero of 62 boxes from losing to winning, on paper or in cash. at 1 in 100, two draft boxes that were barely under water cross on paper; still none in cash. (this rule skips booster fun, so it undersells new sets: reality fracture is $38 here, $65 under the real rule. double everything and it's still about $4 a box, tops.)
+- **how much does the 2027 collector cut take?** `collector_cut.py` prices "two foil commons and one foil uncommon, gone, same price" on all 35 collector boosters since 2019: median $0.97 a pack, $11.61 a box, about 3% of the value for 20% of the cards. in cash it's about a dime a pack. mh3 would have lost the most, $24 a box.
+
 ## is it statistically significant?
 
 yes, and the one place it isn't is worth saying out loud. `significance.py` pulls apart four different uncertainties instead of hiding behind "4,000 simulations":

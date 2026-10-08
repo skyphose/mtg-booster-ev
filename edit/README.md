@@ -76,9 +76,14 @@ python3 edit/make_cues.py     # rebuilds cues_a.json / cues_b.json from the cue 
 | if you want a coin flip at seeing one | 23 boxes callout |
 | is the average | animation ends |
 | the median one is | $51 callout |
+| what if god packs had always been a thing | "what if" tag + chart 11 |
+| the most it ever adds is about | ~$2 callout |
+| not one box in ten years goes from losing to winning | 0 of 62 callout |
 | same post, two paragraphs down | part 5 tag |
 | price per card goes up | chart 07 + 15 → 12 callout |
 | your collector booster got about | −$0.85 callout |
+| run the same cut on every collector booster | chart 12 |
+| in cash, those three cards are worth about a dime | 3¢ callout |
 | it comes down to one number wizards | chart 06 |
 | if the new rate is better than one in | 1 in 8 callout |
 | one thing from my side of the counter | part 6 tag + chart 08 |
@@ -106,6 +111,13 @@ the nerd cut reads script a's parts plus the new bits, in the order the doc lays
 | the contents are published, the values are mine | chart 05 |
 | solve for break even | chart 06 |
 | two foil commons and one foil uncommon | part 7 tag + chart 07 |
+| what if god packs had always existed | "what if" tag |
+| the top of the list | chart 11 |
+| the most a god pack ever adds to a box | ~$2 callout |
+| god packs flip zero of them | 0 of 62 callout |
+| how much is wizards actually taking out | −$12.83 callout |
+| i ran the cut on all | chart 12 |
+| in cash, it's a different story | 3¢ callout |
 | the margin chain | chart 08 |
 
 in the nerd cut, the part tags are renumbered to match script b (part 2 "on paper, you win", and so on).
@@ -147,4 +159,4 @@ on a laptop, expect transcription at about 1/3 of real time and the render at ab
 
 ## tested on
 
-`edit/test/script_a_spoken.txt` is script a with a deliberate flub ("three hundred ninety eight of them. redo."). read by a robot voice over a placeholder card, all 38 cue lines match (one fuzzy), the retake gets cut, and 31 seconds of air removed from 9.4 minutes. the nerd cut was checked against a simulated full read of script b: 55 of 56 cues matched, and the last one is a fuzzy match that still lands.
+`edit/test/script_a_spoken.txt` is script a with a deliberate flub ("three hundred ninety eight of them. redo."). read by a robot voice over a placeholder card, all 38 cue lines match (one fuzzy). after the 2026-10-08 script changes, a simulated read of the current doc matches 44 of 44 (public) and 64 of 64 (nerd), the retake gets cut, and 31 seconds of air removed from 9.4 minutes. the nerd cut was checked against a simulated full read of script b: 55 of 56 cues matched, and the last one is a fuzzy match that still lands.
