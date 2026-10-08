@@ -22,9 +22,10 @@ pip install -r requirements.txt
 ./run_all.sh                      # ~8 minutes. writes results/ and runs verify.py at the end
 python3 ev_model.py --help        # change the cash-out haircut or the number of simulated boxes
 python3 scripts/fetch_prices.py   # pull today's prices from scryfall and re-run on them
+python3 fun_facts.py              # every one-liner i drop in the video (odds of the top pull, how many rares are bulk, ...)
 ```
 
-everything lands in `results/`: `set_summary.csv` (one row per box product), `box_sim.csv` (simulated boxes), `godpack.csv`, `foil_scenarios.csv`, the `significance_*.csv` files, ten charts, and `MTG_Booster_EV_Model.xlsx` with every assumption as a cell you can edit.
+everything lands in `results/`: `set_summary.csv` (one row per box product), `box_sim.csv` (simulated boxes), `godpack.csv`, `foil_scenarios.csv`, the `significance_*.csv` files, ten charts, and `MTG_Booster_EV_Model.xlsx` with every assumption as a cell you can edit. `fun_facts.json` is every side fact from the video, and verify.py checks those too.
 
 ## animations
 

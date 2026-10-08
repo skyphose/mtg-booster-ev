@@ -40,6 +40,24 @@ if os.path.exists(sig):
     claim('Play Boosters below 1 in cash: Wilcoxon p < 0.001', float(cs[('Play Booster boxes 2024-26', 'cash-out / price')]['wilcoxon_p']) < 0.001, 1, 0)
     claim('Collector boxes below 1 at market: Wilcoxon p < 0.001', float(cs[('Collector boxes (all years)', 'market EV / price')]['wilcoxon_p']) < 0.001, 1, 0)
 
+# the ad-lib bank (run fun_facts.py first; skipped if absent)
+ffp = os.path.join(OUT, 'fun_facts.json')
+if os.path.exists(ffp):
+    import json; ff = json.load(open(ffp))
+    claim('ad-lib: a god pack is ~15x likelier than the top play-booster card', ff['godpack_vs_top_card'], 15, 5)
+    claim('ad-lib: % of rare-slot pulls under $1 (reality fracture)', ff['fra_rare_slot_bulk_pct'], 58, 8)
+    claim('ad-lib: mythic in the rare slot, 1 in N packs', ff['fra_rare_slot_mythic_one_in'], 6.3, 0.6)
+    claim('ad-lib: $10+ rare-slot pulls per play box', ff['fra_rare_slot_over_10_per_box'], 1.75, 0.6)
+    claim('ad-lib: % of play boxes with no $20 card', ff['play_pct_boxes_with_zero_20plus'], 39, 8)
+    claim('ad-lib: top 10 printings, % of pack EV', ff['fra_top10_share_of_ev'], 20, 5)
+    claim('ad-lib: median card in a pack (cents)', ff['fra_median_card_cents'], 22, 8)
+    claim('ad-lib: msrp per card (cents)', ff['fra_msrp_per_card_cents'], 39, 1)
+    claim('ad-lib: boxes to see every mythic once', ff['fra_boxes_to_see_every_mythic'], 100, 20)
+    claim('ad-lib: all the commons in a box ($)', ff['fra_box_commons_value'], 41, 10)
+    claim('ad-lib: kaladesh sealed box / cards inside (x)', ff['sealed_premium_x'], 4.5, 1)
+    claim('ad-lib: packs simulated (millions)', ff['packs_simulated'] / 1e6, 10.3, 0.05)
+    claim('ad-lib: omnipresence chase, boxes for a coin flip', ff['fra_collector_top_boxes_for_half'], 130, 30)
+
 # arithmetic that does not depend on prices at all
 claim('P(>=1 god pack) in a 30-pack box (%)', 100 * (1 - (1 - 1/1000) ** 30), 2.96, 0.01)
 claim('P(>=1 god pack) in a 6-box case (%)', 100 * (1 - (1 - 1/1000) ** 180), 16.5, 0.1)
