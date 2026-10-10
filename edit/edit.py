@@ -300,7 +300,8 @@ def build_base(pl, budget):
     if not os.path.exists(joined):
         with open(wpath('trim_list.txt'), 'w') as f:
             for o in trimmed: f.write(f"file '{o}'\n")
-        run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath('trim_list.txt'), '-c', 'copy', joined])
+        run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath('trim_list.txt'), '-c', 'copy', joined + '.part.mkv'])
+        os.replace(joined + '.part.mkv', joined)
     cards = [(x['at'], x['asset'], x['dur']) for x in pl['inserts']]
     clips = []; last = 0.0; jd = duration(joined)
     def card_clip(asset, dur, name):
@@ -308,15 +309,29 @@ def build_base(pl, budget):
         if not os.path.exists(o):
             run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-t', f'{dur}', '-i', asset_path(asset), '-f', 'lavfi', '-t', f'{dur}', '-i', 'anullsrc=r=48000:cl=mono',
                  '-vf', f'scale={W}:{H},fps={FPS},format=yuv420p,fade=in:st=0:d=0.25,fade=out:st={dur - 0.3}:d=0.3', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
-                 '-c:a', 'pcm_s16le', '-shortest', o])
+                 '-c:a', 'pcm_s16le', '-shortest', o + '.part.mkv'])
+            os.replace(o + '.part.mkv', o)
         return o
+    def enc_range(a, b, name):
+        # re-encode [a, b) of the joined a-roll in 60 s pieces, each written to a temp file and renamed when done,
+        # so a run that gets cut off never leaves a half-written piece behind
+        outs = []; j = 0; x = a
+        while x < b - 0.01:
+            y = min(b, x + 60); o = wpath(f'{name}_{j:02d}.mkv'); outs.append(o)
+            if not os.path.exists(o):
+                if time.time() - t0 > budget: return None
+                tmp = o.replace('.mkv', '.part.mkv')
+                run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{x:.3f}', '-to', f'{y:.3f}', '-i', joined, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', tmp])
+                os.replace(tmp, o); print(f'render: encoded {name}_{j:02d}')
+            x = y; j += 1
+        return outs
     for k, (at, asset, dur) in enumerate(cards):
-        o = wpath(f'seg_{k:02d}.mkv')
-        if not os.path.exists(o): run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{last:.3f}', '-to', f'{at:.3f}', '-i', joined, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', o])
-        clips += [o, card_clip(asset, dur, f'card_{k:02d}.mkv')]; last = at
-    o = wpath('seg_last.mkv')
-    if not os.path.exists(o): run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{last:.3f}', '-i', joined, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', o])
-    clips.append(o)
+        r = enc_range(last, at, f'seg_{k:02d}')
+        if r is None: print('render: base not finished, run again'); return None
+        clips += r + [card_clip(asset, dur, f'card_{k:02d}.mkv')]; last = at
+    r = enc_range(last, jd, 'seg_last')
+    if r is None: print('render: base not finished, run again'); return None
+    clips += r
     if pl['end_card']: clips.append(card_clip(pl['end_card']['asset'], pl['end_card']['dur'], 'card_end.mkv'))
     with open(wpath('base_list.txt'), 'w') as f:
         for c in clips: f.write(f"file '{c}'\n")
