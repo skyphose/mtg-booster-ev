@@ -345,13 +345,54 @@ def build_base(pl, budget):
     os.replace(out.replace('.mp4', '.mkv'), out)
     print('render: base done'); return out
 
+PIP_W, PIP_H, PIP_M = 456, 264, (48, 56)   # padded pip size, margins from the edge (x, y)
+_corner_cache = {}
+# hand-placed spots where the automatic search gets it wrong (it can't tell a lone outlier dot matters)
+PIP_SPOT = {'02_collector_boxes_ev_vs_price.png': '1060,720'}
+
+def pip_corner(asset):
+    """find a spot for the face that covers as little of the graphic as possible. looks at the graphic's last
+    frame (animations fill up as they play), marks every 16px block that has text or ink in it, and slides the pip
+    down the right edge and along the bottom edge. bottom-right wins ties. returns 'x,y' in pixels."""
+    a = asset_path(asset)
+    if asset in PIP_SPOT: return PIP_SPOT[asset]
+    if a in _corner_cache: return _corner_cache[a]
+    mx, my = PIP_M; dflt = f'{W - mx - PIP_W},{H - my - PIP_H}'
+    try:
+        from PIL import Image
+        import numpy as np
+        if a.endswith('.mp4'):
+            fr = wpath('_corner.png')
+            run(['ffmpeg', '-y', '-v', 'error', '-sseof', '-0.5', '-i', a, '-frames:v', '1', '-s', f'{W}x{H}', fr])
+            im = Image.open(fr).convert('RGB')
+        else:
+            im = Image.open(a).convert('RGB').resize((W, H))
+        px = np.asarray(im).astype(int); bg = np.median(px.reshape(-1, 3), axis=0)
+        busy = (np.abs(px - bg).sum(axis=2) > 60)
+        B = 16; blk = busy[:H // B * B, :W // B * B].reshape(H // B, B, W // B, B).any(axis=(1, 3))
+        def score(x, y): return blk[y // B:(y + PIP_H) // B + 1, x // B:(x + PIP_W) // B + 1].mean()
+        # right edge, but never across the callout band (y 400-650), where the big numbers go
+        cands = [(W - mx - PIP_W, y) for y in list(range(96, 127, 15)) + list(range(656, H - my - PIP_H + 1, 16))] + \
+                [(x, H - my - PIP_H) for x in range(mx, W - mx - PIP_W + 1, 16)]
+        best = min(cands, key=lambda c: (round(score(*c), 2), (W - c[0]) + (H - c[1])))
+        if score(*best) > score(W - mx - PIP_W, H - my - PIP_H) - 0.03: best = (W - mx - PIP_W, H - my - PIP_H)
+        c = f'{best[0]},{best[1]}'
+    except Exception as e:
+        print('pip spot check failed for', asset, e); c = dflt
+    _corner_cache[a] = c; return c
+
+def pip_xy(c): return c.split(',')
+
 def render_piece(pl, base, i, n, pip, burn, music):
     s = i * PIECE; e = min(pl['duration'], s + PIECE); o = wpath(f'out_{pl["cut"]}_{i:03d}.mp4')
     if os.path.exists(o): return o
     ev = [x for x in pl['events'] if x['end'] > s and x['start'] < e]
     inputs = ['-ss', f'{s:.3f}', '-to', f'{e:.3f}', '-i', base]; fc = []; k = 1
-    fc.append('[0:v]split=2[bg][pp]'); cur = 'bg'; pipwin = []
+    fc.append('[0:v]split=2[bg][pp]'); cur = 'bg'; pipwin = {}
     def win(x): return f"between(t,{max(0, x['start'] - s):.3f},{x['end'] - s:.3f})"
+    # one face at a time: a b-roll's pip window stops where the next b-roll starts
+    br = sorted([x for x in ev if x['type'] == 'broll'], key=lambda x: x['start'])
+    pip_end = {id(x): min([x['end']] + [y['start'] for y in br if y['start'] > x['start']]) for x in br}
     for x in ev:
         a = asset_path(x['asset']); st = max(0.0, x['start'] - s); en = x['end'] - s; dur = en - st
         if x['type'] == 'broll':
@@ -364,7 +405,7 @@ def render_piece(pl, base, i, n, pip, burn, music):
                 inputs += ['-loop', '1', '-t', f'{dur + 0.1:.3f}', '-i', a]
                 fc.append(f"[{k}:v]scale={W}:{H},fps={FPS},format=yuva420p,setpts=PTS-STARTPTS+{st:.3f}/TB,fade=in:st={st:.3f}:d=0.25:alpha=1[b{k}]")
             fc.append(f"[{cur}][b{k}]overlay=0:0:enable='{win(x)}':eof_action=pass[v{k}]"); cur = f'v{k}'
-            if pip and x.get('pip', True): pipwin.append(win(x))
+            if pip and x.get('pip', True): pipwin.setdefault(pip_corner(x['asset']), []).append(win(dict(x, end=pip_end[id(x)])))
         else:   # png overlays: callout, tag, lower, badge
             inputs += ['-loop', '1', '-t', f'{dur + 0.1:.3f}', '-i', a]
             fo = max(st, en - 0.3)
@@ -372,9 +413,11 @@ def render_piece(pl, base, i, n, pip, burn, music):
             fc.append(f"[{cur}][o{k}]overlay=0:0:enable='{win(x)}':eof_action=pass[v{k}]"); cur = f'v{k}'
         k += 1
     if pipwin:
-        en = '+'.join(pipwin)
-        fc.append(f"[pp]scale=448:-2,pad=iw+8:ih+8:4:4:color=0x1a1a19[pip]")
-        fc.append(f"[{cur}][pip]overlay=W-w-48:H-h-56:enable='{en}'[vp]"); cur = 'vp'
+        cs = sorted(pipwin); lab = ''.join(f'[pip{j}]' for j in range(len(cs)))
+        fc.append(f"[pp]scale=448:-2,pad=iw+8:ih+8:4:4:color=0x1a1a19" + (f",split={len(cs)}{lab}" if len(cs) > 1 else '[pip0]'))
+        for j, c in enumerate(cs):
+            x, y = pip_xy(c); en = '+'.join(pipwin[c])
+            fc.append(f"[{cur}][pip{j}]overlay={x}:{y}:enable='{en}'[vp{j}]"); cur = f'vp{j}'
     else:
         fc.append('[pp]nullsink')
     if burn:
@@ -394,12 +437,17 @@ def render(src, cut, pip, burn, music, budget=150):
     pl = json.load(open(wpath(f'plan_{cut}.json'))); t0 = time.time()
     # if the plan or the options changed since the last render, throw away the cached pieces
     import hashlib, glob
-    stamp = hashlib.md5(json.dumps([pl, pip, burn, music], sort_keys=True).encode()).hexdigest()
-    sf = wpath(f'render_stamp_{cut}.txt')
+    # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
+    stamp = hashlib.md5(json.dumps(pl, sort_keys=True).encode()).hexdigest()
+    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v4'], sort_keys=True).encode()).hexdigest()
+    sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
         for pat in ('out_*', 'base_*', 'card_*', 'seg_*', 'trim*', 'base_raw.mkv'):
             for f in glob.glob(wpath(pat)): os.remove(f)
         open(sf, 'w').write(stamp)
+    if not os.path.exists(of) or open(of).read() != ostamp:
+        for f in glob.glob(wpath(f'out_{cut}_*')): os.remove(f)
+        open(of, 'w').write(ostamp)
     base = build_base(pl, budget)
     if not base: return False
     n = math.ceil(pl['duration'] / PIECE); outs = []
