@@ -7,7 +7,7 @@ i record myself reading the script in one take. `edit.py` takes it from there:
 - cuts my retakes and dead air
 - drops in the charts, animations, callouts and chapter tags
 - shrinks my face into the corner while a chart is up
-- cleans and levels the audio (-14 LUFS, what youtube normalizes to)
+- cleans and levels the audio: 80 Hz rumble cut, a little presence and air, light de-ess and compression, two-pass loudnorm to -14 LUFS / -1.5 dBTP (what youtube normalizes to). no broadband denoiser: it was dulling the voice and the mic's gate already keeps pauses quiet
 - writes captions and the youtube chapter list
 
 nothing in here touches the model. it only reads the pngs and mp4s in `results/` plus the graphics in `edit/gfx/`.
@@ -152,6 +152,7 @@ options:
 - `--burn-captions`: captions baked into the video, not just the .srt
 - `--music bed.mp3`: background music, ducked under your voice
 - `--max-gap 0.6`: keep more breathing room between sentences
+- `--fps 30`: output frame rate (default 60, to match the camera). the animations render at 60 too (`ANIM_FPS=30 python3 animations.py` for quick drafts)
 
 every step caches into `edit/work/<recording name>/` and picks up where it left off, so if anything gets interrupted, run the same command again. if you re-run `plan`, `render` notices and starts fresh.
 

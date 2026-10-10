@@ -1,5 +1,5 @@
 """
-procedural animations for the video, rendered straight from the model. 1920x1080, 30 fps, dark, mp4 (h264).
+procedural animations for the video, rendered straight from the model. 1920x1080, 60 fps (ANIM_FPS to change), dark, mp4 (h264).
 
     python3 animations.py            # all five, into results/animations/  (~5-8 min)
     python3 animations.py box hist   # just some
@@ -28,8 +28,8 @@ plt.rcParams.update({'figure.facecolor': SURF, 'axes.facecolor': SURF, 'axes.edg
                      'text.color': INK, 'font.family': 'DejaVu Sans', 'font.size': 18, 'axes.titlesize': 26, 'axes.titleweight': 'bold', 'axes.titlelocation': 'left',
                      'axes.spines.top': False, 'axes.spines.right': False, 'axes.grid': True, 'grid.color': GRID, 'grid.linewidth': 1, 'axes.axisbelow': True, 'legend.frameon': False})
 usd = FuncFormatter(lambda v, _: f'${v:,.0f}')
-FPS = 30
-def writer(): return FFMpegWriter(fps=FPS, codec='libx264', bitrate=8000, extra_args=['-pix_fmt', 'yuv420p', '-preset', 'medium'])
+FPS = int(os.environ.get("ANIM_FPS", 60))   # 60 to match the camera; ANIM_FPS=30 for quicker drafts
+def writer(): return FFMpegWriter(fps=FPS, codec='libx264', bitrate=12000, extra_args=['-pix_fmt', 'yuv420p', '-preset', 'medium'])
 def fig(): return plt.subplots(figsize=(19.2, 10.8), dpi=100)
 def ease(t): return 1 - (1 - t) ** 3   # ease-out cubic
 def tier_color(p): return MUTED if p < 1 else (BLUE if p < 5 else (AQUA if p < 20 else YELLOW))

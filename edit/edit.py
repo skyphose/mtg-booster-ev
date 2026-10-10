@@ -20,7 +20,13 @@ import argparse, json, os, re, subprocess, sys, time, math
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 WORK = os.environ.get('EDIT_WORK') or os.path.join(HERE, 'work'); os.makedirs(WORK, exist_ok=True)
 GFX = os.path.join(HERE, 'gfx'); FONTS = os.path.join(HERE, 'fonts')
-FPS = 30; W, H = 1920, 1080
+FPS = 60; W, H = 1920, 1080   # --fps to change; match the camera
+# voice chain. no broadband denoiser: the mic's own gate already leaves the pauses near silent, and afftdn was
+# shaving ~5 dB off 2-5 kHz and ~10 dB off 5-10 kHz (that's the 'muffled' sound). instead: rumble cut, a little
+# presence and air, gentle de-ess, light compression, then two-pass loudnorm to -14 LUFS / -1.5 dBTP.
+VOICE_CHAIN = ('highpass=f=80,equalizer=f=3500:t=q:w=0.9:g=3,treble=g=3:f=9000,deesser=i=0.3,'
+               'acompressor=threshold=-20dB:ratio=3:attack=5:release=120')
+LOUD = 'I=-14:TP=-1.5:LRA=11'
 
 def run(cmd, **kw):
     r = subprocess.run(cmd, capture_output=True, text=True, **kw)
@@ -339,8 +345,12 @@ def build_base(pl, budget):
     run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath('base_list.txt'), '-c', 'copy', raw])
     # 3c. audio clean-up once, on the whole thing (needs to see all of it for loudness)
     aout = wpath('voice.wav')
-    run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-vn', '-af', 'highpass=f=80,afftdn=nf=-25,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,'
-         'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', aout])
+    meas = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', raw, '-vn', '-af', f'{VOICE_CHAIN},loudnorm={LOUD}:print_format=json',
+                           '-f', 'null', '-'], capture_output=True, text=True).stderr
+    m = json.loads(meas[meas.rindex('{'):meas.rindex('}') + 1])
+    ln = (f"loudnorm={LOUD}:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
+          f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
+    run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-vn', '-af', f'{VOICE_CHAIN},{ln}', '-ar', '48000', aout])
     run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-i', aout, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'pcm_s16le', out.replace('.mp4', '.mkv')])
     os.replace(out.replace('.mp4', '.mkv'), out)
     print('render: base done'); return out
@@ -384,7 +394,7 @@ def pip_corner(asset):
 def pip_xy(c): return c.split(',')
 
 def render_piece(pl, base, i, n, pip, burn, music):
-    s = i * PIECE; e = min(pl['duration'], s + PIECE); o = wpath(f'out_{pl["cut"]}_{i:03d}.mp4')
+    s = i * PIECE; e = min(pl['duration'], s + PIECE); o = wpath(f'out_{pl["cut"]}_{i:03d}.mkv')
     if os.path.exists(o): return o
     ev = [x for x in pl['events'] if x['end'] > s and x['start'] < e]
     inputs = ['-ss', f'{s:.3f}', '-to', f'{e:.3f}', '-i', base]; fc = []; k = 1
@@ -430,16 +440,17 @@ def render_piece(pl, base, i, n, pip, burn, music):
         fc.append(f"[{k}:a]volume=-22dB,aresample=48000[mus];[0:a]asplit=2[vo][sc];[mus][sc]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=400[duck];[vo][duck]amix=inputs=2:duration=first:normalize=0[am]")
         amap = '[am]'
     cmd = ['ffmpeg', '-y', '-v', 'error'] + inputs + ['-filter_complex', ';'.join(fc), '-map', f'[{cur}]', '-map', amap,
-           '-t', f'{e - s:.3f}', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', o + '.tmp.mp4']
-    run(cmd); os.replace(o + '.tmp.mp4', o); return o
+           '-t', f'{e - s:.3f}', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17', '-profile:v', 'high', '-g', str(FPS // 2), '-bf', '2',
+           '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'pcm_s16le', o + '.tmp.mkv']
+    run(cmd); os.replace(o + '.tmp.mkv', o); return o
 
 def render(src, cut, pip, burn, music, budget=150):
     pl = json.load(open(wpath(f'plan_{cut}.json'))); t0 = time.time()
     # if the plan or the options changed since the last render, throw away the cached pieces
     import hashlib, glob
     # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
-    stamp = hashlib.md5(json.dumps(pl, sort_keys=True).encode()).hexdigest()
-    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v4'], sort_keys=True).encode()).hexdigest()
+    stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD], sort_keys=True).encode()).hexdigest()
+    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v5', FPS], sort_keys=True).encode()).hexdigest()
     sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
         for pat in ('out_*', 'base_*', 'card_*', 'seg_*', 'trim*', 'base_raw.mkv'):
@@ -452,14 +463,14 @@ def render(src, cut, pip, burn, music, budget=150):
     if not base: return False
     n = math.ceil(pl['duration'] / PIECE); outs = []
     for i in range(n):
-        o = wpath(f'out_{cut}_{i:03d}.mp4')
+        o = wpath(f'out_{cut}_{i:03d}.mkv')
         if not os.path.exists(o) and time.time() - t0 > budget:
             print(f'render: {i}/{n} pieces done, run again to continue'); return False
         outs.append(render_piece(pl, base, i, n, pip, burn, music)); print(f'render: piece {i + 1}/{n}')
     with open(wpath(f'out_list_{cut}.txt'), 'w') as f:
         for o in outs: f.write(f"file '{o}'\n")
     final = os.path.join(os.path.dirname(os.path.abspath(src)), f'{os.path.splitext(os.path.basename(src))[0]}_edit_{cut}.mp4')
-    run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath(f'out_list_{cut}.txt'), '-c', 'copy', '-movflags', '+faststart', final])
+    run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath(f'out_list_{cut}.txt'), '-c:v', 'copy', '-c:a', 'aac', '-b:a', '384k', '-ar', '48000', '-movflags', '+faststart', final])
     for ext in ('srt',):
         run(['cp', wpath(f'captions_{cut}.{ext}'), final.replace('.mp4', f'.{ext}')])
     print(f'render: DONE -> {final}  ({duration(final) / 60:.1f} min)'); return True
@@ -467,8 +478,8 @@ def render(src, cut, pip, burn, music, budget=150):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('step', choices=['transcribe', 'plan', 'render', 'all']); ap.add_argument('src')
     ap.add_argument('--cut', default='a'); ap.add_argument('--no-pip', action='store_true'); ap.add_argument('--burn-captions', action='store_true')
-    ap.add_argument('--music'); ap.add_argument('--max-gap', type=float, default=0.45); ap.add_argument('--budget', type=float, default=150)
-    a = ap.parse_args()
+    ap.add_argument('--music'); ap.add_argument('--max-gap', type=float, default=0.45); ap.add_argument('--budget', type=float, default=150); ap.add_argument('--fps', type=int, default=60)
+    a = ap.parse_args(); FPS = a.fps
     # one work folder per recording, so a new take never reuses an old transcript
     WORK = os.path.join(WORK, re.sub(r'[^A-Za-z0-9_.-]', '_', os.path.splitext(os.path.basename(a.src))[0])); os.makedirs(WORK, exist_ok=True)
     if a.step in ('transcribe', 'all') and not transcribe(a.src, budget=a.budget): sys.exit(3)
