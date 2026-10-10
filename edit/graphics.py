@@ -10,6 +10,8 @@ kinds:
   lower_*     lower third
   badge_*     small persistent corner badge
   thumb_*     1280x720 thumbnail drafts
+  backdrop    what goes behind you once the black background is keyed out
+  pip_fade    alpha ramp that fades your cut-out's torso when you shrink into a corner
 """
 import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -35,6 +37,26 @@ def plate(img, box, alpha=200, radius=18):
     shadow = layer.filter(ImageFilter.GaussianBlur(12))
     img.alpha_composite(shadow); img.alpha_composite(layer)
 def tw(d, text, f): b = d.textbbox((0, 0), text, font=f); return b[2] - b[0], b[3] - b[1]
+
+# ----------------------------------------------------------------------------- behind the keyed-out talking head
+def backdrop():
+    import numpy as np
+    y, x = np.mgrid[0:H, 0:W].astype(float)
+    r = np.sqrt(((x - 960) / 900) ** 2 + ((y - 600) / 620) ** 2)          # soft pool of light behind the head
+    glow = np.clip(1 - r, 0, 1) ** 1.6
+    vig = np.clip(r - 0.9, 0, 1) * 0.6                                      # darker corners
+    base = np.array(SURF, float); lift = np.array((44, 46, 50), float) - base
+    img = base + glow[..., None] * lift - vig[..., None] * base * 0.45
+    grid = ((x % 96 < 1.2) | (y % 96 < 1.2)) * (0.35 + 0.65 * glow)         # faint chart-paper grid, fades out toward the edges
+    img = img + grid[..., None] * np.array((7, 7, 7)) * (1 - np.clip(r, 0, 1))[..., None]
+    img = np.clip(img + np.random.default_rng(0).normal(0, 0.6, img.shape), 0, 255).astype('uint8')   # dither against banding
+    save(Image.fromarray(img, 'RGB'), 'backdrop.png')
+
+def pip_fade(w=330, h=300, start=0.62):
+    img = Image.new('L', (w, h), 255); d = ImageDraw.Draw(img)
+    for row in range(int(h * start), h):
+        d.line([(0, row), (w, row)], fill=int(255 * (1 - (row - h * start) / (h * (1 - start))) ** 1.5))
+    save(img, 'pip_fade.png')
 
 # ----------------------------------------------------------------------------- full-frame cards
 def card_title():
@@ -180,4 +202,4 @@ def thumbs():
         img.convert('RGB').save(os.path.join(OUT, f'thumb_{key}.png')); print('   thumb_' + key + '.png  (leave the right half for your face)')
 
 if __name__ == '__main__':
-    card_title(); card_end(); card_myth(); card_receipts(); card_recap(); tags(); callouts(); lower(); badge(); thumbs()
+    card_title(); card_end(); card_myth(); card_receipts(); card_recap(); tags(); callouts(); lower(); badge(); thumbs(); backdrop(); pip_fade()

@@ -355,7 +355,11 @@ def build_base(pl, budget):
     os.replace(out.replace('.mp4', '.mkv'), out)
     print('render: base done'); return out
 
-PIP_W, PIP_H, PIP_M = 456, 264, (48, 56)   # padded pip size, margins from the edge (x, y)
+PIP_W, PIP_H, PIP_M = 370, 340, (28, 20)   # cut-out pip incl. 20px glow padding, margins from the edge (x, y)
+KEY = True          # the recording has a pure-black background: key it out, put the backdrop behind, cut-out pip
+KEY_CROP = (990, 900, 465, 180)    # w, h, x, y of the head-and-shoulders crop used for the pip (source is centered)
+SLIDE_IN, SLIDE_OUT = 0.35, 0.30
+KEY_T = 16         # luma above this counts as you (the background is digital black: exactly Y=16 in video range)
 _corner_cache = {}
 # hand-placed spots where the automatic search gets it wrong (it can't tell a lone outlier dot matters)
 PIP_SPOT = {'02_collector_boxes_ev_vs_price.png': '1060,720'}
@@ -382,7 +386,7 @@ def pip_corner(asset):
         B = 16; blk = busy[:H // B * B, :W // B * B].reshape(H // B, B, W // B, B).any(axis=(1, 3))
         def score(x, y): return blk[y // B:(y + PIP_H) // B + 1, x // B:(x + PIP_W) // B + 1].mean()
         # right edge, but never across the callout band (y 400-650), where the big numbers go
-        cands = [(W - mx - PIP_W, y) for y in list(range(96, 127, 15)) + list(range(656, H - my - PIP_H + 1, 16))] + \
+        cands = [(W - mx - PIP_W, y) for y in [y for y in range(96, H - my - PIP_H + 1, 16) if y + PIP_H <= 400 or y >= 656]] + \
                 [(x, H - my - PIP_H) for x in range(mx, W - mx - PIP_W + 1, 16)]
         best = min(cands, key=lambda c: (round(score(*c), 2), (W - c[0]) + (H - c[1])))
         if score(*best) > score(W - mx - PIP_W, H - my - PIP_H) - 0.03: best = (W - mx - PIP_W, H - my - PIP_H)
@@ -398,7 +402,17 @@ def render_piece(pl, base, i, n, pip, burn, music):
     if os.path.exists(o): return o
     ev = [x for x in pl['events'] if x['end'] > s and x['start'] < e]
     inputs = ['-ss', f'{s:.3f}', '-to', f'{e:.3f}', '-i', base]; fc = []; k = 1
-    fc.append('[0:v]split=2[bg][pp]'); cur = 'bg'; pipwin = {}
+    if KEY:
+        # matte from the pure-black background: anything above near-black is you. close small holes (dark hair),
+        # pull the edge in a pixel so no black fringe, then soften it.
+        inputs += ['-loop', '1', '-i', os.path.join(GFX, 'backdrop.png'), '-loop', '1', '-i', os.path.join(GFX, 'pip_fade.png')]; k = 3
+        fc.append(f"[0:v]format=yuv420p,split=2[src][msrc];[msrc]extractplanes=y,scale={W // 2}:{H // 2},lut=y='if(gt(val,{KEY_T}),255,0)',"
+                  f"dilation,erosion,erosion,gblur=sigma=0.8,scale={W}:{H}[mask];"
+                  "[src][mask]alphamerge,split=2[cut][pp];"
+                  f"[1:v]scale={W}:{H},fps={FPS},format=yuv420p[plate];[plate][cut]overlay=shortest=1:format=auto[bg]")
+    else:
+        fc.append('[0:v]split=2[bg][pp]')
+    cur = 'bg'; pipwin = {}
     def win(x): return f"between(t,{max(0, x['start'] - s):.3f},{x['end'] - s:.3f})"
     # one face at a time: a b-roll's pip window stops where the next b-roll starts
     br = sorted([x for x in ev if x['type'] == 'broll'], key=lambda x: x['start'])
@@ -415,7 +429,7 @@ def render_piece(pl, base, i, n, pip, burn, music):
                 inputs += ['-loop', '1', '-t', f'{dur + 0.1:.3f}', '-i', a]
                 fc.append(f"[{k}:v]scale={W}:{H},fps={FPS},format=yuva420p,setpts=PTS-STARTPTS+{st:.3f}/TB,fade=in:st={st:.3f}:d=0.25:alpha=1[b{k}]")
             fc.append(f"[{cur}][b{k}]overlay=0:0:enable='{win(x)}':eof_action=pass[v{k}]"); cur = f'v{k}'
-            if pip and x.get('pip', True): pipwin.setdefault(pip_corner(x['asset']), []).append(win(dict(x, end=pip_end[id(x)])))
+            if pip and x.get('pip', True): pipwin.setdefault(pip_corner(x['asset']), []).append((max(0, x['start'] - s), pip_end[id(x)] - s, x['start'] < s))
         else:   # png overlays: callout, tag, lower, badge
             inputs += ['-loop', '1', '-t', f'{dur + 0.1:.3f}', '-i', a]
             fo = max(st, en - 0.3)
@@ -424,10 +438,26 @@ def render_piece(pl, base, i, n, pip, burn, music):
         k += 1
     if pipwin:
         cs = sorted(pipwin); lab = ''.join(f'[pip{j}]' for j in range(len(cs)))
-        fc.append(f"[pp]scale=448:-2,pad=iw+8:ih+8:4:4:color=0x1a1a19" + (f",split={len(cs)}{lab}" if len(cs) > 1 else '[pip0]'))
+        if KEY:
+            cw, ch, cx, cy = KEY_CROP; pw, ph = PIP_W - 40, PIP_H - 40
+            # head and shoulders, torso fading out, a soft light rim so dark hair reads against dark charts
+            fc.append(f"[pp]crop={cw}:{ch}:{cx}:{cy},scale={pw}:{ph},format=yuva420p,split=2[pc][pa0];[pa0]alphaextract[pa1];"
+                      f"[2:v]scale={pw}:{ph},fps={FPS},format=gray[fd];[pa1][fd]blend=all_mode=multiply:shortest=1[pa2];"
+                      f"[pc][pa2]alphamerge,pad={PIP_W}:{PIP_H}:20:20:color=black@0,split=2[pk][pr0];"
+                      f"[pr0]alphaextract,gblur=sigma=9,lut=y='val*0.30'[pr1];color=c=0xdfe6ef:s={PIP_W}x{PIP_H}:r={FPS}[rimc];"
+                      f"[rimc][pr1]alphamerge[rim];[rim][pk]overlay=shortest=1:format=auto" + (f",split={len(cs)}{lab}" if len(cs) > 1 else '[pip0]'))
+        else:
+            fc.append(f"[pp]scale=448:-2,pad=iw+8:ih+8:4:4:color=0x1a1a19" + (f",split={len(cs)}{lab}" if len(cs) > 1 else '[pip0]'))
         for j, c in enumerate(cs):
-            x, y = pip_xy(c); en = '+'.join(pipwin[c])
-            fc.append(f"[{cur}][pip{j}]overlay={x}:{y}:enable='{en}'[vp{j}]"); cur = f'vp{j}'
+            x0, y0 = map(int, pip_xy(c)); wins = pipwin[c]
+            en = '+'.join(f'between(t,{a:.3f},{b:.3f})' for a, b, _ in wins)
+            # keyframes: ease in from off the right edge, ease back out at the end of the window
+            terms = []
+            for a, b, cont in wins:
+                if not cont: terms.append(f'if(between(t,{a:.3f},{a + SLIDE_IN:.3f}),pow(1-(t-{a:.3f})/{SLIDE_IN},3),0)')
+                terms.append(f'if(between(t,{b - SLIDE_OUT:.3f},{b:.3f}),pow((t-{b - SLIDE_OUT:.3f})/{SLIDE_OUT},3),0)')
+            xexpr = f"{x0}+({W - x0})*({'+'.join(terms) or '0'})"
+            fc.append(f"[{cur}][pip{j}]overlay=x='{xexpr}':y={y0}:eval=frame:enable='{en}'[vp{j}]"); cur = f'vp{j}'
     else:
         fc.append('[pp]nullsink')
     if burn:
@@ -450,7 +480,7 @@ def render(src, cut, pip, burn, music, budget=150):
     import hashlib, glob
     # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
     stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD], sort_keys=True).encode()).hexdigest()
-    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v5', FPS], sort_keys=True).encode()).hexdigest()
+    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v6', FPS, KEY], sort_keys=True).encode()).hexdigest()
     sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
         for pat in ('out_*', 'base_*', 'card_*', 'seg_*', 'trim*', 'base_raw.mkv'):

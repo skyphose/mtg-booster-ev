@@ -35,7 +35,8 @@ python3 edit/make_cues.py     # rebuilds cues_a.json / cues_b.json from the cue 
   - **right third, middle**: big number callouts
   - **top left**: chapter tags
   - **bottom left**: name lower-third (first ~20 seconds only)
-- during charts, your video shrinks into a corner box. the tool picks the spot on each graphic that covers the least (usually bottom right, never over the callout band); `PIP_SPOT` in `edit.py` pins it by hand for a graphic where it guesses wrong.
+- record on a pure-black background (a camera app's background removal works): the edit keys the black out, puts a soft backdrop behind you, and when a chart is up you slide in as a cut-out (head and shoulders, faded torso, light rim) instead of a box. `KEY = False` in `edit.py` turns that off.
+- during charts, your video shrinks into a corner. the tool picks the spot on each graphic that covers the least (usually bottom right, never over the callout band); `PIP_SPOT` in `edit.py` pins it by hand for a graphic where it guesses wrong.
 
 **audio**
 - this matters more than the camera. use a lav or a mic within arm's length, in a room with soft stuff in it.
