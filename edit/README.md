@@ -43,7 +43,7 @@ python3 edit/make_cues.py     # rebuilds cues_a.json / cues_b.json from the cue 
 
 **reading**
 - one file, one take, start to finish. stopping and starting is fine, just don't stop the recording.
-- **flubbed a line?** say "**redo**", take a breath, and restart *that sentence*. everything from the start of the bad sentence through "redo" gets cut.
+- **flubbed a line?** say "**redo**" and restart that sentence, or say "**let's restart**" and go back as far as you like (up to ~90 seconds): the tool finds where the repeated line first started and keeps only the clean take.
 - don't worry about pauses. anything longer than 0.45s gets trimmed down.
 - **pause for a beat after "six cents"** in the cold open. that's where the title card goes.
 - ad-lib anywhere you want, **except on the cue lines below**. those are what the edit listens for, so say them close to word for word. the matcher is fuzzy, so "here's what surprised me" vs "here's what surprised me most" is fine.
@@ -176,3 +176,14 @@ on a laptop, expect transcription at about 1/3 of real time and the render at ab
 | sorting the box at fifteen seconds a card (nerd cut) | selling clock animation |
 
 where an animation already shows a number on screen, the matching callout was dropped so they don't stack.
+
+### per-recording fixes: `<recording>.edit.json`
+
+put a file next to the video with the same name plus `.edit.json` to fix one take without touching the script:
+
+```json
+{"phrases": {"tag_p4": "so what's a god pack worth"},
+ "cuts": [[331.9, 337.05, "misspoke a number"]]}
+```
+
+`phrases` swaps the line a cue listens for (use when you said it differently); `cuts` removes a stretch of the recording (seconds, in the original file's time). `plan` prints what it used.

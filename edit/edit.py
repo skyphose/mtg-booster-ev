@@ -72,19 +72,48 @@ def transcribe(src, model_dir=None, budget=150):
     print(f'transcribe: done, {len(words)} words, {total / 60:.1f} min'); return True
 
 # ============================================================================= 2. plan
-def norm(t): return re.sub(r"[^a-z0-9$%¢ ]", '', t.lower().replace('-', ' ').replace('’', "'").replace("'", ''))
+_ONES = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split()
+_TENS = 'twenty thirty forty fifty sixty seventy eighty ninety'.split()
+def _num_word(n):
+    if n < 20: return _ONES[n]
+    t, o = divmod(n, 10); return _TENS[t - 2] + ('' if o == 0 else ' ' + _ONES[o])
+def norm(t):
+    """lowercase, drop punctuation, and spell out small numbers so the transcriber's '15' matches a cue's 'fifteen'."""
+    t = re.sub(r"[^a-z0-9$%¢ ]", '', t.lower().replace('-', ' ').replace('’', "'").replace("'", ''))
+    return ' '.join(_num_word(int(w.lstrip('$'))) if re.fullmatch(r'\$?\d{1,2}', w) else w for w in t.split())
 
+FILLER = {'this', 'uh', 'um', 'okay', 'ok', 'again', 'that'}
 def find_retakes(words):
-    cuts = []
-    for k, w in enumerate(words):
-        if norm(w['w']).replace(' ', '') in ('redo',) or (norm(w['w']) == 're' and k + 1 < len(words) and norm(words[k + 1]['w']) == 'do'):
-            end_k = k + (1 if norm(w['w']) == 're' else 0)
-            j = k - 1
+    """two ways to flag a flub:
+      'redo'           - cut the flubbed sentence and the word redo
+      "let's restart"  - you went back and said a line (or a few) again; find where that line first started, up to
+                         90 seconds back, and cut everything from there to the restart, so only the clean take stays"""
+    from rapidfuzz import fuzz
+    toks = [norm(w['w']) for w in words]; cuts = []; k = 0
+    while k < len(words):
+        t = toks[k].replace(' ', '')
+        if t == 'redo' or (t == 're' and k + 1 < len(words) and toks[k + 1] == 'do'):
+            end_k = k + (1 if t == 're' else 0); j = k - 1
             while j > 0:
                 prev = words[j - 1]
                 if re.search(r'[.?!]$', prev['w']) or words[j]['s'] - prev['e'] > 1.0: break
                 j -= 1
-            cuts.append((words[max(j, 0)]['s'] - 0.05, words[end_k]['e'] + 0.1, ' '.join(x['w'] for x in words[j:end_k + 1])))
+            cuts.append((words[max(j, 0)]['s'] - 0.05, words[end_k]['e'] + 0.1, ' '.join(x['w'] for x in words[j:end_k + 1]))); k = end_k + 1; continue
+        if t == 'restart':
+            m0 = k - 1 if k > 0 and toks[k - 1].replace(' ', '') in ('lets', 'let') else k
+            m = k + 1
+            while m < len(words) and toks[m] in FILLER: m += 1
+            if m >= len(words): break
+            probe = ' '.join(toks[m:m + 5]); start = None; best = 0
+            for j in range(m0 - 1, -1, -1):
+                if words[m0]['s'] - words[j]['s'] > 90: break
+                sc = fuzz.ratio(probe, ' '.join(toks[j:j + 5]))
+                if sc > best: best, start = sc, j
+            if best < 75:   # couldn't find the earlier attempt: fall back to cutting the sentence the restart sits in
+                start = m0
+                while start > 0 and not re.search(r'[.?!]$', words[start - 1]['w']) and words[start]['s'] - words[start - 1]['e'] <= 1.0: start -= 1
+            cuts.append((words[start]['s'] - 0.05, words[m]['s'] - 0.05, ' '.join(x['w'] for x in words[start:m]))); k = m; continue
+        k += 1
     return cuts
 
 def drop_cut_words(words, cuts):
@@ -113,8 +142,9 @@ def align(words, cues):
         if strong:  # earliest strong hit, then the best-scoring start within 2 words of it (drops a stray leading word)
             first = min(strong, key=lambda x: x[1])
             pick = max([x for x in strong if x[1] - first[1] <= 2], key=lambda x: (x[0], x[1]))
-        else:
-            pick = max(cands) if cands else (0, None, None)
+        else:   # no strong match: only look nearby, so one weak guess can't drag the cursor minutes ahead
+            near = [x for x in cands if x[1] - pos <= 250]
+            pick = max(near) if near else (0, None, None)
         ok = pick[0] >= c.get('min_score', 72)
         rec = dict(c, score=round(pick[0]), matched=ok)
         if ok:
@@ -144,7 +174,16 @@ def make_mapper(segs):
 def plan(src, cut, max_gap):
     words = json.load(open(wpath('transcript.json'))); total = duration(src)
     cues = json.load(open(os.path.join(HERE, f'cues_{cut}.json')))
-    cuts = find_retakes(words); clean = drop_cut_words(words, cuts)
+    cuts = find_retakes(words)
+    # optional per-recording settings next to the video: '<recording>.edit.json'
+    #   {"phrases": {"cue_id": "what you actually said"}, "cuts": [[start_s, end_s, "why"], ...]}
+    ov_path = os.path.splitext(os.path.abspath(src))[0] + '.edit.json'
+    if os.path.exists(ov_path):
+        ov = json.load(open(ov_path))
+        cues = [dict(c, phrase=ov.get('phrases', {}).get(c['id'], c.get('phrase'))) for c in cues]
+        cuts += [(float(a), float(b), f'[manual] {why}') for a, b, why in ov.get('cuts', [])]
+        print(f'using {os.path.basename(ov_path)}: {len(ov.get("phrases", {}))} phrase overrides, {len(ov.get("cuts", []))} manual cuts')
+    cuts.sort(key=lambda c: c[0]); clean = drop_cut_words(words, cuts)
     marks = align(clean, cues)
     segs = keep_segments(clean, total, max_gap); m, tdur = make_mapper(segs)
     # inserts (full-frame cards that add time) are placed after their phrase; build the final clock
