@@ -184,6 +184,10 @@ where an animation already shows a number on screen, the matching callout was dr
 
 every animation gets its full length plus a beat on the finished frame. if you move on before it's done, it plays up to 1.35x faster; if that still isn't enough, the edit adds a short pause in your talking (in the gap before the line that cuts it off) and your face slides out until it resumes. `plan_a.txt` lists the pauses. tune `ANIM_BEAT` / `ANIM_MAX_SPEED` in `edit.py`.
 
+### variants
+
+`--variant fable` renders a second editorial take of the same cut to `<take>_edit_fable.mp4` (graphics hold up to 12 s past their line instead of 30, callouts never earn a frozen pause, animations may run up to 1.5x). the `VARIANTS` table in `edit.py` is the whole definition; add your own.
+
 ### per-recording fixes: `<recording>.edit.json`
 
 put a file next to the video with the same name plus `.edit.json` to fix one take without touching the script:

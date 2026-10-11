@@ -182,7 +182,8 @@ def make_mapper(segs):
         return acc
     return m, acc
 
-def plan(src, cut, max_gap):
+def plan(src, cut, max_gap, key=None):
+    key = key or cut
     words = json.load(open(wpath('transcript.json'))); total = duration(src)
     cues = json.load(open(os.path.join(HERE, f'cues_{cut}.json')))
     cuts = find_retakes(words)
@@ -287,33 +288,35 @@ def plan(src, cut, max_gap):
 
     def conflicts(events):
         out = {}
-        def add(ws, x): out[round(ws, 3)] = max(out.get(round(ws, 3), 0), x)
+        def add(ws, x, hold_ok=True):
+            k = round(ws, 3); px, ph = out.get(k, (0, True)); out[k] = (max(px, x), ph and hold_ok)
         for i, e in enumerate(events):
             need = e['_need']
             if not need: continue
             due = e['start'] + need
+            ok = e['type'] == 'broll' or HOLD_FOR_CALLOUTS
             if e['type'] == 'broll' and e['_resume'] and e['_end_nat'] < due - 0.05: add(e['_resume']['ws'], due - e['_end_nat'])
             kinds = {'broll': ('broll',), 'callout': ('broll', 'callout')}.get(e['type'], ())
             nb = next((x for x in events[i + 1:] if x['type'] in kinds and x['start'] > e['start'] + 0.01), None)
-            if nb and nb['start'] < due - 0.05: add(nb['_ws'], due - nb['start'])
+            if nb and nb['start'] < due - 0.05: add(nb['_ws'], due - nb['start'], ok)
             if e.get('_ins') and e['_ins'][1] < due - 0.05:   # a title card would cut it off: push the card back
                 ic, a0 = e['_ins']; x = due - a0
                 ins_extra[ic['id']] = ins_extra.get(ic['id'], 0) + x
                 nw = next_word(ic['we'])
-                if nw: add(nw['s'], x)
-                else: out[-1] = 0
+                if nw: add(nw['s'], x, ok)
+                else: out[-1] = (0, True)
         return out
 
     for it in range(6):
         layout(); events = build_events(); conf = conflicts(events)
-        if not conf: break
-        for ws, x in conf.items():
+        if not conf: break   # (bounded loop: a conflict that can't be resolved just stops here after 6 passes)
+        for ws, (x, hold_ok) in conf.items():
             if ws == -1: continue
             pw = prev_word(ws); gap = ws - pw['e'] if pw else 0
             kept = gap if gap - PAD_IN - PAD_OUT <= max_gap else PAD_IN + PAD_OUT + extend.get(ws, 0)
             take = min(x, max(0.0, gap - kept))
             if take > 0.01: extend[ws] = round(extend.get(ws, 0) + take, 3)       # real footage of you pausing first
-            if x - take > 0.01: hold_src[ws] = hold_src.get(ws, 0) + x - take      # then a frozen frame for the rest
+            if x - take > 0.01 and hold_ok: hold_src[ws] = hold_src.get(ws, 0) + x - take   # then a frozen frame for the rest
     else:
         layout(); events = build_events()
     for e in events:
@@ -324,11 +327,11 @@ def plan(src, cut, max_gap):
     for w in clean:
         cap.append({'w': w['w'], 's': final_t(m(w['s'])), 'e': final_t(m(w['e']))})
     allins = [(at, c['asset'], c['dur']) for at, c in inserts] + [(at, None, h) for at, h in holds]
-    plan = {'src': os.path.abspath(src), 'cut': cut, 'segments': segs, 'inserts': [{'at': round(at, 3), 'asset': a, 'dur': d} for at, a, d in sorted(allins, key=lambda x: x[0])],
+    plan = {'src': os.path.abspath(src), 'cut': key, 'segments': segs, 'inserts': [{'at': round(at, 3), 'asset': a, 'dur': d} for at, a, d in sorted(allins, key=lambda x: x[0])],
             'holds': [[round(final_t(at) - h, 3), round(final_t(at), 3)] for at, h in holds],
             'end_card': end_card[0] if end_card else None, 'events': sorted(events, key=lambda e: e['start']), 'duration': round(final_dur, 2), 'captions': cap}
-    json.dump(plan, open(wpath(f'plan_{cut}.json'), 'w'), indent=1)
-    write_captions(cap, wpath(f'captions_{cut}.srt'), wpath(f'captions_{cut}.ass'))
+    json.dump(plan, open(wpath(f'plan_{key}.json'), 'w'), indent=1)
+    write_captions(cap, wpath(f'captions_{key}.srt'), wpath(f'captions_{key}.ass'))
     # human-readable report + youtube chapters
     L = [f'plan for cut {cut}: {os.path.basename(src)}', f'recorded {total / 60:.1f} min -> edit {final_dur / 60:.1f} min  ({total - tdur:.0f} s of pauses and retakes removed)', '']
     L.append(f'pauses so graphics can be read: {sum(extend.values()):.1f}s of your own pauses kept, {len(holds)} frozen holds')
@@ -344,7 +347,7 @@ def plan(src, cut, max_gap):
     for e in events:
         if e['type'] == 'tag':
             mm, ss = divmod(int(e['start']), 60); L.append(f"{mm}:{ss:02d} {CHAPTER_NAMES.get(e['asset'], e['id'])}")
-    open(wpath(f'plan_{cut}.txt'), 'w').write('\n'.join(L) + '\n'); print('\n'.join(L))
+    open(wpath(f'plan_{key}.txt'), 'w').write('\n'.join(L) + '\n'); print('\n'.join(L))
 
 CHAPTER_NAMES = {'tag_p1.png': 'the number everyone gets wrong', 'tag_p2.png': 'where the money actually goes', 'tag_p3.png': 'ten years',
                  'tag_p4.png': "what's a god pack worth", 'tag_p5.png': 'the part you skipped', 'tag_p6.png': 'from behind the counter',
@@ -502,6 +505,12 @@ RECEIPTS = {
 }
 PANEL_ROWS = 4
 SIDE_SCALE, SIDE_X = 0.655, 16   # chart size/position while a callout shares the screen
+HOLD_FOR_CALLOUTS = True   # a frozen hold may be added so a number box gets its read time (not just for animations)
+# editorial variants: same cue list, different judgement calls. --variant <name> picks one; output is <take>_edit_<name>.mp4
+VARIANTS = {
+    'fable': dict(GRAPHICS_FIRST_MAX=12.0, READ_PER_WORD=0.22, ANIM_MAX_SPEED=1.5, HOLD_FOR_CALLOUTS=False,
+                  READ_MIN_CHART=5.0),
+}
 GRAPHICS_FIRST = True   # keep charts/animations up between lines instead of cutting back to you
 GRAPHICS_FIRST_MAX = 30.0
 READ_PER_WORD = 0.3     # callouts stay up 1.2 s + this per word
@@ -757,10 +766,15 @@ def render(src, cut, pip, burn, music, budget=150):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('step', choices=['transcribe', 'plan', 'render', 'all']); ap.add_argument('src')
     ap.add_argument('--cut', default='a'); ap.add_argument('--pip', action='store_true'); ap.add_argument('--burn-captions', action='store_true')
-    ap.add_argument('--music'); ap.add_argument('--max-gap', type=float, default=0.45); ap.add_argument('--budget', type=float, default=150); ap.add_argument('--fps', type=int, default=60)
+    ap.add_argument('--music'); ap.add_argument('--max-gap', type=float, default=0.45); ap.add_argument('--budget', type=float, default=150); ap.add_argument('--fps', type=int, default=60); ap.add_argument('--variant', choices=sorted(VARIANTS))
     a = ap.parse_args(); FPS = a.fps
+    if a.variant:
+        for k, v in VARIANTS[a.variant].items():
+            if k == 'READ_MIN_CHART': READ_MIN['chart'] = v
+            else: globals()[k] = v
+    KEY = a.variant or a.cut
     # one work folder per recording, so a new take never reuses an old transcript
     WORK = os.path.join(WORK, re.sub(r'[^A-Za-z0-9_.-]', '_', os.path.splitext(os.path.basename(a.src))[0])); os.makedirs(WORK, exist_ok=True)
     if a.step in ('transcribe', 'all') and not transcribe(a.src, budget=a.budget): sys.exit(3)
-    if a.step in ('plan', 'all'): plan(a.src, a.cut, a.max_gap)
-    if a.step in ('render', 'all') and not render(a.src, a.cut, a.pip, a.burn_captions, a.music, budget=a.budget): sys.exit(3)
+    if a.step in ('plan', 'all'): plan(a.src, a.cut, a.max_gap, key=KEY)
+    if a.step in ('render', 'all') and not render(a.src, KEY, a.pip, a.burn_captions, a.music, budget=a.budget): sys.exit(3)
