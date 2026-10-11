@@ -516,7 +516,7 @@ CAPTION_FIXES = [
     (r'\$0 ?\.(\d\d)', r'\1¢'), (r'(\d) \.(\d)', r'\1.\2'), (r'(\d) %', r'\1%'), (r'(\d) ,(\d{3})', r'\1,\2'),
     (r'\ba dollar 35\b', 'about $1.35'), (r'\bdollar 35\b', '$1.35'), (r'Karloff', 'Karlov'), (r'\bI Opened\b', 'I opened'),
     (r'395 of them, comments\.', '395 of them, commons.'), (r'for bulk for \$4 for \$1000\.', 'for bulk, like $4 per 1,000.'),
-    (r'\breality fracture\b', 'Reality Fracture'), (r'\btheros\b', 'Theros'), (r'\bPokemon', 'Pokémon'),
+    (r'\breality fracture\b', 'Reality Fracture'), (r'\bwizards\b', 'Wizards'), (r'\btcgplayer\b', 'TCGplayer'), (r'\bgithub\b', 'GitHub'), (r'\btheros\b', 'Theros'), (r'\bPokemon', 'Pokémon'),
 ]
 KEY_T = 16         # luma above this counts as you (the background is digital black: exactly Y=16 in video range)
 _corner_cache = {}
@@ -713,6 +713,14 @@ def render_piece(pl, base, i, n, pip, burn, music):
            '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'pcm_s16le', o + '.tmp.mkv']
     run(cmd); os.replace(o + '.tmp.mkv', o); return o
 
+def fix_caption_overlaps(srt):
+    # one caption on screen at a time: each one ends where the next begins
+    def ts(x): h, m, sec = x.replace(',', '.').split(':'); return int(h) * 3600 + int(m) * 60 + float(sec)
+    blocks = [b.split('\n') for b in srt.strip().split('\n\n')]
+    times = [[ts(t) for t in b[1].split(' --> ')] for b in blocks]
+    for i in range(len(times) - 1): times[i][1] = min(times[i][1], times[i + 1][0])
+    return '\n\n'.join('\n'.join([b[0], f'{fmt_srt(a)} --> {fmt_srt(c)}'] + b[2:]) for b, (a, c) in zip(blocks, times)) + '\n'
+
 def render(src, cut, pip, burn, music, budget=150):
     pl = json.load(open(wpath(f'plan_{cut}.json'))); t0 = time.time()
     # if the plan or the options changed since the last render, throw away the cached pieces
@@ -742,6 +750,7 @@ def render(src, cut, pip, burn, music, budget=150):
     run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath(f'out_list_{cut}.txt'), '-c:v', 'copy', '-c:a', 'aac', '-b:a', '384k', '-ar', '48000', '-movflags', '+faststart', final])
     srt = open(wpath(f'captions_{cut}.srt')).read()
     for a, b in CAPTION_FIXES: srt = re.sub(a, b, srt)
+    srt = fix_caption_overlaps(srt)
     open(final.replace('.mp4', '.srt'), 'w').write(srt)
     print(f'render: DONE -> {final}  ({duration(final) / 60:.1f} min)'); return True
 
