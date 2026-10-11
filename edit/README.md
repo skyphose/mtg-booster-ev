@@ -184,6 +184,10 @@ where an animation already shows a number on screen, the matching callout was dr
 
 every animation gets its full length plus a beat on the finished frame. if you move on before it's done, it plays up to 1.35x faster; if that still isn't enough, the edit adds a short pause in your talking (in the gap before the line that cuts it off) and your face slides out until it resumes. `plan_a.txt` lists the pauses. tune `ANIM_BEAT` / `ANIM_MAX_SPEED` in `edit.py`.
 
+### thumbnails
+
+`python3 edit/thumbs.py` writes five 1280x720 thumbnails to `results/thumbs/`: a drawn booster pack whose shadow is a question mark, plus one number in the edit's own graphic language (chapter tag, callout plate). no photo, no logos.
+
 ### variants
 
 `--variant fable` renders a second editorial take of the same cut to `<take>_edit_fable.mp4` (graphics hold up to 12 s past their line instead of 30, callouts never earn a frozen pause, animations may run up to 1.5x). the `VARIANTS` table in `edit.py` is the whole definition; add your own.
