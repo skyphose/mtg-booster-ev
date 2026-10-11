@@ -36,6 +36,7 @@ python3 edit/make_cues.py     # rebuilds cues_a.json / cues_b.json from the cue 
   - **top left**: chapter tags
   - **bottom left**: name lower-third (first ~20 seconds only)
 - record on a pure-black background (a camera app's background removal works): the edit keys the black out, puts a soft backdrop behind you, and when a chart is up you slide in as a cut-out (head and shoulders, faded torso, light rim) instead of a box. `KEY = False` in `edit.py` turns that off.
+- while it's just you on screen, the left side carries **the receipts**: a running list of the numbers so far. each one gets filed there when its callout or graphic ends; the newest is lit, older ones dim, and dashes up top track the chapter. edit `RECEIPTS` in `edit.py` to change what gets filed.
 - during charts, your video shrinks into a corner. the tool picks the spot on each graphic that covers the least (usually bottom right, never over the callout band); `PIP_SPOT` in `edit.py` pins it by hand for a graphic where it guesses wrong.
 
 **audio**

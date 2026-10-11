@@ -359,6 +359,27 @@ PIP_W, PIP_H, PIP_M = 370, 340, (28, 20)   # cut-out pip incl. 20px glow padding
 KEY = True          # the recording has a pure-black background: key it out, put the backdrop behind, cut-out pip
 KEY_CROP = (990, 900, 465, 180)    # w, h, x, y of the head-and-shoulders crop used for the pip (source is centered)
 SLIDE_IN, SLIDE_OUT = 0.35, 0.30
+FACE_DX = 0         # talking head stays centered (callouts on the right, receipts panel on the left)
+
+# the receipts panel: while it's just you on screen, the left side keeps a running list of the numbers so far.
+# a receipt is filed when the graphic that shows it ends. (event id -> big, small, colour)
+RECEIPTS = {
+    'six_cents': ('6¢', 'what a god pack adds to a $5.49 pack', 'BLUE'),
+    'ratio_127': ('$1.35', 'of cards per $1 of play box, on paper', 'BLUE'),
+    'bulk_396': ('395 of 420', 'cards in a box are under a dollar', 'MUTED'),
+    'cash_46': ('49¢', 'per $1 if you actually sell it all', 'AQUA'),
+    'one_in_100': ('~1 in 70', 'boxes pay for themselves in cash', 'AQUA'),
+    'anim_clock': ('~5 hrs', 'to turn one box into about $50', 'YELLOW'),
+    'chart02': ('every set', 'collector boxes cost more than the cards inside', 'MAGENTA'),
+    'anim_reveal': ('$65', 'the average god pack', 'YELLOW'),
+    'gp_23': ('23 boxes', 'for a coin flip at seeing one god pack', 'RED'),
+    'gp_50': ('$51', 'the median god pack. half are worth less', 'YELLOW'),
+    'chart11': ('0 of 62', 'boxes god packs would ever have flipped to a win', 'RED'),
+    'net_80': ('−$0.85', 'net change per 2027 collector booster', 'RED'),
+    'cut_cash': ('3¢', 'what the three cut cards sell for, per pack', 'MAGENTA'),
+    'chart06': ('1 in 8', 'foil-rare rate the new slot needs to break even', 'BLUE'),
+}
+PANEL_ROWS = 4
 KEY_T = 16         # luma above this counts as you (the background is digital black: exactly Y=16 in video range)
 _corner_cache = {}
 # hand-placed spots where the automatic search gets it wrong (it can't tell a lone outlier dot matters)
@@ -397,6 +418,53 @@ def pip_corner(asset):
 
 def pip_xy(c): return c.split(',')
 
+def receipt_states(pl):
+    """[(start, end, png)] for the receipts panel, from the first chapter tag to the end card."""
+    import graphics as G
+    from PIL import ImageDraw
+    ev = pl['events']; tags = [e for e in ev if e['type'] == 'tag']
+    if not tags: return []
+    t0 = tags[0]['start']; t1 = pl['duration'] - ((pl.get('end_card') or {}).get('dur', 0))
+    trig = sorted([(e['end'] + 0.15, 'r', e['id']) for e in ev if e['id'] in RECEIPTS] + [(e['start'], 't', e['id']) for e in tags])
+    states, rows, chap = [], [], 0
+    for t, kind, eid in trig:
+        if kind == 'r': rows.append(RECEIPTS[eid])
+        else: chap = [x['id'] for x in tags].index(eid) + 1
+        states.append((max(t, t0), list(rows), chap))
+    out = []
+    for j, (t, rws, ch) in enumerate(states):
+        end = states[j + 1][0] if j + 1 < len(states) else t1
+        if end <= max(t, t0) + 0.05 or not rws: continue
+        f = wpath(f'panel_{pl["cut"]}_{j:02d}.png')
+        if not os.path.exists(f):
+            img = G.blank(); d = ImageDraw.Draw(img)
+            fh, fb, fs = G.font('semi', 22), G.font('black', 56), G.font('med', 24)
+            show = rws[-PANEL_ROWS:]; x0, y0, w = 50, 230, 470
+            def wrap(text):
+                lines, cur = [], ''
+                for word in text.split():
+                    if G.tw(d, (cur + ' ' + word).strip(), fs)[0] > w - 84: lines.append(cur); cur = word
+                    else: cur = (cur + ' ' + word).strip()
+                return lines + [cur]
+            heights = [68 + 31 * len(wrap(sm)) + 20 for _, sm, _ in show]
+            G.plate(img, (x0, y0, x0 + w, y0 + 78 + sum(heights)), alpha=205)
+            d = ImageDraw.Draw(img)
+            d.text((x0 + 32, y0 + 26), 'THE RECEIPTS', font=fh, fill=G.YELLOW)
+            for q in range(len(tags)):   # chapter progress
+                bx = x0 + w - 28 - (len(tags) - q) * 22
+                d.rounded_rectangle((bx, y0 + 36, bx + 15, y0 + 42), radius=3, fill=G.YELLOW if q < ch else (70, 70, 66))
+            y = y0 + 78
+            for r, ((big, sm, col), hh) in enumerate(zip(show, heights)):
+                newest = r == len(show) - 1; c = getattr(G, col)
+                dim = (lambda rgb: rgb) if newest else (lambda rgb: tuple(int(v * 0.5 + 26 * 0.5) for v in rgb))
+                d.rectangle((x0 + 32, y + 6, x0 + 38, y + hh - 18), fill=dim(c))
+                d.text((x0 + 56, y), big, font=fb, fill=dim(c))
+                for li, line in enumerate(wrap(sm)): d.text((x0 + 58, y + 70 + 31 * li), line, font=fs, fill=dim(G.INK2))
+                y += hh
+            img.crop(img.getbbox()).save(f); open(f + '.xy', 'w').write('%d,%d' % img.getbbox()[:2])   # small overlay = fast
+        out.append((max(t, t0), end, f, end < t1))
+    return out
+
 def render_piece(pl, base, i, n, pip, burn, music):
     s = i * PIECE; e = min(pl['duration'], s + PIECE); o = wpath(f'out_{pl["cut"]}_{i:03d}.mkv')
     if os.path.exists(o): return o
@@ -409,10 +477,19 @@ def render_piece(pl, base, i, n, pip, burn, music):
         fc.append(f"[0:v]format=yuv420p,split=2[src][msrc];[msrc]extractplanes=y,scale={W // 2}:{H // 2},lut=y='if(gt(val,{KEY_T}),255,0)',"
                   f"dilation,erosion,erosion,gblur=sigma=0.8,scale={W}:{H}[mask];"
                   "[src][mask]alphamerge,split=2[cut][pp];"
-                  f"[1:v]scale={W}:{H},fps={FPS},format=yuv420p[plate];[plate][cut]overlay=shortest=1:format=auto[bg]")
+                  f"[1:v]scale={W}:{H},fps={FPS},format=yuv420p[plate];[plate][cut]overlay=x={FACE_DX}:y=0:shortest=1:format=auto[bg]")
     else:
         fc.append('[0:v]split=2[bg][pp]')
     cur = 'bg'; pipwin = {}
+    if KEY:
+        for a, b, f, linger in receipt_states(pl):
+            if b <= s or a >= e: continue
+            st, en = max(0.0, a - s), min(e, b + (0.35 if linger else 0)) - s       # each state lingers under the next while it fades in
+            inputs += ['-loop', '1', '-t', f'{en + 0.1:.3f}', '-i', f]
+            fade_in = f",fade=in:st={st:.3f}:d=0.35:alpha=1" if a >= s else ''
+            fc.append(f"[{k}:v]format=rgba{fade_in}[o{k}]")
+            px, py = open(f + '.xy').read().split(',')
+            fc.append(f"[{cur}][o{k}]overlay={px}:{py}:enable='between(t,{st:.3f},{en:.3f})':eof_action=pass[v{k}]"); cur = f'v{k}'; k += 1
     def win(x): return f"between(t,{max(0, x['start'] - s):.3f},{x['end'] - s:.3f})"
     # one face at a time: a b-roll's pip window stops where the next b-roll starts
     br = sorted([x for x in ev if x['type'] == 'broll'], key=lambda x: x['start'])
@@ -480,7 +557,7 @@ def render(src, cut, pip, burn, music, budget=150):
     import hashlib, glob
     # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
     stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD], sort_keys=True).encode()).hexdigest()
-    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v6', FPS, KEY], sort_keys=True).encode()).hexdigest()
+    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v8', FPS, KEY, FACE_DX, RECEIPTS], sort_keys=True).encode()).hexdigest()
     sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
         for pat in ('out_*', 'base_*', 'card_*', 'seg_*', 'trim*', 'base_raw.mkv'):

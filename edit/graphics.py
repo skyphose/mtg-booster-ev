@@ -39,10 +39,10 @@ def plate(img, box, alpha=200, radius=18):
 def tw(d, text, f): b = d.textbbox((0, 0), text, font=f); return b[2] - b[0], b[3] - b[1]
 
 # ----------------------------------------------------------------------------- behind the keyed-out talking head
-def backdrop():
+def backdrop(cx=960):
     import numpy as np
     y, x = np.mgrid[0:H, 0:W].astype(float)
-    r = np.sqrt(((x - 960) / 900) ** 2 + ((y - 600) / 620) ** 2)          # soft pool of light behind the head
+    r = np.sqrt(((x - cx) / 900) ** 2 + ((y - 600) / 620) ** 2)          # soft pool of light behind the head
     glow = np.clip(1 - r, 0, 1) ** 1.6
     vig = np.clip(r - 0.9, 0, 1) * 0.6                                      # darker corners
     base = np.array(SURF, float); lift = np.array((44, 46, 50), float) - base
@@ -131,12 +131,17 @@ def callouts():
     for key, big, small, col in CALLOUTS:
         img = blank(); d = ImageDraw.Draw(img)
         fb = font('black', 110 if len(big) < 12 else 76); fs = font('med', 34)
-        bw, bh = tw(d, big, fb); sw, sh = tw(d, small, fs)
+        bw, bh = tw(d, big, fb)
+        lines, cur = [], ''   # wrap the small line so the plate stays clear of the face (max ~460px of text)
+        for word in small.split():
+            if cur and tw(d, cur + ' ' + word, fs)[0] > max(460, bw): lines.append(cur); cur = word
+            else: cur = (cur + ' ' + word).strip()
+        lines.append(cur); sw = max(tw(d, l, fs)[0] for l in lines); sh = 44 * len(lines) - 10
         w = max(bw, sw) + 96; x1 = W - 80; x0 = x1 - w; y0 = 400; y1 = y0 + bh + sh + 120
         plate(img, (x0, y0, x1, y1), alpha=215)
         d.rectangle((x0, y0, x0 + 10, y1), fill=col)
         d.text((x0 + 48, y0 + 30), big, font=fb, fill=col if col != INK else INK)
-        d.text((x0 + 48, y0 + 50 + bh + 18), small, font=fs, fill=INK2)
+        for li, l in enumerate(lines): d.text((x0 + 48, y0 + 50 + bh + 18 + 44 * li), l, font=fs, fill=INK2)
         save(img, f'callout_{key}.png')
 
 # ----------------------------------------------------------------------------- lower third, badge, source tag
