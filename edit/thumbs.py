@@ -130,7 +130,7 @@ def lines(img, xy, rows, bar, w=620):
 def d_six_cents():
     img = bg(BLUE); hero(img, BLUE)
     tag(img, (56, 44), 'the 2027 god pack', 'what it actually adds')
-    lines(img, (56, 196), [('GOD PACKS', 'black', 92, INK), ('are worth', 'bold', 60, INK2), ('6¢ a pack', 'black', 118, BLUE)], BLUE)
+    lines(img, (56, 196), [('GOD PACKS', 'black', 92, INK), ('are worth', 'bold', 60, INK2), ('???', 'black', 150, BLUE)], BLUE)
     return img
 
 def d_coin_flip():
