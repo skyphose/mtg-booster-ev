@@ -180,6 +180,10 @@ on a laptop, expect transcription at about 1/3 of real time and the render at ab
 
 where an animation already shows a number on screen, the matching callout was dropped so they don't stack.
 
+### animations always finish
+
+every animation gets its full length plus a beat on the finished frame. if you move on before it's done, it plays up to 1.35x faster; if that still isn't enough, the edit adds a short pause in your talking (in the gap before the line that cuts it off) and your face slides out until it resumes. `plan_a.txt` lists the pauses. tune `ANIM_BEAT` / `ANIM_MAX_SPEED` in `edit.py`.
+
 ### per-recording fixes: `<recording>.edit.json`
 
 put a file next to the video with the same name plus `.edit.json` to fix one take without touching the script:

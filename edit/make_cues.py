@@ -55,7 +55,7 @@ A4 = [
 ]
 A4H = [
     C('tag_h1', 'what if god packs had always been a thing', 'tag', 'tag_h1.png', dur=4),
-    C('chart11', 'what if god packs had always been a thing', 'broll', 'anim_godpack_history.mp4', same_as='tag_h1', max=16),
+    C('chart11', 'what if god packs had always been a thing', 'broll', 'anim_godpack_history.mp4', same_as='tag_h1', until='tag_p5', max=16),
 ]
 A5 = [
     C('tag_p5', 'same post two paragraphs down', 'tag', 'tag_p5.png', dur=4),

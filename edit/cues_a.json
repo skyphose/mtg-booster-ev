@@ -229,6 +229,7 @@
   "type": "broll",
   "asset": "anim_godpack_history.mp4",
   "same_as": "tag_h1",
+  "until": "tag_p5",
   "max": 16
  },
  {

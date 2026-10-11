@@ -200,40 +200,65 @@ def plan(src, cut, max_gap):
     def insert_at(c):
         t0 = m(c['we']); nxt = next((w for w in clean if w['s'] > c['we'] + 0.01), None)
         lim = m(nxt['s']) - 0.05 if nxt else t0 + 1
-        return max(t0 + 0.1, min(t0 + c.get('offset', 0.3), lim))
+        return round(max(t0 + 0.1, min(t0 + c.get('offset', 0.3), lim)) * FPS) / FPS   # on the frame grid, or the pieces after it drift
     inserts = sorted([(insert_at(c), c) for c in marks if c['matched'] and c['type'] == 'insert'], key=lambda x: x[0])
     end_card = [c for c in cues if c['type'] == 'endcard']
-    def final_t(t):  # trimmed time -> final time (after inserts before t)
-        return t + sum(c['dur'] for at, c in inserts if at <= t)
-    events = []
-    for c in marks:
-        if not c['matched'] or c['type'] in ('insert', 'mark', 'endcard'): continue
-        start = final_t(m(c['ws'] if c.get('anchor', 'start') == 'start' else c['we'])) + c.get('offset', 0)
-        if c.get('until'):
-            nxt = next((x for x in marks if x['id'] == c['until'] and x['matched']), None)
-            end = final_t(m(nxt['ws'])) - 0.15 if nxt else start + c.get('max', 8)
-        else: end = start + c.get('dur', 4)
-        if c.get('max'): end = min(end, start + c['max'])
-        if c.get('min'): end = max(end, start + c['min'])
-        # overlays never sit on top of a full-frame card (title insert, end card)
-        for at, ic in inserts:
-            a0 = final_t(at) - ic['dur']; a1 = a0 + ic['dur']
-            if a0 - 0.01 <= start < a1: end += a1 - start; start = a1
-            elif start < a0 < end: end = a0
-        end = min(end, final_t(tdur) - 0.1)
-        if end - start < 0.5: continue
-        events.append({'id': c['id'], 'type': c['type'], 'asset': c['asset'], 'start': round(start, 3), 'end': round(end, 3), 'pip': c.get('pip', True)})
+    holds = []   # (trimmed time, seconds): pauses in the talking so an animation can finish
+    def final_t(t):  # trimmed time -> final time (after inserts and holds before t)
+        return t + sum(c['dur'] for at, c in inserts if at <= t) + sum(h for at, h in holds if at <= t)
+    def anim_len(asset):
+        return duration(asset_path(asset)) if asset.endswith('.mp4') else None
+    def build_events():
+        events = []
+        for c in marks:
+            if not c['matched'] or c['type'] in ('insert', 'mark', 'endcard'): continue
+            start = final_t(m(c['ws'] if c.get('anchor', 'start') == 'start' else c['we'])) + c.get('offset', 0)
+            nxt = next((x for x in marks if x['id'] == c.get('until') and x['matched']), None) if c.get('until') else None
+            if c.get('until'):
+                end = final_t(m(nxt['ws'])) - 0.15 if nxt else start + c.get('max', 8)
+            else: end = start + c.get('dur', c.get('max', 4))
+            D = anim_len(c['asset']) if c['type'] == 'broll' else None
+            # an animation gets at least its own length (up to where the talking moves on), whatever 'max' says
+            if c.get('max'): end = min(end, start + max(c['max'], D + ANIM_BEAT if D else 0))
+            if c.get('min'): end = max(end, start + c['min'])
+            for at, ic in inserts:   # overlays never sit on top of a full-frame card (title insert, end card)
+                a0 = final_t(at) - ic['dur']; a1 = a0 + ic['dur']
+                if a0 - 0.01 <= start < a1: end += a1 - start; start = a1
+                elif start < a0 < end: end = a0
+            end = min(end, final_t(tdur) - 0.1)
+            if end - start < 0.5: continue
+            e = {'id': c['id'], 'type': c['type'], 'asset': c['asset'], 'start': round(start, 3), 'end': round(end, 3), 'pip': c.get('pip', True)}
+            if D:
+                slot = end - start
+                e['speed'] = round(min(ANIM_MAX_SPEED, max(1.0, D / max(0.1, slot - ANIM_BEAT))), 3)
+                e['_short'] = D / e['speed'] + ANIM_BEAT - slot   # still this many seconds short at full speed
+                e['_resume'] = nxt                            # the cue that cuts it off (where a pause can go)
+            events.append(e)
+        return events
+    # pass 1: find animations that can't finish even sped up, and pause the talking right before the line that
+    # cuts them off (in the gap between sentences). pass 2: lay everything out again with those pauses in.
+    for e in build_events():
+        if e.get('_short', 0) > 0.2 and e['_resume']:
+            ws = e['_resume']['ws']; prev = max((w for w in clean if w['e'] <= ws + 0.01), key=lambda w: w['e'], default=None)
+            at = (m(prev['e']) + m(ws)) / 2 if prev else m(ws) - 0.1
+            holds.append((round(at * FPS) / FPS, math.ceil((e['_short'] + 0.05) * FPS) / FPS))   # frame-grid place and length
+    holds.sort()
+    events = build_events()
+    for e in events: e.pop('_short', None); e.pop('_resume', None)
     final_dur = final_t(tdur) + sum(c['dur'] for c in end_card)
     # captions on the final clock
     cap = []
     for w in clean:
         cap.append({'w': w['w'], 's': final_t(m(w['s'])), 'e': final_t(m(w['e']))})
-    plan = {'src': os.path.abspath(src), 'cut': cut, 'segments': segs, 'inserts': [{'at': round(at, 3), 'asset': c['asset'], 'dur': c['dur']} for at, c in inserts],
+    allins = [(at, c['asset'], c['dur']) for at, c in inserts] + [(at, None, h) for at, h in holds]
+    plan = {'src': os.path.abspath(src), 'cut': cut, 'segments': segs, 'inserts': [{'at': round(at, 3), 'asset': a, 'dur': d} for at, a, d in sorted(allins, key=lambda x: x[0])],
+            'holds': [[round(final_t(at) - h, 3), round(final_t(at), 3)] for at, h in holds],
             'end_card': end_card[0] if end_card else None, 'events': sorted(events, key=lambda e: e['start']), 'duration': round(final_dur, 2), 'captions': cap}
     json.dump(plan, open(wpath(f'plan_{cut}.json'), 'w'), indent=1)
     write_captions(cap, wpath(f'captions_{cut}.srt'), wpath(f'captions_{cut}.ass'))
     # human-readable report + youtube chapters
     L = [f'plan for cut {cut}: {os.path.basename(src)}', f'recorded {total / 60:.1f} min -> edit {final_dur / 60:.1f} min  ({total - tdur:.0f} s of pauses and retakes removed)', '']
+    L.append(f'animation pauses ({len(holds)}):'); L += [f'  {h:.1f}s pause at {final_t(at) - h:.1f}s' for at, h in holds] or ['  none']
     L.append(f'retakes cut ({len(cuts)}):'); L += [f'  {a:7.1f}s  "{t[:90]}"' for a, b, t in cuts] or ['  none']
     L += ['', 'cues:']
     for c in marks:
@@ -316,10 +341,15 @@ def build_base(pl, budget):
             for o in trimmed: f.write(f"file '{o}'\n")
         run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath('trim_list.txt'), '-c', 'copy', joined + '.part.mkv'])
         os.replace(joined + '.part.mkv', joined)
-    cards = [(x['at'], x['asset'], x['dur']) for x in pl['inserts']]
+    cards = [(round(x['at'] * FPS) / FPS, x['asset'], x['dur']) for x in pl['inserts']]   # back onto the exact frame grid
     clips = []; last = 0.0; jd = duration(joined)
     def card_clip(asset, dur, name):
         o = wpath(name)
+        if not os.path.exists(o) and asset is None:   # an animation pause: black (keys to the backdrop) and silence
+            run(['ffmpeg', '-y', '-v', 'error', '-f', 'lavfi', '-t', f'{dur}', '-i', f'color=c=black:s={W}x{H}:r={FPS}', '-f', 'lavfi', '-t', f'{dur}',
+                 '-i', 'anullsrc=r=48000:cl=stereo', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', '-c:a', 'pcm_s16le',
+                 '-shortest', o + '.part.mkv'])
+            os.replace(o + '.part.mkv', o)
         if not os.path.exists(o):
             run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-t', f'{dur}', '-i', asset_path(asset), '-f', 'lavfi', '-t', f'{dur}', '-i', 'anullsrc=r=48000:cl=stereo',   # must match the voice track: a mono card concatenated as stereo halves its length and throws sync off
                  '-vf', f'scale={W}:{H},fps={FPS},format=yuv420p,fade=in:st=0:d=0.25,fade=out:st={dur - 0.3}:d=0.3', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
@@ -335,7 +365,7 @@ def build_base(pl, budget):
             if not os.path.exists(o):
                 if time.time() - t0 > budget: return None
                 tmp = o.replace('.mkv', '.part.mkv')
-                run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{x:.3f}', '-to', f'{y:.3f}', '-i', joined, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', tmp])
+                run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{x - 0.25 / FPS:.5f}', '-to', f'{y - 0.25 / FPS:.5f}', '-i', joined, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', tmp])
                 os.replace(tmp, o); print(f'render: encoded {name}_{j:02d}')
             x = y; j += 1
         return outs
@@ -394,6 +424,8 @@ RECEIPTS = {
     'chart06': ('1 in 8', 'foil-rare rate the new slot needs to break even', 'BLUE'),
 }
 PANEL_ROWS = 4
+ANIM_BEAT = 0.8         # every animation gets this long on its finished frame before the edit moves on
+ANIM_MAX_SPEED = 1.35   # an animation that doesn't fit its slot plays up to this much faster, then the talking pauses for the rest
 
 # caption clean-up (whisper's spacing around numbers, and the names it hears wrong). applied to the delivered .srt only.
 CAPTION_FIXES = [
@@ -521,9 +553,11 @@ def render_piece(pl, base, i, n, pip, burn, music):
         a = asset_path(x['asset']); st = max(0.0, x['start'] - s); en = x['end'] - s; dur = en - st
         if x['type'] == 'broll':
             if a.endswith('.mp4'):
-                skip = max(0.0, s - x['start'])  # piece starts mid-clip
+                sp = x.get('speed', 1.0)
+                skip = max(0.0, s - x['start']) * sp  # piece starts mid-clip (in the clip's own time)
+                skip = min(skip, max(0.0, duration(a) - 0.1))   # already finished: start on its last frame (seeking past the end crashes ffmpeg)
                 inputs += ['-ss', f'{skip:.3f}', '-i', a]
-                fc.append(f"[{k}:v]scale={W}:{H},fps={FPS},tpad=stop_mode=clone:stop_duration=60,trim=0:{dur:.3f},setpts=PTS-STARTPTS+{st:.3f}/TB,"
+                fc.append(f"[{k}:v]setpts=(PTS-STARTPTS)/{sp},scale={W}:{H},fps={FPS},tpad=stop_mode=clone:stop_duration=60,trim=0:{dur:.3f},setpts=PTS-STARTPTS+{st:.3f}/TB,"
                           f"fade=in:st={st:.3f}:d=0.25:alpha=1,format=yuva420p[b{k}]")
             else:
                 inputs += ['-loop', '1', '-t', f'{dur + 0.1:.3f}', '-i', a]
@@ -549,7 +583,14 @@ def render_piece(pl, base, i, n, pip, burn, music):
         else:
             fc.append(f"[pp]scale=448:-2,pad=iw+8:ih+8:4:4:color=0x1a1a19" + (f",split={len(cs)}{lab}" if len(cs) > 1 else '[pip0]'))
         for j, c in enumerate(cs):
-            x0, y0 = map(int, pip_xy(c)); wins = pipwin[c]
+            x0, y0 = map(int, pip_xy(c)); wins = []
+            for a, b, cont in pipwin[c]:   # no face during an animation pause (you're not talking): slide out, slide back in
+                for h0, h1 in pl.get('holds', []):
+                    h0, h1 = h0 - s, h1 - s
+                    if a < h0 < b: wins.append((a, h0, cont)); a, cont = min(b, h1), False
+                    elif h0 <= a < h1: a, cont = min(b, h1), False
+                if b - a > 0.3: wins.append((a, b, cont))
+            if not wins: fc.append(f'[pip{j}]nullsink'); continue
             en = '+'.join(f'between(t,{a:.3f},{b:.3f})' for a, b, _ in wins)
             # keyframes: ease in from off the right edge, ease back out at the end of the window
             terms = []
@@ -579,7 +620,7 @@ def render(src, cut, pip, burn, music, budget=150):
     # if the plan or the options changed since the last render, throw away the cached pieces
     import hashlib, glob
     # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
-    stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD, 'frame-grid-v2'], sort_keys=True).encode()).hexdigest()
+    stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD, 'frame-grid-v3'], sort_keys=True).encode()).hexdigest()
     ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v9', FPS, KEY, FACE_DX, RECEIPTS], sort_keys=True).encode()).hexdigest()
     sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
