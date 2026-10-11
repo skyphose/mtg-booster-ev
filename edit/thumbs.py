@@ -95,7 +95,7 @@ def pack(w=340, h=500, col=(43, 95, 168), col2=(24, 48, 96), label='2027', mark=
     bd.rectangle((x0, y0 + 10, x0 + 3, y1 - 10), fill=(255, 255, 255, 70)); bd.rectangle((x1 - 3, y0 + 10, x1, y1 - 10), fill=(0, 0, 0, 90))
     return body
 
-def question_shadow(img, center, col, size=700, dx=255, dy=105):
+def question_shadow(img, center, col, size=640, dx=215, dy=110):
     """the pack's shadow is a question mark: a big '?' in the design colour, dark and soft, thrown behind and
     below-right of the pack, big enough to show around it. (a true cast shadow is invisible on a dark surface.)"""
     f = font('black', size); layer = Image.new('RGBA', img.size, (0, 0, 0, 0)); d = ImageDraw.Draw(layer)
@@ -112,55 +112,52 @@ def place_pack(img, center, rot=-8, scale=1.0, **kw):
     cx, cy = center; img.alpha_composite(soft, (int(cx - p.width / 2) + 10, int(cy - p.height / 2) + 26))
     img.alpha_composite(p, (int(cx - p.width / 2), int(cy - p.height / 2)))
 
-def hero(img, col, center=(880, 360), rot=-8, scale=0.92, **kw):
+def hero(img, col, center=(950, 360), rot=-8, scale=0.88, **kw):
     question_shadow(img, center, col)
     place_pack(img, center, rot=rot, scale=scale, mark='', **kw)
 
-# ----------------------------------------------------------------------------- designs
+# ----------------------------------------------------------------------------- designs: how little a god pack does
+def lines(img, xy, rows, bar, w=620):
+    """a plate with stacked lines: (text, font weight, size, colour). the thumbnail's one idea, big."""
+    d = ImageDraw.Draw(img); x0, y0 = xy; y = y0 + 28; h = 28
+    for t, wt, sz, col in rows: h += d.textbbox((0, 0), t, font=font(wt, sz))[3] + 10
+    plate(img, (x0, y0, x0 + w, y0 + h + 18)); d = ImageDraw.Draw(img)
+    d.rectangle((x0, y0, x0 + 12, y0 + h + 18), fill=bar)
+    for t, wt, sz, col in rows:
+        f = font(wt, sz); d.text((x0 + 44, y), t, font=f, fill=col); y += d.textbbox((0, 0), t, font=f)[3] + 10
+    return y0 + h + 18
+
 def d_six_cents():
     img = bg(BLUE); hero(img, BLUE)
-    tag(img, (56, 44), 'the 2027 god pack', 'what it adds to every pack')
-    callout(img, (56, 200), '6¢', 'on a $5.49 pack', BLUE, fb=300, fs=50)
+    tag(img, (56, 44), 'the 2027 god pack', 'what it actually adds')
+    lines(img, (56, 196), [('GOD PACKS', 'black', 92, INK), ('are worth', 'bold', 60, INK2), ('6¢ a pack', 'black', 118, BLUE)], BLUE)
     return img
 
-def d_ev():
-    img = bg(AQUA); hero(img, AQUA)
-    tag(img, (56, 44), 'ten years of boxes', 'is opening boosters +EV?')
-    x, y = callout(img, (56, 190), '$1.35', 'of cards per $1, on paper', AQUA, fb=150, fs=42)
-    callout(img, (56, y + 18), '49¢', 'per $1 once you sell it', RED, fb=150, fs=42, w=x - 56)
+def d_coin_flip():
+    img = bg(RED); hero(img, RED)
+    tag(img, (56, 44), 'the 2027 god pack', 'the odds, in boxes')
+    lines(img, (56, 196), [('$3,800', 'black', 150, RED), ('of boxes for a', 'bold', 56, INK2), ('coin flip at ONE', 'black', 66, INK)], RED)
     return img
 
-def d_myth():
+def d_zero():
     img = bg(MAGENTA); hero(img, MAGENTA)
-    plate(img, (56, 44, 740, 660)); d = ImageDraw.Draw(img)
-    d.text((96, 70), 'MYTH', font=font('black', 56), fill=RED)
-    d.text((96, 134), '"god packs make', font=font('bold', 54), fill=INK)
-    d.text((96, 194), '  boxes worth it"', font=font('bold', 54), fill=INK)
-    d.line([(96, 290), (700, 290)], fill=MUTED, width=2)
-    d.text((96, 318), 'MATH', font=font('black', 56), fill=AQUA)
-    d.text((96, 382), '+$1.74', font=font('black', 150), fill=INK)
-    d.text((100, 556), 'on a $151 box', font=font('bold', 50), fill=INK2)
+    tag(img, (56, 44), 'what if', 'god packs had always existed')
+    lines(img, (56, 196), [('0 of 62', 'black', 150, RED), ('boxes would flip', 'bold', 60, INK2), ('to a win. zero.', 'black', 74, INK)], RED)
     return img
 
-def d_ten_million():
-    img = bg(YELLOW); hero(img, YELLOW, center=(900, 360))
-    tag(img, (56, 44), 'the receipts', 'i opened 10 million packs')
-    callout(img, (56, 196), '1 in 70', 'boxes pay for themselves', AQUA, fb=170, fs=44)
-    callout(img, (56, 470), '49¢', 'per $1, in cash', RED, fb=120, fs=40)
+def d_per_box():
+    img = bg(YELLOW); hero(img, YELLOW)
+    tag(img, (56, 44), 'the 2027 god pack', 'per box')
+    lines(img, (56, 196), [('$1.74', 'black', 160, YELLOW), ('on a $151 box.', 'bold', 60, INK2), ("that's it.", 'black', 90, INK)], YELLOW)
     return img
 
-def d_question():
-    """the pack and the question, nothing else: for the version where the title does the talking."""
-    img = bg(BLUE, pool=(640, 380)); hero(img, BLUE, center=(600, 360), rot=-6, scale=1.0)
-    d = ImageDraw.Draw(img); f = font('black', 96)
-    for text, y, col in (('is opening', 40, INK), ('boosters +EV?', 590, INK)):
-        tw = d.textbbox((0, 0), text, font=f)[2]
-        glow = Image.new('RGBA', img.size, (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
-        gd.text(((W - tw) / 2, y), text, font=f, fill=(0, 0, 0, 200)); img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(16)))
-        ImageDraw.Draw(img).text(((W - tw) / 2, y), text, font=f, fill=col)
+def d_never():
+    img = bg(AQUA); hero(img, AQUA)
+    tag(img, (56, 44), 'the 2027 god pack', 'one in a thousand packs')
+    lines(img, (56, 196), [('you will', 'black', 78, INK), ('probably never', 'black', 78, INK), ('open one', 'black', 78, AQUA), ('23 boxes for a coin flip', 'bold', 44, INK2)], AQUA)
     return img
 
-DESIGNS = {'six_cents': d_six_cents, 'ev': d_ev, 'myth': d_myth, 'ten_million': d_ten_million, 'question': d_question}
+DESIGNS = {'six_cents': d_six_cents, 'coin_flip': d_coin_flip, 'zero': d_zero, 'per_box': d_per_box, 'never': d_never}
 
 if __name__ == '__main__':
     for name, fn in DESIGNS.items():
