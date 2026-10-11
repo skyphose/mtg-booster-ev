@@ -27,6 +27,9 @@ FPS = 60; W, H = 1920, 1080   # --fps to change; match the camera
 VOICE_CHAIN = ('highpass=f=80,equalizer=f=3500:t=q:w=0.9:g=3,treble=g=3:f=9000,deesser=i=0.3,'
                'acompressor=threshold=-20dB:ratio=3:attack=5:release=120')
 LOUD = 'I=-14:TP=-1.5:LRA=11'
+# place every audio sample by its timestamp: the joined clips have millisecond gaps at the joins, and reading the
+# audio as one continuous run would pull it ~70 ms ahead of the picture by the end of an 8-minute edit
+ASYNC = 'aresample=async=1:first_pts=0'
 
 def run(cmd, **kw):
     r = subprocess.run(cmd, capture_output=True, text=True, **kw)
@@ -292,11 +295,16 @@ def build_base(pl, budget):
         o = wpath(f'trim_{i:03d}.mp4'); trimmed.append(o)
         if os.path.exists(o): continue
         if time.time() - t0 > budget: print(f'render: trimmed {i}/{len(parts)} pieces, run again'); return None
-        a, b = g[0][0], g[-1][1]
-        sel = '+'.join(f'between(t,{x - a:.3f},{y - a:.3f})' for x, y in g)
+        # snap every cut to the frame grid and use half-open windows, so each kept stretch has exactly as many
+        # video frames as it has audio (48000/60 = 800 samples a frame). otherwise every cut can add a frame of
+        # picture the audio doesn't have, and over a few hundred cuts the voice drifts ahead of the lips.
+        snap = lambda v: round(v * FPS) / FPS
+        a, b = snap(g[0][0]), snap(g[-1][1])
+        sel = '+'.join(f'gte(t,{snap(x) - a - 0.25 / FPS:.5f})*lt(t,{snap(y) - a - 0.25 / FPS:.5f})' for x, y in g if snap(y) > snap(x))
         vf = (f"select='{sel}',setpts=N/FRAME_RATE/TB,scale={W}:{H}:force_original_aspect_ratio=decrease,"
               f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x1a1a19,fps={FPS},format=yuv420p")
-        af = f"aselect='{sel}',asetpts=N/SR/TB,aresample=48000"
+        # aselect keeps or drops whole audio frames, so cut the audio into one-video-frame blocks first
+        af = f"aresample=48000,asetnsamples=n={48000 // FPS}:p=0,aselect='{sel}',asetpts=N/SR/TB"
         run(['ffmpeg', '-y', '-v', 'error', '-ss', f'{a:.3f}', '-to', f'{b + 0.05:.3f}', '-i', src, '-vf', vf, '-af', af,
              '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-c:a', 'pcm_s16le', o.replace('.mp4', '.mkv')])
         os.replace(o.replace('.mp4', '.mkv'), o)
@@ -313,7 +321,7 @@ def build_base(pl, budget):
     def card_clip(asset, dur, name):
         o = wpath(name)
         if not os.path.exists(o):
-            run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-t', f'{dur}', '-i', asset_path(asset), '-f', 'lavfi', '-t', f'{dur}', '-i', 'anullsrc=r=48000:cl=mono',
+            run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-t', f'{dur}', '-i', asset_path(asset), '-f', 'lavfi', '-t', f'{dur}', '-i', 'anullsrc=r=48000:cl=stereo',   # must match the voice track: a mono card concatenated as stereo halves its length and throws sync off
                  '-vf', f'scale={W}:{H},fps={FPS},format=yuv420p,fade=in:st=0:d=0.25,fade=out:st={dur - 0.3}:d=0.3', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16',
                  '-c:a', 'pcm_s16le', '-shortest', o + '.part.mkv'])
             os.replace(o + '.part.mkv', o)
@@ -343,14 +351,20 @@ def build_base(pl, budget):
         for c in clips: f.write(f"file '{c}'\n")
     raw = wpath('base_raw.mkv')
     run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath('base_list.txt'), '-c', 'copy', raw])
+    # sync guard: every clip must carry the same audio format, and audio must run as long as the picture
+    fmts = {subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=sample_rate,channels', '-of', 'csv=p=0', c],
+                           capture_output=True, text=True).stdout.strip() for c in clips}
+    if len(fmts) != 1: sys.exit(f'render: clips have mixed audio formats {fmts}, sync would drift. delete the odd ones and rerun')
+    adur = float(subprocess.run(['ffmpeg', '-v', 'error', '-i', raw, '-vn', '-f', 'wav', '-'], capture_output=True).stdout.__len__() - 44) / (48000 * 2 * int(fmts.pop().split(',')[1]))
+    if abs(adur - duration(raw)) > 0.15: sys.exit(f'render: audio {adur:.2f}s vs video {duration(raw):.2f}s, refusing to continue')
     # 3c. audio clean-up once, on the whole thing (needs to see all of it for loudness)
     aout = wpath('voice.wav')
-    meas = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', raw, '-vn', '-af', f'{VOICE_CHAIN},loudnorm={LOUD}:print_format=json',
+    meas = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', raw, '-vn', '-af', f'{ASYNC},{VOICE_CHAIN},loudnorm={LOUD}:print_format=json',
                            '-f', 'null', '-'], capture_output=True, text=True).stderr
     m = json.loads(meas[meas.rindex('{'):meas.rindex('}') + 1])
     ln = (f"loudnorm={LOUD}:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
           f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
-    run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-vn', '-af', f'{VOICE_CHAIN},{ln}', '-ar', '48000', aout])
+    run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-vn', '-af', f'{ASYNC},{VOICE_CHAIN},{ln}', '-ar', '48000', aout])
     run(['ffmpeg', '-y', '-v', 'error', '-i', raw, '-i', aout, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'pcm_s16le', out.replace('.mp4', '.mkv')])
     os.replace(out.replace('.mp4', '.mkv'), out)
     print('render: base done'); return out
@@ -380,6 +394,14 @@ RECEIPTS = {
     'chart06': ('1 in 8', 'foil-rare rate the new slot needs to break even', 'BLUE'),
 }
 PANEL_ROWS = 4
+
+# caption clean-up (whisper's spacing around numbers, and the names it hears wrong). applied to the delivered .srt only.
+CAPTION_FIXES = [
+    (r'\$0 ?\.(\d\d)', r'\1¢'), (r'(\d) \.(\d)', r'\1.\2'), (r'(\d) %', r'\1%'), (r'(\d) ,(\d{3})', r'\1,\2'),
+    (r'\ba dollar 35\b', 'about $1.35'), (r'\bdollar 35\b', '$1.35'), (r'Karloff', 'Karlov'), (r'\bI Opened\b', 'I opened'),
+    (r'395 of them, comments\.', '395 of them, commons.'), (r'for bulk for \$4 for \$1000\.', 'for bulk, like $4 per 1,000.'),
+    (r'\breality fracture\b', 'Reality Fracture'), (r'\btheros\b', 'Theros'), (r'\bPokemon', 'Pokémon'),
+]
 KEY_T = 16         # luma above this counts as you (the background is digital black: exactly Y=16 in video range)
 _corner_cache = {}
 # hand-placed spots where the automatic search gets it wrong (it can't tell a lone outlier dot matters)
@@ -494,7 +516,8 @@ def render_piece(pl, base, i, n, pip, burn, music):
     # one face at a time: a b-roll's pip window stops where the next b-roll starts
     br = sorted([x for x in ev if x['type'] == 'broll'], key=lambda x: x['start'])
     pip_end = {id(x): min([x['end']] + [y['start'] for y in br if y['start'] > x['start']]) for x in br}
-    for x in ev:
+    # draw every b-roll first, then tags/callouts/badges on top: a chapter tag that starts with a chart must not hide under it
+    for x in sorted(ev, key=lambda x: (x['type'] != 'broll', x['start'])):
         a = asset_path(x['asset']); st = max(0.0, x['start'] - s); en = x['end'] - s; dur = en - st
         if x['type'] == 'broll':
             if a.endswith('.mp4'):
@@ -556,8 +579,8 @@ def render(src, cut, pip, burn, music, budget=150):
     # if the plan or the options changed since the last render, throw away the cached pieces
     import hashlib, glob
     # plan changed -> rebuild everything; only the overlay options/layout changed -> just redo the finished pieces
-    stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD], sort_keys=True).encode()).hexdigest()
-    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v8', FPS, KEY, FACE_DX, RECEIPTS], sort_keys=True).encode()).hexdigest()
+    stamp = hashlib.md5(json.dumps([pl, FPS, VOICE_CHAIN, LOUD, 'frame-grid-v2'], sort_keys=True).encode()).hexdigest()
+    ostamp = hashlib.md5(json.dumps([pl, pip, burn, music, 'overlays-v9', FPS, KEY, FACE_DX, RECEIPTS], sort_keys=True).encode()).hexdigest()
     sf = wpath(f'render_stamp_{cut}.txt'); of = wpath(f'overlay_stamp_{cut}.txt')
     if not os.path.exists(sf) or open(sf).read() != stamp:
         for pat in ('out_*', 'base_*', 'card_*', 'seg_*', 'trim*', 'base_raw.mkv'):
@@ -578,8 +601,9 @@ def render(src, cut, pip, burn, music, budget=150):
         for o in outs: f.write(f"file '{o}'\n")
     final = os.path.join(os.path.dirname(os.path.abspath(src)), f'{os.path.splitext(os.path.basename(src))[0]}_edit_{cut}.mp4')
     run(['ffmpeg', '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', wpath(f'out_list_{cut}.txt'), '-c:v', 'copy', '-c:a', 'aac', '-b:a', '384k', '-ar', '48000', '-movflags', '+faststart', final])
-    for ext in ('srt',):
-        run(['cp', wpath(f'captions_{cut}.{ext}'), final.replace('.mp4', f'.{ext}')])
+    srt = open(wpath(f'captions_{cut}.srt')).read()
+    for a, b in CAPTION_FIXES: srt = re.sub(a, b, srt)
+    open(final.replace('.mp4', '.srt'), 'w').write(srt)
     print(f'render: DONE -> {final}  ({duration(final) / 60:.1f} min)'); return True
 
 if __name__ == '__main__':
