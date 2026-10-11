@@ -272,6 +272,12 @@ def plan(src, cut, max_gap):
                     a0 = final_t(at) - ic['dur']
                     if e['start'] < a0: lim = min(lim, a0)
                 if lim > e['end']: e['end'] = round(min(lim, e['end'] + GRAPHICS_FIRST_MAX), 3)
+        # the name lower-third never sits on a full-screen graphic: it waits for the graphic to end
+        for e in events:
+            if e['type'] == 'lower':
+                for b in events:
+                    if b['type'] == 'broll' and b['start'] <= e['start'] < b['end']:
+                        d = e['end'] - e['start']; e['start'] = b['end']; e['end'] = round(b['end'] + d, 3)
         # hard cuts: a callout leaves when the next callout or chart arrives
         for i, e in enumerate(events):
             if e['type'] in ('callout', 'tag'):
