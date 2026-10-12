@@ -24,7 +24,11 @@ FPS = 60; W, H = 1920, 1080   # --fps to change; match the camera
 # voice chain. no broadband denoiser: the mic's own gate already leaves the pauses near silent, and afftdn was
 # shaving ~5 dB off 2-5 kHz and ~10 dB off 5-10 kHz (that's the 'muffled' sound). instead: rumble cut, a little
 # presence and air, gentle de-ess, light compression, then two-pass loudnorm to -14 LUFS / -1.5 dBTP.
-VOICE_CHAIN = ('highpass=f=80,equalizer=f=3500:t=q:w=0.9:g=3,treble=g=3:f=9000,deesser=i=0.3,'
+# take 1 has a steady electronic whine at ~11.7 kHz (plus a weak one at 17.7 kHz), ~25 dB above the room: notch it
+# before the presence lift, or the treble shelf makes it worse. found by scanning the quiet frames for narrow peaks.
+WHINE_NOTCH = ('equalizer=f=11707:t=h:w=70:g=-30,equalizer=f=11707:t=h:w=30:g=-20,'
+               'equalizer=f=17660:t=h:w=60:g=-24,equalizer=f=23414:t=h:w=60:g=-24,')
+VOICE_CHAIN = (WHINE_NOTCH + 'highpass=f=80,equalizer=f=3500:t=q:w=0.9:g=3,treble=g=3:f=9000,deesser=i=0.3,'
                'acompressor=threshold=-20dB:ratio=3:attack=5:release=120')
 LOUD = 'I=-14:TP=-1.5:LRA=11'
 # place every audio sample by its timestamp: the joined clips have millisecond gaps at the joins, and reading the
